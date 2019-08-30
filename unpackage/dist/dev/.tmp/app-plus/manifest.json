@@ -4,8 +4,8 @@
     "iPhone",
     "iPad"
   ],
-  "id": "__UNI__C55411E",
-  "name": "SMIC(UNI-APP)",
+  "id": "__UNI__070B437",
+  "name": "hello_uni_login",
   "version": {
     "name": "1.0.0",
     "code": "100"
@@ -28,10 +28,8 @@
       "concatenate": true
     },
     "splashscreen": {
-      "target": "id:1",
-      "autoclose": true,
-      "waiting": true,
-      "delay": 0
+      "autoclose": false,
+      "waiting": false
     },
     "popGesture": "close",
     "launchwebview": {

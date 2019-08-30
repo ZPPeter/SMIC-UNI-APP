@@ -1,0 +1,117 @@
+基于Promise封装uni-app的request方法
+https://www.cnblogs.com/syncmr/p/11139611.html
+
+实现类似axios形式的请求
+基于Promise封装uni-app的request方法,h5和小程序均可使用
+
+特别之处
+
+支持Promise API
+
+拦截请求和响应
+转换请求和响应数据
+取消请求
+自动转换为JSON数据
+超时请求
+告别callback
+支持默认请求前缀
+支持并发请求
+
+特别之处
+
+uni-app框架中
+
+安装
+
+npm install uni-request --save
+文件中引用
+
+import uniRequest from 'uni-request';
+使用方法
+
+请求方法的别名
+
+uniRequest.request(config)
+uniRequest.get(url[, config])
+uniRequest.delete(url[, config])
+uniRequest.head(url[, config])
+uniRequest.options(url[, config])
+uniRequest.post(url[, data[, config]])
+uniRequest.put(url[, data[, config]])
+uniRequest.patch(url[, data[, config]])
+
+全局配置
+
+uniRequest.defaults.baseURL = 'https://yourapi.domain.com';
+uniRequest.defaults.headers.common['Authorization'] = AUTH_TOKEN;
+uniRequest.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+
+全局拦截
+
+// 请求拦截
+uniRequest.interceptors.request.use(
+    request => {
+        //配置基本信息    
+        return request;
+    },
+    err => {
+        console.log('请求失败');
+        return Promise.reject(err);
+    });
+
+// 响应拦截
+uniRequest.interceptors.response.use(function(response) {
+    console.log('返回进入拦截成功')
+    return Promise.resolve(response);
+}, function(error) {
+    console.log('返回进入拦截失败')
+    return Promise.reject(error);
+});
+
+发送Get请求
+
+// 向具有给定ID的用户发出请求
+uniRequest.get('/user?id=12345')
+    .then(function(response) {
+        console.log(response);
+    })
+    .catch(function(error) {
+        console.log(error);
+    });
+
+// 可选地，上面的请求也可以按照
+uniRequest.get('/user', {
+    data: {
+        id: 'number'
+    }
+}).then(function(response) {
+    console.log(response);
+}).catch(function(error) {
+    console.log(error);
+});
+
+
+// 想要使用 async/await？ 将`async`关键字添加到外部函数/method
+async function getUser() {
+    try {
+        const response = await uniRequest.get('/user?ID=12345');
+        console.log(response);
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+发送Post请求
+
+uniRequest.post('/user', {
+    firstname: 'firstname',
+    lastname: 'lastname'
+}).then(function(response) {
+    console.log(response);
+}).catch(function(error) {
+    console.log(error);
+});
+
+
+// 其他类似的库还有 fly / uniFly 等等
+https://blog.csdn.net/haoyuexihuai/article/details/86590587

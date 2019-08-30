@@ -1,0 +1,63 @@
+在 路由 控制是否已经登录 
+
+!Util.abp.session.userId
+
+router.beforeEach((to, from, next) => {
+    //iView.LoadingBar.start();
+    LoadingBar.start();
+    Util.title(to.meta.title);
+    if (Cookies.get('locking') === '1' && to.name !== 'locking') {
+        next({
+            replace: true,
+            name: 'locking'
+        });
+    }
+    else if (Cookies.get('locking') === '0' && to.name === 'locking') {
+        next(false);
+    }
+    else {
+        if (!Util.abp.session.userId && to.name !== 'login') {
+            next({
+                name: 'login' // 到登录界面
+            });
+        }
+        else if (!!Util.abp.session.userId && to.name === 'login') {
+            Util.title(to.meta.title);
+            next({
+                name: 'home' // 任何 name 都可以,比如 setting 则显示子菜单的第一个 
+            });
+        }
+
+
+main.ts  -> store 这里没有 session.userId
+
+    async mounted () {
+      this.currentPageName = this.$route.name as string;
+      await this.$store.dispatch({
+        type:'session/init'
+      })
+      if(!!this.$store.state.session.user&&this.$store.state.session.application.features['SignalR']){
+        if (this.$store.state.session.application.features['SignalR.AspNetCore']) {
+            SignalRAspNetCoreHelper.initSignalR();
+        }
+      }
+	  
+	  
+store
+            async init(content) {
+                let rep = await ajax.get('/api/services/app/Session/GetCurrentLoginInformations', {
+                    headers: {
+                        'Abp.TenantId': util.abp.multiTenancy.getTenantIdCookie()
+                    }
+                });
+                content.state.application = rep.data.result.application;
+                content.state.user = rep.data.result.user;	  
+				
+在 main.ts 里面有个 
+
+Ajax.get('/AbpUserConfiguration/GetAll').then(data=>{     -> Ajax  拦截，注入 token 得到 UserID
+	
+  console.log(Util.abp.session); // 没有 session.userId
+  console.log(data.data.result); // 有 session.userId 
+  Util.abp = Util.extend(true, Util.abp, data.data.result); // extend 要实现的是给任意对象扩展, +  的关系
+  console.log(Util.abp.session); // 有 session.userId 				

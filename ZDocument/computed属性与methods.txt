@@ -1,0 +1,79 @@
+<div id="example">
+  <p>Original message: "{{ message }}"</p>
+  <p>Computed reversed message: "{{ reversedMessage }}"</p>
+</div>
+
+var vm = new Vue({
+  el: '#example',
+  data: {
+    message: 'Hello'
+  },
+  computed: {    
+    reversedMessage: function () {      
+      return this.message.split('').reverse().join('')
+    }
+  }
+})
+--------------------------------------------------------------
+computed: {    
+    // 在 computed 中，可以定义一些 属性，这些属性，叫做 【计算属性】， 计算属性的，本质，就是 一个方法，只不过，
+	// 我们在使用 这些计算属性的时候，是把 它们的 名称，直接当作 属性来使用的；并不会把 计算属性，当作方法去调用；
+    // 注意1： 计算属性，在引用的时候，一定不要加 () 去调用，直接把它 当作 普通 属性去使用就好了；
+    // 注意2： 只要 计算属性，这个 function 内部，所用到的 任何 data 中的数据发送了变化，就会 立即重新计算 这个 计算属性的值
+    // 注意3： 计算属性的求值结果，会被缓存起来，方便下次直接使用； 如果 计算属性方法中，所以来的任何数据，
+	//         都没有发生过变化，则，不会重新对 计算属性求值；
+    'fullname': function () {
+        return this.firstname+this.lastname;
+    }
+}			
+--------------------------------------------------------------
+computed属性与methods的区别
+在模板文件中，computed属性只需要写{{reverseMessage}}，而methods需要写成{{reverseMessage()}}，
+最明显的区别就是methods是方法，需要执行；
+computed属性只有在依赖的data放生变化时，才会重新执行，否则会使用缓存中的值，而methods是每次进入页面都要执行的，
+有些需要每次进入页面都执行的方法，需要使用methods，而computed属性比较节约。
+--------------------------------------------------------------
+	computed: {
+		...mapState(['userInfo'])
+	},
+	computed: mapState(['userInfo']),
+--------------------------------------------------------------	
+import { mapState, mapMutations } from 'vuex';
+export default {
+	computed: mapState(['hasLogin', 'userInfo']),
+	methods: {
+		gotoTab() {
+			uni.switchTab({
+				url:'/pages/user/user'
+		})
+	},
+	... 
+=============================================================
+函数可以忽略 : function
+
+<script>
+import { mapState } from 'vuex';
+export default {
+	computed: {
+		...mapState(['userInfo']),
+		showInfo: { // 计算属性必须有 get/set
+			get() { // get: function() { 
+				if(this.userInfo.realname)
+					return '您: ';
+			},
+			// set: function() {}
+			set() {}
+		}
+	},
+	data() {
+		return {};
+	},
+	methods: {
+		// showInfos: function() {
+		showInfos() {  // 不能与上面的 showInfo 重名
+			if(this.userInfo.realname)
+				return '您: ';
+		}
+	}
+};
+</script>

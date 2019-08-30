@@ -1,0 +1,14 @@
+﻿要让 TypeScript 正确推断 Vue 组件选项中的类型，您需要使用 Vue.component 或 Vue.extend 定义组件：
+
+import Vue from 'vue'
+const Component = Vue.extend({
+  // 类型推断已启用
+})
+
+const Component = {
+  // 这里不会有类型推断，
+  // 因为TypeScript不能确认这是Vue组件的选项
+}
+
+当前
+uni-app基于Vue 2.0实现,页面组件就不要用 ts  写了！！！

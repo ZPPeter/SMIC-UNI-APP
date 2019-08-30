@@ -1,0 +1,47 @@
+一、公共设置属性,参见 helper.js
+======================================================================================
+
+1、App.vue
+--------------------------------------------------------------------------------------
+    /*
+	* globalData 属性
+	* 支持vue和nvue共享数据。是目前 nvue 和 vue 共享数据的一种比较好的方式。
+	* js中操作globalData的方式如下：
+		赋值：getApp().globalData.text = 'test'
+		取值：console.log(getApp().globalData.text) 
+	    如果需要把globalData的数据绑定到页面上，可在页面的onshow声明周期里进行变量重赋值。
+	* */
+	globalData: {  
+            text: 'globalData'  
+    },
+
+
+console.log('I come from App.vue globalData 属性：' + getApp().globalData.text);
+
+2、main.js 扩展 Vue.prototype
+----------------------------------------------------------------------------------------
+Vue.prototype.$global_Url = 'https://uniapp.dcloud.io';  
+
+console.log('I come from Vue.prototype.$global_Url: ' + this.$global_Url); 
+
+
+3、公用模块 common.js
+-------------------------------------------------------------------------------------------------
+这种方式只支持多个vue页面或多个nvue页面之间公用，vue和nvue之间不公用。维护起来方便，每次都需要引入。
+
+
+4、Vuex 的状态管理方式
+-------------------------------------------------------------------------------------------------
+
+5、ts 参考 AbpBase
+-------------------------------------------------------------------------------------------------
+
+二、过滤器
+=================================================================================================
+// 在main.js中引入全局过滤器 .js 引入 .js -> filters/index.js
+import * as filters  from '@/common/filters'
+
+// register global utility filters.
+Object.keys(filters).forEach(key => {
+  Vue.filter(key, filters[key])
+})

@@ -1,0 +1,70 @@
+
+uni-simple-router
+pushTab api在跳转到tab时，H5端使用 $Route 无法访问到传递的参数,App 可以
+
+1. push
+跳转到普通页面，新开保留历史记录
+2. replace
+动态的导航到一个新 URL 关闭当前页面，跳转到的某个页面。
+3. replaceAll
+动态的导航到一个新 URL 关闭所有页面，打开到应用内的某个页面
+4. pushTab
+动态的导航到一个新 url 关闭所有页面，打开到应用内的某个tab,页面会刷新不会缓存
+
+// 假如你是通过name 来进行跳转。
+this.$Router.push({ name: 'router1', params: { userId: '123' }})
+// 获取方式
+this.$Route.query.userId;
+// 同样 等同于
+this.$Router.push({ path: '/pages/router/router1/router1', query: { userId: '123' }})
+// 获取方式
+this.$Route.query.userId;
+
+router.push(location, onComplete?, onAbort?) 等同于 uni.navigateTo()
+router.replace(location, onComplete?, onAbort?) 等同于 uni.redirectTo()
+跟 router.push 很像，唯一的不同就是，它不会向 history 添加新记录，而是跟它的方法名一样 —— 替换掉当前的 history 记录
+router.replaceAll(location, onComplete?, onAbort?) 等同于 uni.reLaunch()
+跟 router.replace 很像，唯一的不同就是，它不会向 history 添加新记录，而是将所有的页面都关掉，打开一个新的页面。
+router.pushTab(location, onComplete?, onAbort?) 等同于??? uni.switchTab()  两者在 缓存页面 方面还是有区别的!
+router.back(n) 等同于 uni.navigateBack()
+
+AJAX
+Flyio Github: https://github.com/wendux/fly
+
+setTimeout延迟
+setTimeout(() => { this.value = 100 }, 0)
+
+键盘弹起遮挡输入框:focus输入框被键盘遮挡，输入内容后输入框弹起。
+=============================================================================
+
+蓝牙打印机模块
+
+原始记录不用文件 - SQLite 数据库
+
+SMIC 数据库在 Ubuntu
+
+待检列表下载到本地 SQLite 可以离线操作，任何人可以下载
+检定员开始检定，远程锁定不可再下载
+
+从 SDIM 登记到 SMIC -> 待检列表
+
+<button type="primary" @click="gotoTab">跳转到User页面</button>
+	methods: {		
+		gotoTab(){
+			uni.switchTab({ // 有缓存则不调用 onLoad: function() {
+				url:'/pages/user/user'
+			})
+			/*
+			this.$Router.pushTab({  // 会 onLoad: function() { // 需要传参并刷新页面的时候用
+				name: 'user',
+				params: {
+					name: '我只想去tab5',
+				}
+			})*/
+		},
+	},
+	
+<view>
+	<router-link to="{name: 'home',params: {name: '...'}}" navType="pushTab">To Tab,Reload</router-link>		
+	<router-link to="{name: 'view',params: {name: '...'}}">To Page Test</router-link>		
+</view>

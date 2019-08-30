@@ -1,0 +1,14 @@
+加上 test_date.vue 会报错 $gwx is not a function
+
+			<input v-model.number="age"  placeholder="Age"/>
+			<input v-model.trim="Name" placeholder="Name"/>
+			<text>{{typeof(Age)}}</text>
+			<text>{{Age}}</text>
+			<text>{{Name.length}}</text>
+			<text class="title">{{ title }}</text><hr>
+			<text class="title">{{ testDate | FormatDate}}</text><hr>
+			<text class="title">{{ testDate | formatDateFilter}}</text>	
+
+
+原因：
+<text>{{typeof(Age)}}</text>

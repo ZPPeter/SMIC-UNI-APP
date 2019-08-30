@@ -1,0 +1,340 @@
+@font-face {
+  font-family: iconfont;
+  src: url('static/iconfont.ttf') format('truetype');	  
+}
+.iconfont {
+  font-family: 'iconfont' !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-iconfontscan:before {
+  content: "\e600";
+}
+
+.icon-barcode:before {
+  content: "\e6ce";
+}
+
+.icon-earth2:before {
+  content: "\e6df";
+}
+
+.icon-settings:before {
+  content: "\e7c4";
+}
+
+.icon-bianji:before {
+  content: "\e602";
+}
+
+.icon-result:before {
+  content: "\e617";
+}
+
+.icon-custom-ok:before {
+  content: "\e631";
+}
+
+.icon-authorize:before {
+  content: "\e668";
+}
+
+.icon-checktriangle:before {
+  content: "\e6d0";
+}
+
+.icon-bianji1:before {
+  content: "\e646";
+}
+
+.icon-bluetooth1:before {
+  content: "\e64a";
+}
+
+.icon-bluetoothconnect:before {
+  content: "\e6a7";
+}
+
+.icon-bluetoothtransfer:before {
+  content: "\e6aa";
+}
+
+.icon-ai-module:before {
+  content: "\e608";
+}
+
+.icon-3401caidan:before {
+  content: "\e663";
+}
+
+.icon-theearth2diqiu:before {
+  content: "\e629";
+}
+
+.icon-bluetooth2lanya:before {
+  content: "\e735";
+}
+
+.icon-mediaprevious:before {
+  content: "\e679";
+}
+
+.icon-saoma:before {
+  content: "\e648";
+}
+
+.icon-result1:before {
+  content: "\e660";
+}
+
+.icon-refresh:before {
+  content: "\e636";
+}
+
+.icon-examineandapprove:before {
+  content: "\e650";
+}
+
+.icon-ok:before {
+  content: "\e65e";
+}
+
+.icon-previous:before {
+  content: "\e669";
+}
+
+.icon-refresh1:before {
+  content: "\e661";
+}
+
+.icon-sure:before {
+  content: "\e66a";
+}
+
+.icon-bluetooth2:before {
+  content: "\e615";
+}
+
+.icon-refresh2:before {
+  content: "\e61a";
+}
+
+.icon-menu:before {
+  content: "\e6c1";
+}
+
+.icon-next:before {
+  content: "\e60b";
+}
+
+.icon-previous1:before {
+  content: "\e60c";
+}
+
+.icon-next1:before {
+  content: "\e654";
+}
+
+.icon-planetearth:before {
+  content: "\e603";
+}
+
+.icon-choose_done_surface:before {
+  content: "\e6ba";
+}
+
+.icon-close_circle_surface:before {
+  content: "\e6be";
+}
+
+.icon-bianji2:before {
+  content: "\e67f";
+}
+
+.icon-peer_surface:before {
+  content: "\e764";
+}
+
+.icon-zuoyejieguoduibi:before {
+  content: "\e63f";
+}
+
+.icon-next2:before {
+  content: "\e612";
+}
+
+.icon-juli:before {
+  content: "\e676";
+}
+
+.icon-cansaitubiaozhuanqu-:before {
+  content: "\e604";
+}
+
+.icon-xinxiheyan:before {
+  content: "\e634";
+}
+
+.icon-shicizhijianjieguojichuli:before {
+  content: "\e64d";
+}
+
+.icon-lousaojieguobaobiao:before {
+  content: "\e64c";
+}
+
+.icon-peizhihechajieguobaobiao:before {
+  content: "\e64e";
+}
+
+.icon-saoma1:before {
+  content: "\e624";
+}
+
+.icon-ziyuan:before {
+  content: "\e60e";
+}
+
+.icon-jianchajieguo:before {
+  content: "\e7c2";
+}
+
+.icon-dots-vertical-rounde:before {
+  content: "\e777";
+}
+
+.icon-bianji3:before {
+  content: "\e621";
+}
+
+.icon-tool_angleCobb:before {
+  content: "\e647";
+}
+
+.icon-tool_angle:before {
+  content: "\e649";
+}
+
+.icon-menu-circle:before {
+  content: "\e776";
+}
+
+.icon-renjijiaohuD-jiaodu:before {
+  content: "\e6e7";
+}
+
+.icon-book:before {
+  content: "\e6f3";
+}
+
+.icon-refresh3:before {
+  content: "\e714";
+}
+
+.icon-Tirangle-:before {
+  content: "\e60a";
+}
+
+.icon-Tirangle--:before {
+  content: "\e62e";
+}
+
+.icon-chulijieguo:before {
+  content: "\e605";
+}
+
+.icon-ios-return-left:before {
+  content: "\e688";
+}
+
+.icon-save:before {
+  content: "\e601";
+}
+
+.icon-distance:before {
+  content: "\e609";
+}
+
+.icon-next3:before {
+  content: "\e709";
+}
+
+.icon-refresh4:before {
+  content: "\e71e";
+}
+
+.icon-juliceliang:before {
+  content: "\e606";
+}
+
+.icon-Refresh-Wifi:before {
+  content: "\ecbc";
+}
+
+.icon-travel-tourism_earth:before {
+  content: "\ef5c";
+}
+
+.icon-bluetooth:before {
+  content: "\e638";
+}
+
+.icon-surface_px:before {
+  content: "\e6c2";
+}
+
+.icon-surface_px1:before {
+  content: "\e6c3";
+}
+
+.icon-surface_px2:before {
+  content: "\e6c4";
+}
+
+.icon-surface_px3:before {
+  content: "\e6c5";
+}
+
+.icon-settings-bluetooth:before {
+  content: "\e8bb";
+}
+
+.icon-bluetooth-connected:before {
+  content: "\e97b";
+}
+
+.icon-bluetooth-disabled:before {
+  content: "\e97c";
+}
+
+.icon-ic_refresh:before {
+  content: "\e626";
+}
+
+.icon-jieguofankui:before {
+  content: "\e607";
+}
+
+.icon-lx-refresh:before {
+  content: "\e657";
+}
+
+.icon-24gl-next:before {
+  content: "\ea6b";
+}
+
+.icon-24gl-previous:before {
+  content: "\ea73";
+}
+
+.icon-ios-menu:before {
+  content: "\e74c";
+}
+
+.icon-dots-vertical-rounde-copy:before {
+  content: "\ef5d";
+}
+

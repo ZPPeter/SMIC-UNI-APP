@@ -1,0 +1,56 @@
+封装uni-app的需要token的请求
+https://segmentfault.com/a/1190000019083308?utm_source=tag-newest
+
+
+config.js
+
+const app = {
+    apiUrl: 'http://216:18080/webcase/', //请求的地址
+    baseRequest(obj) {
+        try {
+            const userToken = uni.getStorageSync('userToken');
+            if (userToken) {
+                if (obj.header) {
+                    obj.header["token"] = userToken;
+                } else {
+                    obj.header = { "token": userToken };
+                }
+                obj.url = this.apiUrl + obj.url;
+                uni.request(obj)
+            }
+            else{
+                console.log("获取不到userToken")
+                
+            }
+        } catch (e) {
+            console.log(e)
+            console.log("获取不到userToken")
+        } 
+    },
+}
+export default app;
+
+
+需要使用的页面
+
+import app from "@/api/apiConfig"
+            getUserStatus() {
+                app.baseRequest({
+                    url: 'getUserStatus',
+                    method: 'POST',
+                    success: (res) => {
+                        // 用户状态存到缓存中去
+                        try{
+                            uni.setStorageSync('userStatus', res.data.data.type)
+                            uni.setStorageSync('userAgentInfo',res.data.data)
+                        }catch(e){
+                            //TODO handle the exception
+                        }
+                        if(res.data.data.type == 2) {
+                            this.getLawInfo()
+                        } else {
+                            this.yhju= false
+                        }
+                    }
+                })
+            }

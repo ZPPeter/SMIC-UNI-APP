@@ -1,0 +1,7 @@
+import { mapState, mapMutations } from 'vuex';
+
+	methods: {
+		...mapMutations(['logout']),
+		save() {
+			...
+	}		

@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "",
+  "navigationStyle": "custom",
+  "bounce": "none",
+  "softinput": {
+    "mode": "adjustPan"
+  },
+  "titleNView": false,
+  "animationType": "slide-in-bottom",
+  "usingComponents": {}
+}
