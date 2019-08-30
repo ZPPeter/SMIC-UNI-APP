@@ -1,6 +1,4 @@
 {
   "navigationBarTitleText": "首页",
-  "usingComponents": {
-    "router-link": "/node-modules/uni-simple-router/component/router-link"
-  }
+  "usingComponents": {}
 }

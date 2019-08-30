@@ -12,6 +12,15 @@ export default {
 				this.login(res.data);
 			}
 		});
+		setTimeout(() => {
+			uni.setTabBarBadge({
+				index: 1,
+				text: '31'
+			});
+			uni.showTabBarRedDot({
+				index: 3
+			});
+		}, 1000);		
 		console.log('App Launch');
 	},
 	onShow: function() {

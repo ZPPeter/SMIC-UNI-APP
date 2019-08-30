@@ -11,7 +11,10 @@
     "pages/address/addressManage",
     "pages/notice/notice",
     "pages/userinfo/userinfo",
-    "pages/about/about"
+    "pages/about/about",
+    "pages/scan/scan",
+    "pages/verification/verification",
+    "pages/approve/approve"
   ],
   "window": {
     "navigationBarTextStyle": "white",
@@ -30,10 +33,21 @@
         "selectedIconPath": "static/img/homeHL.png"
       },
       {
-        "pagePath": "pages/main/home",
-        "text": "批准",
+        "pagePath": "pages/verification/verification",
+        "text": "检定",
+        "iconPath": "static/img/verification.png",
+        "selectedIconPath": "static/img/verificationHL.png"
+      },
+      {
+        "pagePath": "pages/scan/scan",
+        "iconPath": "static/img/scan.png",
+        "selectedIconPath": "static/img/scanHL.png"
+      },
+      {
+        "pagePath": "pages/approve/approve",
         "iconPath": "static/img/approve.png",
-        "selectedIconPath": "static/img/approveHL.png"
+        "selectedIconPath": "static/img/approveHL.png",
+        "text": "核验"
       },
       {
         "pagePath": "pages/user/user",

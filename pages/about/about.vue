@@ -53,16 +53,6 @@ export default {
 		};
 	},
 	onShow() {
-		/* 隐藏凸起图标 */
-		/*
-		if (uni.getSystemInfoSync().platform === 'android') {			
-			var icon = plus.nativeObj.View.getViewById('icon');
-			if (icon) {
-				setTimeout(function() {					
-					icon.hide();
-				}, 100);
-			}			
-		}*/
 	},
 	onLoad() {
 		// #ifdef APP-PLUS

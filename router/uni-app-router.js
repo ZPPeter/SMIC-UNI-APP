@@ -11,34 +11,38 @@ const router = new Router({
 	routes: [{
 			path: "/pages/main/main",
 			name: 'main',
-			meta:{
-				login: false  // tabBar
+			meta: {
+				login: false // tabBar
 			}
 		},
 		{
 			path: "/pages/main/home",
 			name: 'home',
-			meta:{
+			meta: {
 				login: false // tabBar
 			}
 		},
 		{
 			path: "/pages/user/user",
 			name: 'user',
-			meta:{				
+			meta: {
 				login: false // tabBar
-			}			
+			}
 		},
 		{
 			path: "/pages/test/test",
 			name: 'test'
 		},
 		{
+			path: "/pages/scan/scan",
+			name: 'scan'
+		},
+		{
 			path: "/pages/login/login",
 			name: 'login',
 			meta: {
 				login: false
-			},			
+			},
 		},
 		{
 			path: "/pages/component/view/view",
@@ -67,9 +71,23 @@ const router = new Router({
 		{
 			path: "/pages/about/about",
 			name: 'about',
-			meta:{				
+			meta: {
 				login: false
-			}			
+			}
+		},
+		{
+			path: "/pages/approve/approve",
+			name: 'approve',
+			meta: {
+				login: false
+			}
+		},
+		{
+			path: "/pages/verification/verification",
+			name: 'verification',
+			meta: {
+				login: false
+			}
 		}		
 	]
 });
@@ -82,13 +100,13 @@ router.beforeEach((to, from, next) => {
 	console.log('to:')
 	console.log(to);
 	*/
-	if(from.name===to.name){ // tabBar 直接跳转不用登录
+	if (from.name === to.name) { // tabBar 直接跳转不用登录
 		next();
 	}
 	if (to.meta && to.meta.login == false) { // 不用登录的 view
 		next()
-	} else {		
-		if (!store.state.hasLogin) {			
+	} else {
+		if (!store.state.hasLogin) {
 			next({
 				path: '/pages/login/login'
 			})
@@ -99,8 +117,29 @@ router.beforeEach((to, from, next) => {
 })
 
 router.afterEach((to, from) => {
-	//console.log(to);
-	//console.log(from)
+	//console.log(to.name);
+	//console.log(from)	
+	var tabbars = ["main", "user", "verification", "approve"];
+	var a = tabbars.indexOf(to.name);
+	if (a == -1) {
+		if (uni.getSystemInfoSync().platform === 'android') {
+			var icon = plus.nativeObj.View.getViewById('icon');
+			if (icon) {
+				setTimeout(function() {
+					icon.hide();
+				}, 100);
+			}
+		}
+	} else {
+		if (uni.getSystemInfoSync().platform === 'android') {
+			var icon = plus.nativeObj.View.getViewById('icon');
+			if (icon) {
+				setTimeout(function() {
+					icon.show();
+				}, 100);
+			}
+		}
+	}
 })
 //console.log(router)
 

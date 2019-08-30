@@ -137,6 +137,30 @@ if (typeof String.prototype.endsWith != 'function') {
 		return this.indexOf(suffix, this.length - suffix.length) !== -1;
 	};
 }
+
+if (typeof String.prototype.inOf!= 'function') {
+	String.prototype.inOf = function(targetArr) {
+		let res = true;
+		forEach(item => {
+			if (targetArr.indexOf(item) < 0) {
+				res = false;
+			}
+		});
+		return res;
+	};
+}
+
+/*
+	oneOf(ele, targetArr) {
+		if (targetArr.indexOf(ele) >= 0) {
+			return true;
+		} else {
+			return false;
+		}
+	},
+*/
+
+
 //console.log( (new Date()).Format("yyyy.MM.dd") )
 //alert((new Date()).Format("yyyy.MM.dd"));
 //alert(("123.png").endsWith('.png'));
