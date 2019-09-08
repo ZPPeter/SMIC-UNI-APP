@@ -1,4 +1,8 @@
 {
-  "navigationBarTitleText": "核验",
+  "navigationBarTitleText": "批准",
+  "navigationStyle": "custom",
+  "bounce": "none",
+  "titleNView": false,
+  "animationType": "slide-in-bottom",
   "usingComponents": {}
 }

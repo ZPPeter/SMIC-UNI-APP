@@ -2,7 +2,7 @@
   "pages": [
     "pages/main/main",
     "pages/login/login",
-    "pages/component/view/view",
+    "pages/component/ucharts/ucharts",
     "pages/user/user",
     "pages/main/home",
     "pages/test/test",
@@ -14,11 +14,13 @@
     "pages/about/about",
     "pages/scan/scan",
     "pages/verification/verification",
-    "pages/approve/approve"
+    "pages/check/check",
+    "pages/approve/approve",
+    "pages/wtd/wtd"
   ],
   "window": {
     "navigationBarTextStyle": "white",
-    "navigationBarBackgroundColor": "#0faeff",
+    "navigationBarBackgroundColor": "#449DED",
     "backgroundColor": "#fbf9fe"
   },
   "tabBar": {
@@ -44,7 +46,7 @@
         "selectedIconPath": "static/img/scanHL.png"
       },
       {
-        "pagePath": "pages/approve/approve",
+        "pagePath": "pages/check/check",
         "iconPath": "static/img/approve.png",
         "selectedIconPath": "static/img/approveHL.png",
         "text": "核验"
@@ -58,12 +60,13 @@
     ]
   },
   "nvueCompiler": "weex",
+  "renderer": "auto",
   "splashscreen": {
     "alwaysShowBeforeRender": false,
     "autoclose": true
   },
   "appname": "hello_uni_login",
-  "compilerVersion": "2.1.3",
+  "compilerVersion": "2.2.2",
   "usingComponents": {
     "router-link": "/node-modules/uni-simple-router/component/router-link"
   }

@@ -1,4 +1,19 @@
 {
-  "navigationBarTitleText": "首页",
-  "usingComponents": {}
+  "navigationBarTitleText": "全站仪检定数据处理系统",
+  "bounce": "none",
+  "titleNView": {
+    "type": "transparent",
+    "buttons": [
+      {
+        "text": "",
+        "fontSrc": "/static/yticon.ttf",
+        "fontSize": "24px",
+        "color": "black"
+      }
+    ]
+  },
+  "usingComponents": {
+    "u-charts": "/pages/component/ucharts/ucharts",
+    "uni-notice-bar": "/components/uni-notice-bar/uni-notice-bar"
+  }
 }

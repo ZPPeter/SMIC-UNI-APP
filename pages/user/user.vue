@@ -3,11 +3,11 @@
 		<view class="user-section">
 			<image class="bg" src="/static/img/user-bg.jpg"></image>
 			<view class="user-info-box">
-				<view class="portrait-box">
+				<view>
 					<image class="portrait" :src="userInfo.portrait || '/static/img/missing-face.png'" @click="navTo('/pages/userinfo/userinfo')"></image>
 				</view>
-				<view class="info-box">
-					<text class="username">{{ userInfo.realname || '游客' }}</text>
+				<view>
+					<text class="username">{{ userInfo.realname || '未登录' }}</text>
 				</view>
 			</view>
 			<view class="vip-card-box">
@@ -62,7 +62,7 @@
 </template>
 <script>
 import listCell from '@/components/mix-list-cell';
-import util from '../../libs/common/utils.js'; 
+import util from '../../libs/common/utils.js';
 import { mapState } from 'vuex';
 let startY = 0,
 	moveY = 0,
@@ -154,7 +154,17 @@ and conditions of the Mulan PSL v1.`);
 			this.coverTransition = 'transform 0.3s cubic-bezier(.21,1.93,.53,.64)';
 			this.coverTransform = 'translateY(0px)';
 		}
-	}
+	},
+	onShow() {
+		if (uni.getSystemInfoSync().platform === 'android') {
+			var icon = plus.nativeObj.View.getViewById('icon');
+			if (icon) {
+				setTimeout(function() {
+					icon.show();
+				}, 100);
+			}
+		}		
+	},	
 };
 </script>
 <style lang="scss">

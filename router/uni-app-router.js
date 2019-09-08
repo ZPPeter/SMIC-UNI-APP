@@ -31,11 +31,21 @@ const router = new Router({
 		},
 		{
 			path: "/pages/test/test",
-			name: 'test'
+			name: 'test',
+			meta: {
+				login: false
+			}			
 		},
 		{
 			path: "/pages/scan/scan",
 			name: 'scan'
+		},
+		{
+			path:"/pages/component/ucharts/ucharts",
+			name:'ucharts',
+			meta:{
+				login:false
+			}
 		},
 		{
 			path: "/pages/login/login",
@@ -44,6 +54,13 @@ const router = new Router({
 				login: false
 			},
 		},
+		{
+			path: "/pages/ucharts/ucharts",
+			name: 'ucharts',
+			meta: {
+				login: false
+			}
+		},		
 		{
 			path: "/pages/component/view/view",
 			name: 'view'
@@ -83,6 +100,20 @@ const router = new Router({
 			}
 		},
 		{
+			path: "/pages/check/check",
+			name: 'approve',
+			meta: {
+				login: false
+			}
+		},		
+		{
+			path: "/pages/wtd/wtd",
+			name: 'wtd',
+			meta: {
+				login: false
+			}
+		},
+		{
 			path: "/pages/verification/verification",
 			name: 'verification',
 			meta: {
@@ -108,9 +139,13 @@ router.beforeEach((to, from, next) => {
 	} else {
 		if (!store.state.hasLogin) {
 			next({
-				path: '/pages/login/login'
+				path: '/pages/login/login',
+				meta:{
+					from:to.name
+				}
 			})
 		} else {
+			console.log(from.to.meta.from);
 			next()
 		}
 	}
@@ -130,16 +165,7 @@ router.afterEach((to, from) => {
 				}, 100);
 			}
 		}
-	} else {
-		if (uni.getSystemInfoSync().platform === 'android') {
-			var icon = plus.nativeObj.View.getViewById('icon');
-			if (icon) {
-				setTimeout(function() {
-					icon.show();
-				}, 100);
-			}
-		}
-	}
+	} 
 })
 //console.log(router)
 

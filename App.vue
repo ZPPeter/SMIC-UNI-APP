@@ -34,6 +34,7 @@ export default {
 
 <style>
 	@import "common/iconfont.css";
+	@import "common/uni.css";
 </style>
 <style lang="scss">
 @font-face {

@@ -3,7 +3,22 @@
 		{
             "path": "pages/main/main",
             "style": {
-                "navigationBarTitleText": "首页"
+                "navigationBarTitleText": "全站仪检定数据处理系统",
+				// #ifdef MP
+				"navigationStyle": "custom",
+				// #endif
+				"app-plus": {
+					"bounce": "none",
+					"titleNView": {
+						"type": "transparent",
+						"buttons": [{ // 原生右上角按钮 - i
+							"text": "\ue744",
+							"fontSrc": "/static/yticon.ttf",
+							"fontSize": "24px",
+							"color": "black"
+						}]
+					}
+				}				
             }
 		},
 		{
@@ -19,7 +34,7 @@
 			}		
         },
 		{
-			"path": "pages/component/view/view",
+			"path": "pages/component/ucharts/ucharts",
 			"style": {
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom",
@@ -110,11 +125,86 @@
         }		
         ,{
             "path" : "pages/verification/verification",
-            "style" : {"navigationBarTitleText": "检定"}
+            "style" : {
+				"navigationBarTitleText": "仪器检定",
+				"app-plus": {
+					"bounce": "none",
+					"titleNView": {
+						//"type": "transparent",
+						"searchInput": {
+							"backgroundColor": "rgba(231, 231, 231,.7)",
+							"borderRadius": "16px",
+							"placeholder": "出厂编号/委托单号",
+							"disabled": true,
+							"placeholderColor": "#606266"
+						},
+						"buttons": [{
+								"fontSrc": "/static/iconfont.ttf",
+								"text": "\ue663",
+								"fontSize": "26",
+								"color": "navajowhite",
+								"float": "left",
+								"background": "rgba(0,0,0,0)"
+							},
+							{
+								"fontSrc": "/static/iconfont.ttf",
+								"text": "\ue61a",
+								"fontSize": "24",
+								"color": "navajowhite",
+								"width": "46px",
+								"background": "rgba(0,0,0,0)"
+							}
+						]						
+					}
+				}				
+			}
+        }
+        ,{
+            "path" : "pages/check/check",
+            "style" : {
+				"navigationBarTitleText": "仪器检定-核验",
+"app-plus": {
+					"bounce": "none",
+					"titleNView": {
+						//"type": "transparent",
+						"searchInput": {
+							"backgroundColor": "rgba(231, 231, 231,.7)",
+							"borderRadius": "16px",
+							"placeholder": "出厂编号/委托单号",
+							"disabled": true,
+							"placeholderColor": "#606266"
+						},
+						"buttons": [
+							{
+								"fontSrc": "/static/iconfont.ttf",
+								"text": "\ue61a",
+								"fontSize": "24",
+								"color": "navajowhite",
+								"width": "46px",
+								"background": "rgba(0,0,0,0)"
+							}
+						]						
+					}
+				}				
+			}
         }
         ,{
             "path" : "pages/approve/approve",
-            "style" : {"navigationBarTitleText": "核验"}
+			"style": {
+				"navigationBarTitleText": "批准",
+				"navigationStyle": "custom",
+				"app-plus": {
+					"bounce": "none",
+					"titleNView": false,
+					"animationType": "slide-in-bottom"
+				}
+			}
+        }
+        ,{
+            "path" : "pages/wtd/wtd",
+			"style": {
+				"navigationBarTitleText": "委托单列表"
+			}
         }
     ],
     "tabBar": {
@@ -140,7 +230,7 @@
 			//,"text": "扫描" 
 		},
 		{
-			"pagePath": "pages/approve/approve",
+			"pagePath": "pages/check/check",
 			"iconPath": "static/img/approve.png",
 			"selectedIconPath": "static/img/approveHL.png",
 			"text": "核验" 
@@ -154,7 +244,7 @@
     },
     "globalStyle": {
         "navigationBarTextStyle": "white",
-        "navigationBarBackgroundColor": "#0faeff",
+        "navigationBarBackgroundColor": "#449DED",
         "backgroundColor": "#fbf9fe"
     }
 }

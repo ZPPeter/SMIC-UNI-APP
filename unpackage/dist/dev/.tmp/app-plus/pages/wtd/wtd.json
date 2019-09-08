@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "委托单列表",
+  "usingComponents": {
+    "u-charts": "/pages/component/ucharts/ucharts"
+  }
+}

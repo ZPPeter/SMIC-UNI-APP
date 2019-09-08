@@ -1,1 +1,2 @@
+setCssToHead(["@charset \x22UTF-8\x22;\n.",[1],"tj-item { color: #75787d; font-size: ",[0,30],"; margin-left: 4px; }\n",],undefined,{path:"./pages/approve/approve.wxss"})();
 document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/approve/approve.wxml') } }));

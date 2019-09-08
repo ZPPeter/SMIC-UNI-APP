@@ -1,0 +1,15 @@
+%flex-center {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+	.order-item{
+			@extend %flex-center;
+			width: 120upx;
+			height: 120upx;
+			border-radius: 10upx;
+			font-size: $font-sm;
+			color: $font-color-dark;
+	}

@@ -1,4 +1,4 @@
-<template>
+<template name="view">
 	<view>
 		<view class="uni-padding-wrap uni-common-mt">
 			<view class="uni-hello-text">
@@ -102,11 +102,24 @@
 	</view>
 </template>
 <script>
-	export default {
-		data() {
-			return {}
-		}
+export default {
+	name: "view",	
+	props: {
+		name: {
+			type: String,
+			value: "值"
+		},		
+	},
+	//组件生命周期
+	created:function(e){
+		console.log('compoment...')
+	},
+	methods: {
+		fun1:function(obj){		
+		},
 	}
+}
+
 </script>
 
 <style>

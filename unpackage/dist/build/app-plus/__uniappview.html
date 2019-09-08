@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+    <head>
+        <meta charset="UTF-8" />
+        <script>
+            var coverSupport = 'CSS' in window && typeof CSS.supports === 'function' && (CSS.supports('top: env(a)') ||
+                CSS.supports('top: constant(a)'))
+            document.write(
+                '<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0' +
+                (coverSupport ? ', viewport-fit=cover' : '') + '" />')
+        </script>
+        <title>View</title>
+        <style>
+            * {
+                -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+                -webkit-tap-highlight-color: transparent;
+            }
+
+            input[type="search"i]::-webkit-search-cancel-button {
+                display: none;
+            }
+        </style>
+        <script>
+            var __wxConfig = {"debug":false,"appname":"hello_uni_login","entryPagePath":"pages/main/main.html","page":{"pages/main/main.html":{"window":{"navigationBarTitleText":"首页","usingComponents":{}}},"pages/login/login.html":{"window":{"navigationBarTitleText":"","navigationStyle":"custom","bounce":"none","titleNView":false,"animationType":"slide-in-bottom","usingComponents":{}}},"pages/component/view/view.html":{"window":{"navigationBarTitleText":"","navigationStyle":"custom","bounce":"none","softinput":{"mode":"adjustPan"},"titleNView":false,"animationType":"slide-in-bottom","usingComponents":{}}},"pages/user/user.html":{"window":{"navigationBarTitleText":"我的","bounce":"none","titleNView":{"type":"transparent","buttons":[{"fontSrc":"/static/yticon.ttf","text":"","fontSize":"24","color":"#303133","width":"46px","background":"rgba(0,0,0,0)"},{"fontSrc":"/static/yticon.ttf","text":"","fontSize":"28","color":"#303133","background":"rgba(0,0,0,0)","redDot":true}]},"usingComponents":{"list-cell":"/components/mix-list-cell"}}},"pages/main/home.html":{"window":{"navigationBarTitleText":"主页","usingComponents":{}}},"pages/test/test.html":{"window":{"navigationBarTitleText":"测试","usingComponents":{}}},"pages/set/set.html":{"window":{"navigationBarTitleText":"设置","bounce":"none","usingComponents":{}}},"pages/address/address.html":{"window":{"navigationBarTitleText":"地址","usingComponents":{}}},"pages/address/addressManage.html":{"window":{"navigationBarTitleText":"地址维护","usingComponents":{}}},"pages/notice/notice.html":{"window":{"navigationBarTitleText":"通知消息","usingComponents":{}}},"pages/userinfo/userinfo.html":{"window":{"navigationBarTitleText":"用户信息","usingComponents":{}}},"pages/about/about.html":{"window":{"navigationBarTitleText":"关于","bounce":"none","usingComponents":{"u-link":"/components/uLink"}}},"pages/scan/scan.html":{"window":{"navigationBarTitleText":"扫描","usingComponents":{}}},"pages/verification/verification.html":{"window":{"navigationBarTitleText":"检定","usingComponents":{}}},"pages/approve/approve.html":{"window":{"navigationBarTitleText":"核验","usingComponents":{}}}},"global":{"window":{"navigationBarTextStyle":"white","navigationBarBackgroundColor":"#0faeff","backgroundColor":"#fbf9fe"}},"tabBar":{"color":"#7a7e83","selectedColor":"#0faeff","backgroundColor":"#ffffff","borderStyle":"black","list":[{"pagePath":"pages/main/main.html","text":"首页","iconPath":"static/img/home.png","selectedIconPath":"static/img/homeHL.png"},{"pagePath":"pages/verification/verification.html","text":"检定","iconPath":"static/img/verification.png","selectedIconPath":"static/img/verificationHL.png"},{"pagePath":"pages/scan/scan.html","iconPath":"static/img/scan.png","selectedIconPath":"static/img/scanHL.png"},{"pagePath":"pages/approve/approve.html","iconPath":"static/img/approve.png","selectedIconPath":"static/img/approveHL.png","text":"核验"},{"pagePath":"pages/user/user.html","text":"我的","iconPath":"static/img/user.png","selectedIconPath":"static/img/userHL.png"}],"position":"bottom"},"networkTimeout":{"request":60000,"connectSocket":60000,"uploadFile":60000,"downloadFile":60000},"platform":"devtools","pages":["pages/main/main","pages/login/login","pages/component/view/view","pages/user/user","pages/main/home","pages/test/test","pages/set/set","pages/address/address","pages/address/addressManage","pages/notice/notice","pages/userinfo/userinfo","pages/about/about","pages/scan/scan","pages/verification/verification","pages/approve/approve"],"nvueCompiler":"weex","renderer":"auto","splashscreen":{"alwaysShowBeforeRender":false,"autoclose":true},"compilerVersion":"2.2.2","usingComponents":{"router-link":"/node-modules/uni-simple-router/component/router-link"}}
+        </script>
+        <script>
+            var __id__ = '';
+            window.__dispatchGenerateFunc__ = function(page) {
+                __id__ = page;
+                document.title = page;
+                // window.history.pushState('', '', page);
+                var wxss = page.replace('.html', '.wxss')
+                if (
+                    typeof __wxAppCode__ !== 'undefined' &&
+                    __wxAppCode__.hasOwnProperty(wxss)
+                ) {
+                    var setCssToHead = __wxAppCode__[wxss]
+                    typeof setCssToHead === 'function' && setCssToHead()
+                    document.dispatchEvent(new CustomEvent("generateFuncReady", {
+                        detail: {
+                            generateFunc: $gwx(page.replace('.html', '.wxml'))
+                        }
+                    }));
+                } else {
+                    plus.webview.currentWebview().setJsFile('_www/' + page.replace('.html', '.js'));
+                }
+            };
+        </script>
+        <script src="__uniappes6.js"></script>
+        <script src="uniapp://ready"></script>
+    </head>
+
+    <body>
+        <div></div>
+    </body>
+
+</html>

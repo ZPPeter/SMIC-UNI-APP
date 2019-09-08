@@ -1,0 +1,71 @@
+{
+  "pages": [
+    "pages/main/main",
+    "pages/login/login",
+    "pages/component/view/view",
+    "pages/user/user",
+    "pages/main/home",
+    "pages/test/test",
+    "pages/set/set",
+    "pages/address/address",
+    "pages/address/addressManage",
+    "pages/notice/notice",
+    "pages/userinfo/userinfo",
+    "pages/about/about",
+    "pages/scan/scan",
+    "pages/verification/verification",
+    "pages/approve/approve"
+  ],
+  "window": {
+    "navigationBarTextStyle": "white",
+    "navigationBarBackgroundColor": "#0faeff",
+    "backgroundColor": "#fbf9fe"
+  },
+  "tabBar": {
+    "color": "#7a7e83",
+    "selectedColor": "#0faeff",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/main/main",
+        "text": "首页",
+        "iconPath": "static/img/home.png",
+        "selectedIconPath": "static/img/homeHL.png"
+      },
+      {
+        "pagePath": "pages/verification/verification",
+        "text": "检定",
+        "iconPath": "static/img/verification.png",
+        "selectedIconPath": "static/img/verificationHL.png"
+      },
+      {
+        "pagePath": "pages/scan/scan",
+        "iconPath": "static/img/scan.png",
+        "selectedIconPath": "static/img/scanHL.png"
+      },
+      {
+        "pagePath": "pages/approve/approve",
+        "iconPath": "static/img/approve.png",
+        "selectedIconPath": "static/img/approveHL.png",
+        "text": "核验"
+      },
+      {
+        "pagePath": "pages/user/user",
+        "text": "我的",
+        "iconPath": "static/img/user.png",
+        "selectedIconPath": "static/img/userHL.png"
+      }
+    ]
+  },
+  "nvueCompiler": "weex",
+  "renderer": "auto",
+  "splashscreen": {
+    "alwaysShowBeforeRender": false,
+    "autoclose": true
+  },
+  "appname": "hello_uni_login",
+  "compilerVersion": "2.2.2",
+  "usingComponents": {
+    "router-link": "/node-modules/uni-simple-router/component/router-link"
+  }
+}
