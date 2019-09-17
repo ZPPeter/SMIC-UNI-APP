@@ -1,0 +1,24 @@
+{
+  "navigationBarTitleText": "仪器检定-核验",
+  "bounce": "none",
+  "titleNView": {
+    "searchInput": {
+      "backgroundColor": "rgba(231, 231, 231,.7)",
+      "borderRadius": "16px",
+      "placeholder": "出厂编号/委托单号",
+      "disabled": true,
+      "placeholderColor": "#606266"
+    },
+    "buttons": [
+      {
+        "fontSrc": "/static/iconfont.ttf",
+        "text": "",
+        "fontSize": "24",
+        "color": "navajowhite",
+        "width": "46px",
+        "background": "rgba(0,0,0,0)"
+      }
+    ]
+  },
+  "usingComponents": {}
+}

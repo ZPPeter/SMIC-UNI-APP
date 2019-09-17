@@ -97,13 +97,13 @@ export default {
 /*样式的width和height一定要与定义的cWidth和cHeight相对应*/
 .qiun-charts {
 	width: 750upx;
-	height: 500upx;
+	height: 450upx;
 	background-color: #ffffff;
 }
 
 .charts {
 	width: 750upx;
-	height: 500upx;
+	height: 450upx;
 	background-color: #ffffff;
 }
 </style>

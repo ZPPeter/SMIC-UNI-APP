@@ -12,23 +12,21 @@
     "buttons": [
       {
         "fontSrc": "/static/iconfont.ttf",
-        "text": "",
-        "fontSize": "26",
-        "color": "navajowhite",
+        "text": "",
+        "fontSize": "21",
+        "color": "white",
         "float": "left",
         "background": "rgba(0,0,0,0)"
       },
       {
         "fontSrc": "/static/iconfont.ttf",
-        "text": "",
+        "text": "",
         "fontSize": "24",
-        "color": "navajowhite",
+        "color": "ghostwhite",
         "width": "46px",
         "background": "rgba(0,0,0,0)"
       }
     ]
   },
-  "usingComponents": {
-    "uni-card": "/components/uni-card/uni-card"
-  }
+  "usingComponents": {}
 }

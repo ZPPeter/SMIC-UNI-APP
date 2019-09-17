@@ -33,8 +33,11 @@
 </template>
 
 <script>
+import Vue from 'vue';
 import { mapMutations } from 'vuex';
-import request from '@/libs/ajax/request.js';
+//import request from '@/libs/ajax/request.js';
+import config from '../../libs/common/config.js';
+
 export default {
 	data() {
 		return {
@@ -44,10 +47,15 @@ export default {
 			version: '1.01'
 		};
 	},
-	onLoad() {
+	onBackPress(){
+	},
+	onReady(){
+	},
+	onLoad(option) { //option为object类型，会序列化上个页面传递的参数
+		// console.log(option.query);
 		if (uni.getSystemInfoSync().platform === 'android') {
 			this.version = plus.runtime.version; // 打包后有效，打包前是基座的版本号
-		}
+		}		
 	},
 	methods: {
 		...mapMutations(['login']),
@@ -81,20 +89,32 @@ export default {
 				password: this.password,
 				rememberMe: true
 			};
-			const res = await request.Login(data);
-			if (res === 'OK') {
+			//console.log(this.$store)
+			//const res = await request.Login(data);
+			const res = await this.$store.dispatch({
+				type:'app/Login',
+				data:data
+			})			
+			if (res != '') {
+				//console.log(res);				
 				const userInfo = {
-					id:99,
+					id:res.userId,
 					userName: this.userNameOrEmailAddress,
-					realname: '管理员',
-					portrait: 'http://img.61ef.cn/news/201409/28/2014092805595807.jpg'
+					realname: res.surName,
+					roles: res.roles,
+					portrait: config.avatarImgPath + res.userId + '.png'
 				};
-				this.login(userInfo);
-				uni.navigateBack();
+				//console.log(userInfo);
+				this.login(userInfo); // -> ...mapMutations(['login']), 				
+				uni.navigateBack();				
+				//this.$Router.replace({ name: 'notice'}); //从 notice 返回不到 设置界面
+				//this.$Router.push({ name: 'notice'}); // 缓存 login
 			} else {
 				this.logining = false;
 			}
 		}
+	},
+	onShow() {
 	}
 };
 </script>

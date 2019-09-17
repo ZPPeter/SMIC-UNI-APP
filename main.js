@@ -17,7 +17,7 @@ Vue.prototype.$api = API
 Vue.config.productionTip = false
 
 Vue.prototype.$store = store
-
+//Vue.prototype.$eventHub = new Vue(); 
 App.mpType = 'app'
 
 import router from './router/uni-app-router.js'

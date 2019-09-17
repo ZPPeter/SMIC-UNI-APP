@@ -1,9 +1,9 @@
 {
-    "pages": [ //pages数组中第一项表示应用启动页,
+	"pages": [ //pages数组中第一项表示应用启动页,
 		{
-            "path": "pages/main/main",
-            "style": {
-                "navigationBarTitleText": "全站仪检定数据处理系统",
+			"path": "pages/main/main",
+			"style": {
+				"navigationBarTitleText": "全站仪检定数据处理系统",
 				// #ifdef MP
 				"navigationStyle": "custom",
 				// #endif
@@ -11,18 +11,137 @@
 					"bounce": "none",
 					"titleNView": {
 						"type": "transparent",
-						"buttons": [{ // 原生右上角按钮 - i
-							"text": "\ue744",
-							"fontSrc": "/static/yticon.ttf",
-							"fontSize": "24px",
-							"color": "black"
+						"buttons": [
+							/*{
+								"text": "\ue624",
+								"fontSrc": "/static/iconfont.ttf",								
+								"fontSize": "24px",
+								"color": "navajowhite"
+								//,
+								//"width": "46px",
+								//"background": "rgba(0,0,0,0)"
+							},*/
+							{
+								"text": "\ue613",
+								"fontSrc": "/static/iconfont.ttf",								
+								"fontSize": "24px",
+								"color": "black"
+							}
+						]
+					}
+				}
+			}
+		},
+{
+			"path": "pages/verification/verification",
+			"style": {
+				"navigationBarTitleText": "仪器检定",
+				"app-plus": {
+					"bounce": "none",
+					"titleNView": {
+						//"type": "transparent",
+						"searchInput": {
+							"backgroundColor": "rgba(231, 231, 231,.7)",
+							"borderRadius": "16px",
+							"placeholder": "出厂编号/委托单号",
+							"disabled": true,
+							"placeholderColor": "#606266"
+						},
+						"buttons": [{
+								"fontSrc": "/static/iconfont.ttf",
+								"text": "\ue613",
+								"fontSize": "21",
+								"color": "white",
+								"float": "left",
+								"background": "rgba(0,0,0,0)"
+							},
+							{
+								"fontSrc": "/static/iconfont.ttf",
+								"text": "\ue657",
+								"fontSize": "24",
+								"color": "ghostwhite",
+								"width": "46px",
+								"background": "rgba(0,0,0,0)"
+							}
+						]
+					}
+				}
+			}
+		}, {
+			"path": "pages/check/check",
+			"style": {
+				"navigationBarTitleText": "仪器检定-核验",
+				"app-plus": {
+					"bounce": "none",
+					"titleNView": {
+						//"type": "transparent",
+						"searchInput": {
+							"backgroundColor": "rgba(231, 231, 231,.7)",
+							"borderRadius": "16px",
+							"placeholder": "出厂编号/委托单号",
+							"disabled": true,
+							"placeholderColor": "#606266"
+						},
+						"buttons": [
+							{
+									"fontSrc": "/static/iconfont.ttf",
+									"text": "\ue613",
+									"fontSize": "21",
+									"color": "white",
+									"float": "left",
+									"background": "rgba(0,0,0,0)"
+							},
+							{
+							"fontSrc": "/static/iconfont.ttf",
+							"text": "\ue657",
+							"fontSize": "24",
+							"color": "ghostwhite"
+							//,"width": "46px",
+							//"background": "rgba(0,0,0,0)"
 						}]
 					}
-				}				
-            }
+				}
+			}
+		}, {
+			"path": "pages/approve/approve",
+			"style": {
+				"navigationBarTitleText": "检定结果批准",
+				"enablePullDownRefresh":true,
+				//"navigationStyle": "custom",
+				"app-plus": {
+					"bounce": "none",					
+					"titleNView": {
+						"searchInput": {
+							"backgroundColor": "rgba(231, 231, 231,.7)",
+							"borderRadius": "16px",
+							"placeholder": "委托单号",
+							"disabled": true,
+							"placeholderColor": "#606266"
+						},
+						"buttons": [
+						{
+								"fontSrc": "/static/iconfont.ttf",
+								"text": "\ue613",
+								"fontSize": "21",
+								"color": "white",
+								"float": "left",
+								"background": "rgba(0,0,0,0)"
+							},	
+						{
+							"fontSrc": "/static/iconfont.ttf",
+							"text": "\ue657",
+							"fontSize": "24",
+							"color": "ghostwhite",
+							"background": "rgba(0,0,0,0)"
+						}						
+						]
+					},
+					"animationType": "slide-in-bottom"
+				}
+			}
 		},
 		{
-            "path": "pages/login/login",
+			"path": "pages/login/login",
 			"style": {
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom",
@@ -31,8 +150,8 @@
 					"titleNView": false,
 					"animationType": "slide-in-bottom"
 				}
-			}		
-        },
+			}
+		},
 		{
 			"path": "pages/component/ucharts/ucharts",
 			"style": {
@@ -42,12 +161,12 @@
 					"bounce": "none", //关闭窗口回弹效果
 					"softinput": { // 固定选项卡（tabbar）至底部不被软键盘弹起,注意仅打包后生效
 						"mode": "adjustPan"
-					},					
+					},
 					"titleNView": false,
 					"animationType": "slide-in-bottom"
 				}
 			}
-        },
+		},
 		{
 			"path": "pages/user/user",
 			"style": {
@@ -80,171 +199,126 @@
 				}
 			}
 		}, {
-            "path" : "pages/main/home",
-            "style" : {"navigationBarTitleText": "主页"}
-        }
-        ,{
-            "path" : "pages/test/test",
-            "style" : {"navigationBarTitleText": "测试"}
-        }
-        ,{
-            "path" : "pages/set/set",
-            "style" : {
+			"path": "pages/main/home",
+			"style": {
+				"navigationBarTitleText": "主页"
+			}
+		}, {
+			"path": "pages/test/test",
+			"style": {
+				"navigationBarTitleText": "测试"
+			}
+		}, {
+			"path": "pages/set/set",
+			"style": {
 				"navigationBarTitleText": "设置",
 				"app-plus": {
 					"bounce": "none"
+				}
+			}
+		}, {
+			"path": "pages/address/address",
+			"style": {
+				"navigationBarTitleText": "地址"
+			}
+		}, {
+			"path": "pages/address/addressManage",
+			"style": {
+				"navigationBarTitleText": "地址维护"
+			}
+		}, {
+			"path": "pages/notice/notice",
+			"style": {
+				"navigationBarTitleText": "通知消息"
+			}
+		}, {
+			"path": "pages/userinfo/userinfo",
+			"style": {
+				"navigationBarTitleText": "用户信息",
+				"app-plus": {
+					"bounce": "none" //关闭窗口回弹效果
 				}				
 			}
-        }
-        ,{
-            "path" : "pages/address/address",
-            "style" : {"navigationBarTitleText": "地址"}
-        },{
-            "path" : "pages/address/addressManage",
-            "style" : {"navigationBarTitleText": "地址维护"}
-        }
-        ,{
-            "path" : "pages/notice/notice",
-            "style" : {"navigationBarTitleText": "通知消息"}
-        }
-        ,{
-            "path" : "pages/userinfo/userinfo",
-            "style" : {"navigationBarTitleText": "用户信息"}
-        },{
-            "path" : "pages/about/about",
+		}, {
+			"path": "pages/about/about",
 			"style": {
 				"navigationBarTitleText": "关于",
 				"app-plus": {
 					"bounce": "none" //关闭窗口回弹效果
 				}
 			}
-        },
-        {
-            "path" : "pages/scan/scan",
-            "style" : {"navigationBarTitleText": "扫描"}
-        }		
-        ,{
-            "path" : "pages/verification/verification",
-            "style" : {
-				"navigationBarTitleText": "仪器检定",
-				"app-plus": {
-					"bounce": "none",
-					"titleNView": {
-						//"type": "transparent",
-						"searchInput": {
-							"backgroundColor": "rgba(231, 231, 231,.7)",
-							"borderRadius": "16px",
-							"placeholder": "出厂编号/委托单号",
-							"disabled": true,
-							"placeholderColor": "#606266"
-						},
-						"buttons": [{
-								"fontSrc": "/static/iconfont.ttf",
-								"text": "\ue663",
-								"fontSize": "26",
-								"color": "navajowhite",
-								"float": "left",
-								"background": "rgba(0,0,0,0)"
-							},
-							{
-								"fontSrc": "/static/iconfont.ttf",
-								"text": "\ue61a",
-								"fontSize": "24",
-								"color": "navajowhite",
-								"width": "46px",
-								"background": "rgba(0,0,0,0)"
-							}
-						]						
-					}
-				}				
-			}
-        }
-        ,{
-            "path" : "pages/check/check",
-            "style" : {
-				"navigationBarTitleText": "仪器检定-核验",
-"app-plus": {
-					"bounce": "none",
-					"titleNView": {
-						//"type": "transparent",
-						"searchInput": {
-							"backgroundColor": "rgba(231, 231, 231,.7)",
-							"borderRadius": "16px",
-							"placeholder": "出厂编号/委托单号",
-							"disabled": true,
-							"placeholderColor": "#606266"
-						},
-						"buttons": [
-							{
-								"fontSrc": "/static/iconfont.ttf",
-								"text": "\ue61a",
-								"fontSize": "24",
-								"color": "navajowhite",
-								"width": "46px",
-								"background": "rgba(0,0,0,0)"
-							}
-						]						
-					}
-				}				
-			}
-        }
-        ,{
-            "path" : "pages/approve/approve",
+		},
+		{
+			"path": "pages/scan/scan",
 			"style": {
-				"navigationBarTitleText": "批准",
-				"navigationStyle": "custom",
+				"navigationBarTitleText": "扫描二维码",
 				"app-plus": {
 					"bounce": "none",
-					"titleNView": false,
-					"animationType": "slide-in-bottom"
+					"titleNView": {
+						"buttons": [{
+							"fontSrc": "/static/iconfont.ttf",
+							"text": "\ue600",
+							"fontSize": "24",
+							"color": "navajowhite",
+							"width": "46px",
+							"background": "rgba(0,0,0,0)"
+						}]
+					}
 				}
+
 			}
-        }
-        ,{
-            "path" : "pages/wtd/wtd",
+		},  {
+			"path": "pages/wtd/wtd",
 			"style": {
 				"navigationBarTitleText": "委托单列表"
 			}
+		}
+	    ,{
+            "path" : "pages/user/changePwd",
+            "style" : {
+				"navigationBarTitleText": "修改登录密码"
+			}
         }
     ],
-    "tabBar": {
-        "color": "#7a7e83",
-        "selectedColor": "#0faeff",
-        "backgroundColor": "#ffffff",
-        "list": [{
-            "pagePath": "pages/main/main",
-            "text": "首页",
-            "iconPath": "static/img/home.png",
-            "selectedIconPath": "static/img/homeHL.png"
-		}, 
-		{
-            "pagePath": "pages/verification/verification",
-            "text": "检定",
-            "iconPath": "static/img/verification.png",
-            "selectedIconPath": "static/img/verificationHL.png"
-		}, 
-		{
-			"pagePath": "pages/scan/scan",
-			"iconPath": "static/img/scan.png",
-			"selectedIconPath": "static/img/scanHL.png"
-			//,"text": "扫描" 
-		},
-		{
-			"pagePath": "pages/check/check",
-			"iconPath": "static/img/approve.png",
-			"selectedIconPath": "static/img/approveHL.png",
-			"text": "核验" 
-		},		
-		{
-            "pagePath": "pages/user/user",
-            "text": "我的",
-            "iconPath": "static/img/user.png",
-            "selectedIconPath": "static/img/userHL.png"
-        }]
-    },
-    "globalStyle": {
-        "navigationBarTextStyle": "white",
-        "navigationBarBackgroundColor": "#449DED",
-        "backgroundColor": "#fbf9fe"
-    }
+	"tabBar": {
+		"color": "#7a7e83",
+		"selectedColor": "#0faeff",
+		"backgroundColor": "#ffffff",
+		"list": [{
+				"pagePath": "pages/main/main",
+				"text": "首页",
+				"iconPath": "static/img/home.png",
+				"selectedIconPath": "static/img/homeHL.png"
+			},
+			{
+				"pagePath": "pages/verification/verification",
+				"text": "检定",
+				"iconPath": "static/img/verification.png",
+				"selectedIconPath": "static/img/verificationHL.png"
+			},
+			{
+				"pagePath": "pages/check/check",
+				"iconPath": "static/img/check.png",
+				"selectedIconPath": "static/img/checkHL.png",
+				"text": "核验"
+			},
+			{
+				"pagePath": "pages/approve/approve",
+				"iconPath": "static/img/approve.png",
+				"selectedIconPath": "static/img/approveHL.png",
+				"text": "批准"
+			},
+			{
+				"pagePath": "pages/user/user",
+				"text": "我的",
+				"iconPath": "static/img/user.png",
+				"selectedIconPath": "static/img/userHL.png"
+			}
+		]
+	},
+	"globalStyle": {
+		"navigationBarTextStyle": "white",
+		"navigationBarBackgroundColor": "#449DED",
+		"backgroundColor": "#fbf9fe"
+	}
 }

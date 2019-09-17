@@ -16,15 +16,15 @@ const router = new Router({
 			}
 		},
 		{
-			path: "/pages/main/home",
-			name: 'home',
+			path: "/pages/user/user",
+			name: 'user',
 			meta: {
 				login: false // tabBar
 			}
 		},
 		{
-			path: "/pages/user/user",
-			name: 'user',
+			path: "/pages/main/home",
+			name: 'home',
 			meta: {
 				login: false // tabBar
 			}
@@ -37,8 +37,18 @@ const router = new Router({
 			}			
 		},
 		{
+			path: "/pages/user/changePwd",
+			name: 'changePwd',
+			meta: {
+				login: false // tabBar
+			}
+		},		
+		{
 			path: "/pages/scan/scan",
-			name: 'scan'
+			name: 'scan',
+			meta: {
+				login: false
+			}			
 		},
 		{
 			path:"/pages/component/ucharts/ucharts",
@@ -93,79 +103,64 @@ const router = new Router({
 			}
 		},
 		{
-			path: "/pages/approve/approve",
-			name: 'approve',
-			meta: {
-				login: false
-			}
-		},
-		{
-			path: "/pages/check/check",
-			name: 'approve',
-			meta: {
-				login: false
-			}
-		},		
-		{
 			path: "/pages/wtd/wtd",
-			name: 'wtd',
-			meta: {
-				login: false
-			}
+			name: 'wtd'
 		},
 		{
-			path: "/pages/verification/verification",
+			path: "/pages/verification/verification", // 检定
 			name: 'verification',
 			meta: {
 				login: false
-			}
-		}		
+			}			
+		},
+		{
+			path: "/pages/check/check",  // 核验
+			name: 'check',
+			meta: {
+				login: false
+			}			
+		},						
+		{
+			path: "/pages/approve/approve", // 批准
+			name: 'approve',
+			meta: {
+				login: false
+			}			
+		}
 	]
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, from, next) => {	
 	/*
 	console.log('------------------------------');
 	console.log('from:');
 	console.log(from);
 	console.log('to:')
 	console.log(to);
-	*/
+	*/   
+   
 	if (from.name === to.name) { // tabBar 直接跳转不用登录
 		next();
 	}
+	
 	if (to.meta && to.meta.login == false) { // 不用登录的 view
 		next()
 	} else {
 		if (!store.state.hasLogin) {
 			next({
 				path: '/pages/login/login',
-				meta:{
-					from:to.name
-				}
+				//,query: to.name
 			})
 		} else {
-			console.log(from.to.meta.from);
 			next()
 		}
 	}
 })
 
 router.afterEach((to, from) => {
-	//console.log(to.name);
-	//console.log(from)	
-	var tabbars = ["main", "user", "verification", "approve"];
-	var a = tabbars.indexOf(to.name);
-	if (a == -1) {
-		if (uni.getSystemInfoSync().platform === 'android') {
-			var icon = plus.nativeObj.View.getViewById('icon');
-			if (icon) {
-				setTimeout(function() {
-					icon.hide();
-				}, 100);
-			}
-		}
-	} 
+	// console.log(from)
+	// console.log(to);	
+	// before route -> show page -> after route
 })
 //console.log(router)
 

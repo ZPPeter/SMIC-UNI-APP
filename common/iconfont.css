@@ -1,10 +1,8 @@
-@font-face {
-  font-family: iconfont;
-  /*src: url('static/iconfont.ttf') format('truetype');*/
-  src: url('~@/static/iconfont.ttf');
+@font-face {font-family: "iconfont";
+  src: url('~@/static/iconfont.ttf?t=1568164697710') format('truetype')  
 }
 .iconfont {
-  font-family: 'iconfont' !important;
+  font-family: "iconfont" !important;
   font-size: 16px;
   font-style: normal;
   -webkit-font-smoothing: antialiased;
@@ -13,6 +11,14 @@
 
 .icon-iconfontscan:before {
   content: "\e600";
+}
+
+.icon-level:before {
+  content: "\e689";
+}
+
+.icon-search:before {
+  content: "\e677";
 }
 
 .icon-barcode:before {
@@ -171,6 +177,26 @@
   content: "\e676";
 }
 
+.icon-search1:before {
+  content: "\e67d";
+}
+
+.icon-yiqishuaxinsvg:before {
+  content: "\e60d";
+}
+
+.icon-yiqishezhi:before {
+  content: "\e60f";
+}
+
+.icon-yiqixinxisvg:before {
+  content: "\e610";
+}
+
+.icon-yiqizhuce:before {
+  content: "\e611";
+}
+
 .icon-cansaitubiaozhuanqu-:before {
   content: "\e604";
 }
@@ -197,6 +223,10 @@
 
 .icon-ziyuan:before {
   content: "\e60e";
+}
+
+.icon-search2:before {
+  content: "\e613";
 }
 
 .icon-jianchajieguo:before {
@@ -335,7 +365,39 @@
   content: "\e74c";
 }
 
+.icon-theodolite:before {
+  content: "\e664";
+}
+
+.icon-chaxun:before {
+  content: "\e614";
+}
+
+.icon-icon-test:before {
+  content: "\e63a";
+}
+
+.icon-icon-test1:before {
+  content: "\e63c";
+}
+
+.icon-icon-test2:before {
+  content: "\e64f";
+}
+
+.icon-icon-test3:before {
+  content: "\e651";
+}
+
+.icon-icon-test4:before {
+  content: "\e655";
+}
+
 .icon-dots-vertical-rounde-copy:before {
   content: "\ef5d";
+}
+
+.icon-search3:before {
+  content: "\e616";
 }
 

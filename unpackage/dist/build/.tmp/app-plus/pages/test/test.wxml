@@ -1,1 +1,1 @@
-<view><textarea placeholder value="{{value}}"></textarea></view>
+<view><view class="flex-item-0"><text class="iconfont icon-earth2 font-fize2">字体图标</text><text class="yticon icon-shoucang font-fize2"></text><icon type="info" size="18" color="red"></icon>不支持 H5</view><textarea placeholder value="{{value}}"></textarea><view><u-charts vue-id="1" bind:__l="__l"></u-charts></view></view>

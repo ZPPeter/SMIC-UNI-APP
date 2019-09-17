@@ -1,4 +1,6 @@
 {
   "navigationBarTitleText": "测试",
-  "usingComponents": {}
+  "usingComponents": {
+    "u-charts": "/pages/component/ucharts/ucharts"
+  }
 }

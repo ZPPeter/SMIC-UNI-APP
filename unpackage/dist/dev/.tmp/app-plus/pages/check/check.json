@@ -12,11 +12,17 @@
     "buttons": [
       {
         "fontSrc": "/static/iconfont.ttf",
-        "text": "",
-        "fontSize": "24",
-        "color": "navajowhite",
-        "width": "46px",
+        "text": "",
+        "fontSize": "21",
+        "color": "white",
+        "float": "left",
         "background": "rgba(0,0,0,0)"
+      },
+      {
+        "fontSrc": "/static/iconfont.ttf",
+        "text": "",
+        "fontSize": "24",
+        "color": "ghostwhite"
       }
     ]
   },

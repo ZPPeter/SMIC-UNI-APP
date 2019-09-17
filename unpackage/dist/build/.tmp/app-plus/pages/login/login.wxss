@@ -150,12 +150,12 @@ page {
     height: 50rpx;
     line-height: 56rpx;
     font-weight: 400;
-    font-size: 36rpx;
+    font-size: 40rpx;
     color: #303133;
 }
 .input-item input {
     height: 60rpx;
-    font-size: 30rpx;
+    font-size: 34rpx;
     color: #303133;
     width: 100%;
 }
@@ -167,13 +167,13 @@ page {
   margin-top: 70rpx;
   background: #fa436a;
   color: #fff;
-  font-size: 32rpx;
+  font-size: 36rpx;
 }
 .confirm-btn:after {
     border-radius: 100px;
 }
 .forget-section {
-  font-size: 26rpx;
+  font-size: 30rpx;
   color: #4399fc;
   text-align: center;
   margin-top: 40rpx;
@@ -183,7 +183,7 @@ page {
   left: 0;
   bottom: 50rpx;
   width: 100%;
-  font-size: 26rpx;
+  font-size: 30rpx;
   color: #606266;
   text-align: center;
 }

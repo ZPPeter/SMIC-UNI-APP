@@ -1,6 +1,9 @@
 {
   "pages": [
     "pages/main/main",
+    "pages/verification/verification",
+    "pages/check/check",
+    "pages/approve/approve",
     "pages/login/login",
     "pages/component/ucharts/ucharts",
     "pages/user/user",
@@ -13,10 +16,8 @@
     "pages/userinfo/userinfo",
     "pages/about/about",
     "pages/scan/scan",
-    "pages/verification/verification",
-    "pages/check/check",
-    "pages/approve/approve",
-    "pages/wtd/wtd"
+    "pages/wtd/wtd",
+    "pages/user/changePwd"
   ],
   "window": {
     "navigationBarTextStyle": "white",
@@ -41,15 +42,16 @@
         "selectedIconPath": "static/img/verificationHL.png"
       },
       {
-        "pagePath": "pages/scan/scan",
-        "iconPath": "static/img/scan.png",
-        "selectedIconPath": "static/img/scanHL.png"
+        "pagePath": "pages/check/check",
+        "iconPath": "static/img/check.png",
+        "selectedIconPath": "static/img/checkHL.png",
+        "text": "核验"
       },
       {
-        "pagePath": "pages/check/check",
+        "pagePath": "pages/approve/approve",
         "iconPath": "static/img/approve.png",
         "selectedIconPath": "static/img/approveHL.png",
-        "text": "核验"
+        "text": "批准"
       },
       {
         "pagePath": "pages/user/user",
@@ -60,13 +62,12 @@
     ]
   },
   "nvueCompiler": "weex",
-  "renderer": "auto",
   "splashscreen": {
     "alwaysShowBeforeRender": false,
     "autoclose": true
   },
   "appname": "hello_uni_login",
-  "compilerVersion": "2.2.2",
+  "compilerVersion": "2.1.3",
   "usingComponents": {
     "router-link": "/node-modules/uni-simple-router/component/router-link"
   }

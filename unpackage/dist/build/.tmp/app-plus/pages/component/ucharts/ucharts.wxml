@@ -1,0 +1,1 @@
+<view class="qiun-columns"><view style="display:flex;width:90%;text-align:left;margin-left:6px;align-items:center;"><view style="background-color:red;width:4px;height:12px;vertical-align:bottom;" class="_div"></view><view class="tj-item">近两年月工作量统计【0/0】</view></view><view class="qiun-charts"><canvas class="charts" canvas-id="canvasColumn" id="canvasColumn"></canvas></view></view>

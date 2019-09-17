@@ -98,7 +98,7 @@
     border-radius: 50%;
 }
 .user-info-box .username {
-    font-size: 38rpx;
+    font-size: 42rpx;
     color: #303133;
     margin-left: 20rpx;
 }
@@ -146,7 +146,7 @@
     z-index: 1;
 }
 .vip-card-box .tit {
-    font-size: 30rpx;
+    font-size: 34rpx;
     color: #f7d680;
     margin-bottom: 28rpx;
 }
@@ -155,7 +155,7 @@
       margin-right: 16rpx;
 }
 .vip-card-box .e-b {
-    font-size: 24rpx;
+    font-size: 28rpx;
     color: #d8cba9;
     margin-top: 10rpx;
 }
@@ -181,11 +181,11 @@
       -ms-flex-direction: column;
           flex-direction: column;
   height: 140rpx;
-  font-size: 24rpx;
+  font-size: 28rpx;
   color: #75787d;
 }
 .tj-sction .num {
-  font-size: 32rpx;
+  font-size: 36rpx;
   color: #303133;
   margin-bottom: 8rpx;
 }
@@ -197,7 +197,7 @@
     width: 120rpx;
     height: 120rpx;
     border-radius: 10rpx;
-    font-size: 24rpx;
+    font-size: 28rpx;
     color: #303133;
 }
 .order-section .yticon {
@@ -228,7 +228,7 @@
     -webkit-align-items: center;
         -ms-flex-align: center;
             align-items: center;
-    font-size: 28rpx;
+    font-size: 32rpx;
     color: #303133;
     line-height: 40rpx;
     margin-left: 30rpx;

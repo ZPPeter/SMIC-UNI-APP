@@ -156,14 +156,6 @@ and conditions of the Mulan PSL v1.`);
 		}
 	},
 	onShow() {
-		if (uni.getSystemInfoSync().platform === 'android') {
-			var icon = plus.nativeObj.View.getViewById('icon');
-			if (icon) {
-				setTimeout(function() {
-					icon.show();
-				}, 100);
-			}
-		}		
 	},	
 };
 </script>

@@ -1,37 +1,36 @@
 <template>
 	<view>
-		<view class="flex-item-0">
-					<text class="iconfont icon-earth2 font-fize2">字体图标</text>
-					<text class="yticon icon-shoucang font-fize2"/>					
-					<icon type="info" size="18" color="red"/> 不支持 H5
-		</view>		
-		<textarea :value="value" placeholder="" />
-		<view><u-charts></u-charts></view>
+		<uni-card class="head" title="济南市规划局水利设计院" extra="2019121121" note="送检日期:2019.12.31">
+			<ul>
+				<li>SET2B/100678</li>
+				<li>GTS311/23845</li>
+			</ul>
+		</uni-card>				
 	</view>
 </template>
 
 <script>
-	import uCharts from '@/pages/component/ucharts/ucharts.vue';
-	export default {
-		components: {
-			uCharts
-		},		
+	import uniCard from '@/components/uni-card/uni-card.vue'
+export default {
+	components: {
+		uniCard
+	},
 		data() {
 			return {
-				value:''
 			}
 		},
 		methods: {
 			
 		},
 		onLoad(){
-			this.value = this.$Route.query.name
-			console.log(this.$Route.query.name)
 		}		
 	}
 </script>
 
 <style>
+	.head{
+		background-color: #0A98D5;
+	}
 .flex-item-0 {
 	width: 100%;
 	height: 200upx;

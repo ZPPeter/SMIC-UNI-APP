@@ -5,8 +5,8 @@
     "type": "transparent",
     "buttons": [
       {
-        "text": "",
-        "fontSrc": "/static/yticon.ttf",
+        "text": "",
+        "fontSrc": "/static/iconfont.ttf",
         "fontSize": "24px",
         "color": "black"
       }
