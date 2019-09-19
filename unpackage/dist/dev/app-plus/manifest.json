@@ -5,12 +5,12 @@
     "iPad"
   ],
   "id": "__UNI__070B437",
-  "name": "hello_uni_login",
+  "name": "全站仪检定",
   "version": {
     "name": "1.0.0",
     "code": "100"
   },
-  "description": "登录模板",
+  "description": "测绘仪器检定-全站仪",
   "launch_path": "__uniapptabbar.html",
   "developer": {
     "name": "",
@@ -18,6 +18,9 @@
     "url": ""
   },
   "permissions": {
+    "Push": {},
+    "Share": {},
+    "SQLite": {},
     "UniNView": {
       "description": "UniNView原生渲染"
     }

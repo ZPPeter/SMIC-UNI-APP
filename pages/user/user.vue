@@ -4,7 +4,7 @@
 			<image class="bg" src="/static/img/user-bg.jpg"></image>
 			<view class="user-info-box">
 				<view>
-					<image class="portrait" :src="userInfo.portrait || '/static/img/missing-face.png'" @click="navTo('/pages/userinfo/userinfo')"></image>
+					<image class="portrait" :src="userInfo.portrait || '/static/img/missing-face.png'" @click="GotoLogo"></image>
 				</view>
 				<view>
 					<text class="username">{{ userInfo.realname || '未登录' }}</text>
@@ -55,7 +55,7 @@
 			</view>
 			<view class="history-section icon">
 				<!-- list-cell icon="icon-dizhi" iconColor="#5fcda2" title="地址管理" @eventClick="navTo('/pages/address/address')"></list-cell -->
-				<list-cell icon="icon-shezhi1" iconColor="#e07472" title="设置" border="" @eventClick="navTo('/pages/set/set')"></list-cell>
+				<list-cell icon="icon-shezhi1" iconColor="#e07472" title="设置" border="" @eventClick="navTo2('/pages/user/set')"></list-cell>
 			</view>
 		</view>
 	</view>
@@ -83,7 +83,7 @@ export default {
 	onNavigationBarButtonTap(e) {
 		const index = e.index;
 		if (index === 0) {
-			this.navTo('/pages/set/set');
+			this.navTo('/pages/user/set');
 		} else if (index === 1) {
 			// #ifdef APP-PLUS
 			const pages = getCurrentPages();
@@ -104,12 +104,23 @@ export default {
 		...mapState(['hasLogin', 'userInfo'])
 	},
 	methods: {
+		GotoLogo(){
+			if (this.hasLogin) 
+				this.$Router.push('/pages/user/userinfo');
+			else
+				this.$Router.push('/pages/login/login');
+		},		
 		navTo(url) {
+			// this.$Router.push({path:url, query: {}});
 			this.$Router.push(url); // 拦截未登录路由
 			// this.$Router.push('/pages/router/router1');  // 字符串
 			// this.$Router.push({ name: 'userinfo'});      // 命名的路由
 			return;
 		},
+		navTo2(url) {
+			uni.navigateTo({url:url}); // 不传递 query 参数，uni.chooseImage 不会引发 unhandled promise rejection
+			return;
+		},		
 		showOpenSrcInfo() {
 			util.showToast(`  Copyright (c) 2019 SMIC is licensed 
  under the Mulan PSL v1.You can use  
@@ -156,7 +167,13 @@ and conditions of the Mulan PSL v1.`);
 		}
 	},
 	onShow() {
-	},	
+		//console.log(this.userInfo.portrait);
+	},
+	onError(err){
+	// 这里只能捕获方法内的异常，不能捕获生命周期中的逻辑异常  
+	// 不能捕获Unhandled promise rejection
+		console.log(err);
+	}
 };
 </script>
 <style lang="scss">

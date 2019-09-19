@@ -20,23 +20,9 @@ class UserModule {
 				return rep;
 			},
 			async uploadAvatar(state, payload) {
-				console.log('----:'+payload.data);				                
-				
- // 浏览器报错
- //var formData = new FormData();
- //fly.post(config.uploadAvatar,formData).then().catch();
-				
-				
-				//上传单个文件
-				//var formData = {
-				//	file: fs.createReadStream('./v.png'), //文件
-				//}
-				//fly.upload("http://localhost/upload", formData)
-				
-				//var formData = new FormData(); 
-				//formData.append('username', 'Chris');
-				//let rep = await fly.post(config.uploadAvatar, formData).then(function(res) {
-				
+				// *** 微信小程序不支持 FormData 不能通过 fly(wx.umd.min.js) FormData 上传文件 
+				// var formData = new FormData();
+				// fly.post(config.uploadAvatar,formData).then().catch();				
 				let rep = await fly.post(config.uploadAvatar, payload.data).then(function(res) {	
 					console.log(res);
 					if (res.success) {

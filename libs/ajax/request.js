@@ -31,7 +31,7 @@ fly.interceptors.response.use((response) => {
 	},
 	(err) => {
 		uni.hideLoading();
-		if (err.status === 500) {
+		if (err.status === 500) { // 错误详情有两种类别 error.details 和 error.message
 			let errMsg = '';
 			if (err.response) {
 				errMsg = err.response.data.error.details || err.response.data.error.message;
@@ -39,31 +39,25 @@ fly.interceptors.response.use((response) => {
 				//console.log( err.response.data.error.details );
 			}
 			//console.log(errMsg);
-			if (err.response && err.response.data.error.message) {
-					uni.showToast({
-						icon: 'none',
-						title: errMsg
-					});				
+			if ( errMsg === 'Invalid user name or password') {
+				uni.showToast({
+					icon: 'none',
+					title: '用户账号或密码不正确'
+				});
 			} else {
-				if (err.response && err.response.data.error.details === 'Invalid user name or password') {
+				if (errMsg.includes('is not active')) {
 					uni.showToast({
 						icon: 'none',
-						title: '用户账号或密码不正确'
+						title: '该用户尚未激活，请联系管理员激活。',
+						duration: 3000
 					});
-				} else {
-					if (err.response && err.response.data.error.details.includes('is not active')) {
-						uni.showToast({
-							icon: 'none',
-							title: '该用户尚未激活，请联系管理员激活。',
-							duration: 3000
-						});
-					} else
-						uni.showToast({
-							icon: 'none',
-							title: '登录失败，服务器错误'
-						});
-				}
+				} else
+					uni.showToast({
+						icon: 'none',
+						title: errMsg //'登录失败，服务器错误'
+					});
 			}
+
 		} else if (err.status === 401) { // 未登录
 			uni.reLaunch({
 				url: '/pages/login/login'

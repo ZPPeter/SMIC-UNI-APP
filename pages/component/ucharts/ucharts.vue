@@ -1,6 +1,6 @@
 <template name="ucharts">
 	<view class="qiun-columns">
-		<view style="display: flex; width:90%;text-align: left; margin-left: 6px;align-items: center;">
+		<view class="info">
 			<div style="background-color: red;width:4px;height:12px;vertical-align: bottom;"></div>
 			<view class="tj-item">近两年月工作量统计【0/0】</view>
 		</view>
@@ -95,6 +95,13 @@ export default {
 
 <style>
 /*样式的width和height一定要与定义的cWidth和cHeight相对应*/
+.qiun-columns{
+	flex-direction: column;
+}
+.info{
+	display: flex;
+width:90%;text-align: left; margin-left: 6px;align-items: center;
+}
 .qiun-charts {
 	width: 750upx;
 	height: 450upx;

@@ -69,19 +69,8 @@ SMIC 数据库在 Ubuntu
 	<router-link to="{name: 'view',params: {name: '...'}}">To Page Test</router-link>		
 </view>
 
-头像 - 网络 - 修改(设置-个人资料)
-const userInfo = {
-	id:res.userId,
-	userName: this.userNameOrEmailAddress,
-	realname: res.surName,
-	roles: res.roles
-	//portrait: 'http://img.61ef.cn/news/201409/28/2014092805595807.jpg'
-};
-
 user1/2/3 123qwe
-
-修改 头像
-
-刷新头像
-
-formData 不支持
+----------------------------------------------------------------------------------------------------------
+AppLaunch
+Login
+Upload 保存到本地

@@ -25,10 +25,23 @@ class AppModule {
 				})
 				//console.log('Login:' + JSON.stringify(rep));
 				return rep; // return '登录成功'; 返回到此处
-			}
+			},
+			async GetHomeInfo(state) {
+				let rep = await fly.get(config.GetHomeInfo).then(function(res) {
+					//console.log(res);
+					if (res.success) {						
+						return res.result;
+					}
+					return '';
+				})				
+				return rep; // return '登录成功'; 返回到此处
+			}			
 		};
 		this.mutations = {}
 	}
 }
 const appModule = new AppModule();
 export default appModule;
+
+// dispatch 异步操作，比如向后台发送请求获取数据
+// commit   同步操作

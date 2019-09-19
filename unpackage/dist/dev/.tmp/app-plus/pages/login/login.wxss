@@ -114,7 +114,7 @@ page {
   left: 50rpx;
   top: -90rpx;
   font-size: 30rpx;
-  color: #C0C0C0;
+  color: #c0c0c0;
 }
 .input-content {
   padding: 0 60rpx;

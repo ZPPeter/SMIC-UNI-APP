@@ -148,7 +148,7 @@
 				"app-plus": {
 					"bounce": "none",
 					"titleNView": false,
-					"animationType": "slide-in-bottom"
+					"animationType": "none"
 				}
 			}
 		},
@@ -209,11 +209,12 @@
 				"navigationBarTitleText": "测试"
 			}
 		}, {
-			"path": "pages/set/set",
+			"path": "pages/user/set",
 			"style": {
 				"navigationBarTitleText": "设置",
 				"app-plus": {
-					"bounce": "none"
+					"bounce": "none",
+					"animationType":"none"
 				}
 			}
 		}, {
@@ -230,14 +231,6 @@
 			"path": "pages/notice/notice",
 			"style": {
 				"navigationBarTitleText": "通知消息"
-			}
-		}, {
-			"path": "pages/userinfo/userinfo",
-			"style": {
-				"navigationBarTitleText": "用户信息",
-				"app-plus": {
-					"bounce": "none" //关闭窗口回弹效果
-				}				
 			}
 		}, {
 			"path": "pages/about/about",
@@ -277,6 +270,15 @@
             "path" : "pages/user/changePwd",
             "style" : {
 				"navigationBarTitleText": "修改登录密码"
+			}
+        }
+        ,{
+            "path" : "pages/user/userinfo",
+            "style" : {
+				"navigationBarTitleText": "用户信息",
+				"app-plus": {
+					"bounce": "none"
+				}
 			}
         }
     ],

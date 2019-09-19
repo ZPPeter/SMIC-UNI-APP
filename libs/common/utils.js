@@ -97,6 +97,29 @@ const utils = {
 			if (!n.startsWith('_') && status)
 				console.log("属性值:" + obj[n]);
 		}
+	},
+	async compressImage(url, filename) { // 异步操作，不能用
+		var path = '_doc/logo/' + filename; //_doc/upload/F_SMP-1467602809090.jpg
+		var dest = '';
+		// var path = "_www/img/" + filename; //_doc/upload/F_SMP-1467602809090.jpg //打包后 _www 只读
+		// console.log(url); //file:///storage/emulated/0/Pictures/Screenshots/S70915-001739.jpg
+		// console.log(filename);
+		// console.log(path);
+		await plus.zip.compressImage({
+				src: url, //src: (String 类型 )压缩转换原始图片的路径
+				dst: path, //压缩转换目标图片的路径
+				width: '270px', //将图片压缩为大小
+				quality: 20, //quality: (Number 类型 )压缩图片的质量.取值范围为1-100
+				overwrite: true //overwrite: (Boolean 类型 )覆盖生成新文件
+			},
+			function(event) {
+				//event.target获取压缩转换后的图片url路
+				console.log(event.target);
+			},
+			function(error) {
+				console.log('Compress error!' + error.message);
+			}
+		);
 	}
 }
 
@@ -138,7 +161,7 @@ if (typeof String.prototype.endsWith != 'function') {
 	};
 }
 
-if (typeof String.prototype.inOf!= 'function') {
+if (typeof String.prototype.inOf != 'function') {
 	String.prototype.inOf = function(targetArr) {
 		let res = true;
 		forEach(item => {

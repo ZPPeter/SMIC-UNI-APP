@@ -23,6 +23,10 @@ const router = new Router({
 			}
 		},
 		{
+			path: "/pages/user/userinfo",
+			name: 'userinfo'
+		},		
+		{
 			path: "/pages/main/home",
 			name: 'home',
 			meta: {
@@ -84,7 +88,7 @@ const router = new Router({
 			name: 'addressManage'
 		},
 		{
-			path: "/pages/set/set",
+			path: "/pages/user/set",
 			name: 'set'
 		},
 		{
@@ -92,7 +96,7 @@ const router = new Router({
 			name: 'notice'
 		},
 		{
-			path: "/pages/userinfo/userinfo",
+			path: "/pages/user/userinfo",
 			name: 'userinfo'
 		},
 		{
@@ -138,7 +142,6 @@ router.beforeEach((to, from, next) => {
 	console.log('to:')
 	console.log(to);
 	*/   
-   
 	if (from.name === to.name) { // tabBar 直接跳转不用登录
 		next();
 	}

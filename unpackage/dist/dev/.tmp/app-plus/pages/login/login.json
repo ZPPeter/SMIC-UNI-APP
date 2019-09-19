@@ -3,6 +3,6 @@
   "navigationStyle": "custom",
   "bounce": "none",
   "titleNView": false,
-  "animationType": "slide-in-bottom",
+  "animationType": "none",
   "usingComponents": {}
 }

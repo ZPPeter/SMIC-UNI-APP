@@ -8,7 +8,7 @@ export default {
 		uni.getStorage({
 			key: 'userInfo',
 			success: res => {
-				//console.log(res);
+				//console.log(res.data);
 				this.login(res.data);
 			}
 		});

@@ -2,7 +2,7 @@
 	<view class="container">
 		<view class="first" hover-class="cell-hover" :hover-stay-time="50">
 			<view class="user-section">
-				<view class="portrait-box"><image class="portrait" :src="userInfo.portrait || '/static/missing-face.png'" @click="upload"></image></view>
+				<view class="portrait-box"><image class="portrait" :src="userInfo.portrait || '/static/img/missing-face.png'" @click="upload"></image></view>
 				<view>
 					<text class="username">{{ userInfo.realname || '未登录' }}</text>
 				</view>
@@ -34,6 +34,10 @@
 import { mapState, mapMutations } from 'vuex';
 import config from '@/libs/common/config.js';
 import util from '../../libs/common/utils.js';
+
+// var VConsole = require('@/libs/common/vconsole.min.js');
+// var vConsole = new VConsole(); // 不支持 APP+
+
 var _self;
 export default {
 	data() {
@@ -42,6 +46,9 @@ export default {
 		};
 	},
 	onLoad() {
+		if (!this.hasLogin) {
+			this.$Router.push('/pages/login/login');
+		}
 		if (uni.getSystemInfoSync().platform === 'android') {
 			this.version = plus.runtime.version; // 打包后有效，打包前是基座的版本号
 		}
@@ -75,6 +82,80 @@ export default {
 			let statusTip = e.detail.value ? '打开' : '关闭';
 			util.showToast(`${statusTip}消息推送`);
 		},
+		uploadFile(tempFilePath) {
+			_self = this;
+			var savedFilePath = '';
+			const uploadTask = uni.uploadFile({
+				url: config.uploadAvatar,
+				filePath: tempFilePath,
+				name: 'file',
+				header: {
+					Authorization: 'Bearer ' + uni.getStorageSync('token')
+				},
+				formData: {
+					//user:'admin'
+				},
+				success: function(res) {
+					// #ifdef APP-PLUS
+					uni.saveFile({
+						tempFilePath: tempFilePath,
+						success: function(res) {
+							savedFilePath = res.savedFilePath;
+							_self.userInfo.portrait = savedFilePath;
+							//console.log(savedFilePath);
+						}
+					});
+					// #endif
+					// #ifdef H5
+					_self.userInfo.portrait = tempFilePath;
+					// #endif
+				},
+				fail(err) {
+					//console.log(err);
+					uni.showToast({
+						icon: 'none',
+						title: err
+					});
+					reject(err);
+				}
+			});
+			uploadTask.onProgressUpdate(function(res) {});
+
+			/* 微信版 fly 不支持 FormData 参数
+				    console.log(res.tempFiles[0]);
+					var formData = new FormData();
+					formData.append('file',res.tempFiles[0]);
+					const ret = await _self.$store.dispatch({
+						type: 'user/uploadAvatar',
+						data: formData
+					});
+					*/
+		},
+		compressImage(url, filename) {
+			_self = this;
+			var path = '_doc/logo/' + filename; //_doc/upload/F_SMP-1467602809090.jpg
+			// var path = "_www/img/" + filename; //_doc/upload/F_SMP-1467602809090.jpg //打包后 _www 只读
+			// console.log(url); //file:///storage/emulated/0/Pictures/Screenshots/S70915-001739.jpg
+			// console.log(filename);
+			// console.log(path);
+			plus.zip.compressImage(
+				{
+					src: url, //src: (String 类型 )压缩转换原始图片的路径
+					dst: path, //压缩转换目标图片的路径
+					width: '270px', //将图片压缩为大小
+					quality: 20, //quality: (Number 类型 )压缩图片的质量.取值范围为1-100
+					overwrite: true //overwrite: (Boolean 类型 )覆盖生成新文件
+				},
+				async function(event) {
+					//event.target获取压缩转换后的图片url路
+					//console.log(event.size);
+					_self.uploadFile(event.target);
+				},
+				function(error) {
+					console.log('Compress error!' + error.message);
+				}
+			);
+		},
 		upload() {
 			_self = this;
 			uni.chooseImage({
@@ -82,38 +163,36 @@ export default {
 				sizeType: ['compressed'],
 				sourceType: ['album', 'camera'],
 				success: async function(res) {
-					/*
-					const tempFilePaths = res.tempFilePaths;
-					const uploadTask = uni.uploadFile({
-						url: config.uploadAvatar,
-						filePath: tempFilePaths[0],
-						name: 'file',
-						header:{
-							'Authorization': 'Bearer ' + uni.getStorageSync('token')
-						}, 
-						formData: {
-							//user:'admin'
-						},
-						success: function(uploadFileRes) {
-							console.log(uploadFileRes);
-						}
-					});
-					uploadTask.onProgressUpdate(function(res) {
-					});
-					*/
-				    console.log(res.tempFiles[0]);
-					var formData = new FormData();
-					formData.append('file',res.tempFiles[0]);					
-					const ret = await _self.$store.dispatch({
-						type: 'user/uploadAvatar',
-						data: formData
-					});
+					let tempFilePath = res.tempFilePaths[0];
+					// console.log(tempFilePath);
+					// #ifdef APP-PLUS
+					if (res.tempFiles[0].size / 1000 > 20)
+						// 大于 20k 压缩
+						// 大于20k压缩
+						_self.compressImage(tempFilePath, 'logo.png');
+					else _self.uploadFile(tempFilePath);
+					// #endif
+
+					// #ifdef H5
+					_self.uploadFile(tempFilePath);
+					// #endif
 				},
-				error: function(e) {
-					console.log(e);
+				fail(err) {
+					//console.log(err);
+					uni.showToast({
+						icon: 'none',
+						title: err
+					});
+					reject(err);
 				}
 			});
 		}
+	},
+	onShow() {
+		if (!this.hasLogin) { // 避免取消登录
+			this.$Router.push('/pages/login/login');
+		}
+		//console.log(this.userInfo.portrait);
 	}
 };
 </script>
@@ -162,7 +241,7 @@ page {
 	line-height: 76upx;
 	border-radius: 50px;
 	margin-top: 0upx;
-	background: #449ded;
+	background-color:lightslategray; // #449ded;
 	color: #fff;
 	font-size: $font-base;
 	&:after {

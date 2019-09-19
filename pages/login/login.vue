@@ -10,19 +10,12 @@
 			<view class="welcome1">欢迎登录测绘仪器智检系统</view>
 			<view class="input-content">
 				<view class="input-item">
-					<text class="tit">账&nbsp;号:</text>					
-					<input 
-						type="text" 
-						v-model="userNameOrEmailAddress" placeholder="请输入账号"
-					/>					
+					<text class="tit">账&nbsp;号:</text>
+					<input type="text" v-model="userNameOrEmailAddress" placeholder="请输入账号" />
 				</view>
 				<view class="input-item">
 					<text class="tit">密&nbsp;码:</text>
-					<input 
-						type="password"
-						v-model="password" placeholder="请输入密码"
-						@confirm="toLogin"
-					/>					
+					<input type="password" v-model="password" placeholder="请输入密码" @confirm="toLogin" />
 				</view>
 			</view>
 			<button class="confirm-btn" @click="toLogin" :disabled="logining">登录</button>
@@ -47,15 +40,14 @@ export default {
 			version: '1.01'
 		};
 	},
-	onBackPress(){
-	},
-	onReady(){
-	},
-	onLoad(option) { //option为object类型，会序列化上个页面传递的参数
+	onBackPress() {},
+	onReady() {},
+	onLoad(option) {
+		//option为object类型，会序列化上个页面传递的参数
 		// console.log(option.query);
 		if (uni.getSystemInfoSync().platform === 'android') {
 			this.version = plus.runtime.version; // 打包后有效，打包前是基座的版本号
-		}		
+		}
 	},
 	methods: {
 		...mapMutations(['login']),
@@ -92,21 +84,52 @@ export default {
 			//console.log(this.$store)
 			//const res = await request.Login(data);
 			const res = await this.$store.dispatch({
-				type:'app/Login',
-				data:data
-			})			
+				type: 'app/Login',
+				data: data
+			});
 			if (res != '') {
-				//console.log(res);				
-				const userInfo = {
-					id:res.userId,
+				var filePath = '';
+				let userInfo = {
+					id: res.userId,
 					userName: this.userNameOrEmailAddress,
 					realname: res.surName,
 					roles: res.roles,
-					portrait: config.avatarImgPath + res.userId + '.png'
+					portrait: null // config.avatarImgPath + res.userId + '.png?t=' + new Date().getTime()
+					//changeAvata: false
 				};
-				//console.log(userInfo);
-				this.login(userInfo); // -> ...mapMutations(['login']), 				
-				uni.navigateBack();				
+				var _this = this;
+				uni.downloadFile({
+					url: config.avatarImgPath + res.userId + '.png',
+					success: function(res) {
+						//console.log(res)
+						filePath = res.tempFilePath; //下载到临时文件路径
+						userInfo.portrait = filePath;
+						if (res.statusCode === 200) {
+							// #ifdef APP-PLUS
+							uni.saveFile({
+								tempFilePath: filePath,
+								success: function(r) {
+									filePath = r.savedFilePath;
+									userInfo.portrait = filePath;
+								},
+								complete() {
+									//console.log(userInfo.portrait)
+									_this.login(userInfo); // -> ...mapMutations(['login'])
+									uni.navigateBack();
+								}
+							});
+							// #endif
+							// #ifdef H5
+							//console.log(userInfo);
+							_this.login(userInfo); // -> ...mapMutations(['login'])
+							uni.switchTab({
+								url:'/pages/main/main'
+							})
+							// #endif
+						}
+					}
+				});
+
 				//this.$Router.replace({ name: 'notice'}); //从 notice 返回不到 设置界面
 				//this.$Router.push({ name: 'notice'}); // 缓存 login
 			} else {
@@ -114,8 +137,7 @@ export default {
 			}
 		}
 	},
-	onShow() {
-	}
+	onShow() {}
 };
 </script>
 
@@ -199,7 +221,7 @@ page {
 	left: 50upx;
 	top: -90upx;
 	font-size: 30upx;
-	color: #C0C0C0
+	color: #c0c0c0;
 }
 .input-content {
 	padding: 0 60upx;

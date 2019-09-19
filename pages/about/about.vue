@@ -179,13 +179,17 @@ image {
 	flex-direction: column;
 	flex: 1;
 }
-
 .content {
-	flex: 1;
-	padding: 30upx;
 	flex-direction: column;	
+	flex: 1;
+	padding: 30upx;	
 }
-
+.version {
+	height: 80upx;
+	line-height: 80upx;
+	justify-content: center;
+	color: #ccc;
+}
 .qrcode {
 	display: flex;
 	align-items: center;
@@ -212,13 +216,6 @@ image {
 button {
 	width: 100%;
 	margin-top: 40upx;
-}
-
-.version {
-	height: 80upx;
-	line-height: 80upx;
-	justify-content: center;
-	color: #ccc;
 }
 
 .source {
