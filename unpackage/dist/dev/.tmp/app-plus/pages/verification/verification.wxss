@@ -24,6 +24,7 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
+/*--------------------   自定义 -------------------*/
 /* 页面左右间距 */
 /* 文字尺寸 */
 /*文字颜色*/
@@ -32,8 +33,8 @@
 /* 行为相关颜色 */
 .fab-box {
   position: absolute;
-  right: 20rpx;
-  bottom: 20rpx;
+  right: 40rpx;
+  bottom: 40rpx;
   width: 90rpx;
   height: 90rpx;
   display: -webkit-box;
@@ -107,7 +108,6 @@
   border: 1px #dcdcdc solid;
 }
 .list-info {
-  height: 150rpx;
   padding: 12rpx 15rpx;
   display: -webkit-box;
   display: -webkit-flex;
@@ -144,5 +144,11 @@
 .list-info .content .wtdw {
       font-size: 26rpx;
       color: #8f8f94;
+}
+.list-info .content .jdqx {
+      font-size: 26rpx;
+      color: #E54D42;
+      font-weight: 600;
+      text-decoration: line-through;
 }
 

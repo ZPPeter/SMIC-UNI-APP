@@ -7,7 +7,7 @@ Vue.use(Router);
 // tabBar 渲染 2 次：原因:main中已经render了app，在route中不需要再加入app组件了，直接重定向到home即可， login: false
 
 const router = new Router({
-	login: true,
+	login: false,
 	routes: [{
 			path: "/pages/main/main",
 			name: 'main',

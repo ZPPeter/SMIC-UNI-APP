@@ -1,2 +1,2 @@
-setCssToHead([".",[1],"flex-item-0 { width: 100%; height: ",[0,200],"; text-align: center; line-height: ",[0,200],"; background-color: #0faeff; }\n",],undefined,{path:"./pages/test/test.wxss"})();
+setCssToHead([".",[1],"qiun-charts { width: ",[0,750],"; height: ",[0,500],"; background-color: #ffffff; }\n.",[1],"charts { width: ",[0,750],"; height: ",[0,500],"; background-color: #ffffff; }\n",],undefined,{path:"./pages/test/test.wxss"})();
 document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/test/test.wxml') } }));

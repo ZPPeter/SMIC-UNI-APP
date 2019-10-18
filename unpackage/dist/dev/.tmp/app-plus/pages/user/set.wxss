@@ -24,6 +24,7 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
+/*--------------------   自定义 -------------------*/
 /* 页面左右间距 */
 /* 文字尺寸 */
 /*文字颜色*/
@@ -77,14 +78,14 @@ page {
   width: 210rpx;
   height: 76rpx;
   line-height: 76rpx;
-  border-radius: 50px;
+  border-radius: 20px;
   margin-top: 0rpx;
   background-color: lightslategray;
   color: #fff;
   font-size: 32rpx;
 }
 .confirm-btn:after {
-    border-radius: 100px;
+    border-radius: 20px;
 }
 .list-cell {
   display: -webkit-box;

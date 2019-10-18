@@ -9,7 +9,7 @@
 				<text class="code">smic-app</text>
 				是使用
 				<text class="code">uni-app</text>
-				前端跨平台应用框架技术开发的测绘仪器智慧检定系统软件平台，服务端采用了
+				前端跨平台应用框架技术开发的测绘仪器检定系统软件平台，服务端采用了
 				<text class="code">C#</text>
 				语言和
 				<text class="code">ABP</text>

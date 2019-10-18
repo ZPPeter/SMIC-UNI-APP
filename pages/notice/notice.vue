@@ -1,74 +1,132 @@
 <template>
 	<view>
 		<view class="notice-item">
-			<view class="content">
-				<text class="title">欢迎{{ showInfo }}{{ userInfo.realname }}</text>
-				<!-- view class="img-wrapper">
-					<image class="pic" src="https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3761064275,227090144&fm=26&gp=0.jpg"></image>
-					<view class="cover">
-						活动结束
-					</view>
-				</view -->
-				<text class="introduce">在使用过程中发现Bugs请提交给管理员，谢谢。</text>
-				<!--view class="bot b-t">
-					<text>查看详情</text>
-					<text class="more-icon yticon icon-you"></text>
-				</view -->
+			<view class="content0">
+				<text class="title0">欢迎{{ showInfo }}{{ userInfo.realname }}</text>
 			</view>
-			<text class="time">{{ new Date().Format("yyyy.MM.dd hh:mm:ss") }}</text>
 		</view>
-		<view class="notice-item">
+		<view class="notice-item" v-for="(item, index) in list" :key="index">
 			<view class="content">
-				<text class="title">消息</text>
-				<!-- view class="img-wrapper">
-					<image class="pic" src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1556465765776&di=57bb5ff70dc4f67dcdb856e5d123c9e7&imgtype=0&src=http%3A%2F%2Fimg.zcool.cn%2Fcommunity%2F01fd015aa4d95fa801206d96069229.jpg%401280w_1l_2o_100sh.jpg"></image>
-				</view -->
-				<text class="introduce">SMIC.智慧检定系统-全站仪数据处理测试版上线了。</text>
-				<!-- view class="bot b-t">
-					<text>查看详情</text>
-					<text class="more-icon yticon icon-you"></text>
-				</view -->
+				<view class="title1">
+					<div style="background-color: #0081FF;width:4px;height:12px;vertical-align: bottom;"></div>
+					<text class="title">{{ item.title }}</text>
+				</view>
+				<hr />
+				<text class="details">{{ item.description }}</text>
+				<text :class="before(item.creationTime)? 'time2' : 'time'">
+				{{ format(item.creationTime) }}</text>
 			</view>
-			<text class="time">2019.07.31 10:30:25</text>
+		</view>
+		<view style="padding-top: 48upx;">
+			<uni-pagination :current="current" :total="total" :pageSize="pageSize" title="消息" prev-text="上一页" next-text="下一页" @change="change" />
+		</view>
+		<view class="btn-view">
+			<view>当前页：{{ current }}，数据总量：{{ total }}条，每页数据：{{ pageSize }}</view>
 		</view>
 	</view>
 </template>
 
 <script>
 import { mapState } from 'vuex';
-import utils from '../../libs/common/utils.js';
+import uniPagination from '@/components/uni-pagination/uni-pagination.vue';
+import utils from '@/libs/common/utils.js';
+import PageRequest from '@/store/entities/page-request';
+class PageNoticeRequest extends PageRequest {
+}
 export default {
+	components: {
+		uniPagination
+	},
+	data() {
+		return {
+			current: 1,
+			total: 0,
+			pageSize: 3,
+			list: [],
+			pagerequest: new PageNoticeRequest()
+		};
+	},
+	onLoad: async function(e) {
+		this.getNotice();		
+	},
+	onUnload: function() {
+		this.$store.dispatch("notice/setReadLastNoticeTime");
+		this.$store.state.user.readLastNoticeTime = new Date();
+		//console.log(this.$store.state.user.readLastNoticeTime);
+	},
 	computed: {
 		...mapState(['userInfo']),
 		showInfo: {
-			get() { 
-				if(this.userInfo.realname)
-					return '您: ';
+			get() {
+				if (this.userInfo.realname) return '您: ';
 			},
 			set() {}
 		}
 	},
-	data() {
-		return {};
-	},
 	methods: {
+		change(e) {			
+			this.current = e.current;
+			this.getNotice();
+		},
+		format(item) {
+			//return new Date(item).Format('yyyy.MM.dd hh:mm:ss');
+			return this.$moment(item).format('YYYY.MM.DD HH:mm:ss');
+		},
+		before(item){
+			return this.$moment(this.$store.state.user.readLastNoticeTime).isBefore(item)
+		},
+		lastReadTime() {
+			return this.$store.state.user.readLastNoticeTime;
+		},
+		async getNotice() {
+			this.pagerequest.maxResultCount = this.pageSize;
+			this.pagerequest.skipCount = (this.current - 1) * this.pageSize;
+			const res = await this.$store.dispatch({
+				type: 'notice/GetNotices',
+				data: this.pagerequest
+			});			
+			this.total = res.totalCount;			                 
+			this.list = res.items;
+			//console.log(res);
+			//console.log(this.list);
+			//console.log(this.lastReadTime());
+		}
 	}
 };
 </script>
 
 <style lang="scss">
 page {
-	background-color: #f7f7f7;
+	display: flex;
+	flex-direction: column;
+	box-sizing: border-box;
+	background-color: #fff; // #f7f7f7;
 	padding-bottom: 30upx;
 	padding-top: 30upx;
 }
 
+view {
+	font-size: 28upx;
+	line-height: inherit;
+}
+hr {
+	border: none;
+	height: 1px;
+	background-color: #e5e5e5;
+}
 .notice-item {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	padding-top: 12upx;
 }
-
+.title1 {
+	display: flex;
+	width: 90%;
+	text-align: left;
+	margin-left: 0px;
+	align-items: center;
+}
 .time {
 	display: flex;
 	align-items: center;
@@ -81,28 +139,37 @@ page {
 	color: #7d7d7d;
 	width: 100%;
 }
-
+.time2 {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	text-align: right;
+	height: 80upx;
+	padding-top: 10upx;
+	padding-right: 50upx;
+	font-size: 26upx;
+	color: red;
+	width: 100%;
+}
 .content {
 	width: 710upx;
 	padding: 0 24upx;
-	background-color: #fff;
-	border-radius: 4upx;
+	border-radius: 18upx;
+	background-color: #f0f0f0;
 }
-
 .title {
 	display: flex;
 	align-items: center;
 	height: 90upx;
-	font-size: 32upx;
-	color: #303133;
+	font-size: 28upx;
+	margin-left: 5px;
+	//color: #0081ff; //#303133;
 }
-
 .img-wrapper {
 	width: 100%;
 	height: 260upx;
 	position: relative;
 }
-
 .pic {
 	display: block;
 	width: 100%;
@@ -123,15 +190,13 @@ page {
 	font-size: 36upx;
 	color: #fff;
 }
-
-.introduce {
+.details {
 	display: inline-block;
-	padding: 16upx 0;
+	padding: 12upx 0;
 	font-size: 28upx;
 	color: #606266;
 	line-height: 38upx;
 }
-
 .bot {
 	display: flex;
 	align-items: center;
@@ -141,8 +206,11 @@ page {
 	color: #707070;
 	position: relative;
 }
-
 .more-icon {
 	font-size: 32upx;
+}
+.btn-view {
+	margin: 30upx 30upx 0;
+	text-align: center;
 }
 </style>

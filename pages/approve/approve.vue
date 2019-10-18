@@ -81,8 +81,8 @@ export default {
 <style lang="scss">
 .btnrightbottom{
 	position: absolute;
-	right: 20upx;
-	bottom: 20upx;
+	right: 40upx;
+	bottom: 40upx;
 	width: 210upx;
 	height: 80upx;	
 
@@ -107,7 +107,7 @@ export default {
 	border: 1px #DCDCDC solid;
 }
 .list-info{
-	height: 210upx;
+	//height: 210upx;
 	padding: 12upx 15upx;
 	//box-sizing: border-box;
 	display: flex;

@@ -1,7 +1,7 @@
 <template>
 	<view class="box">
 		<view><image class="test" :src="userInfo.portrait"></image></view>
-		<view style="padding-top: 0upx;"><uni-notice-bar style="height:40upx;padding-left: 70upx;" show-icon="true" text="Tips：可以在设置界面修改头像。"></uni-notice-bar></view>
+		<view style="padding-top: 0upx;"><uni-notice-bar style="height:30upx;padding-left: 70upx;" show-icon="true" text="Tips：可以在设置界面修改头像。"></uni-notice-bar></view>
 		<view class="content">
 			<view>
 				<text class="info">用户：{{ userInfo.realname }}</text>

@@ -1,21 +1,22 @@
 <template>
 	<view class="container">
 		<view class="left-bottom-sign"></view>
-		<view class="back-btn yticon icon-zuojiantou-up" @click="navBack"></view>
+		<!-- view class="back-btn yticon icon-zuojiantou-up" @click="navBack"></view -->
 		<view class="right-top-sign"></view>
 		<!-- 设置白色背景防止软键盘把下部绝对定位元素顶上来盖住输入框等 -->
-		<view class="wrapper">
+		<view class="wrapper">			
+			<image class="logo" src="/static/tlg5.jpg"></image>
 			<view class="left-top-sign">LOGIN</view>
 			<view class="welcome">你好，</view>
 			<view class="welcome1">欢迎登录测绘仪器智检系统</view>
 			<view class="input-content">
 				<view class="input-item">
 					<text class="tit">账&nbsp;号:</text>
-					<input type="text" v-model="userNameOrEmailAddress" placeholder="请输入账号" />
+					<input class="zai-input" v-model="userNameOrEmailAddress" placeholder-class placeholder="请输入账号" />
 				</view>
 				<view class="input-item">
 					<text class="tit">密&nbsp;码:</text>
-					<input type="password" v-model="password" placeholder="请输入密码" @confirm="toLogin" />
+					<input class="zai-input" v-model="password" placeholder-class password placeholder="请输入密码" @confirm="toLogin"/>
 				</view>
 			</view>
 			<button class="confirm-btn" @click="toLogin" :disabled="logining">登录</button>
@@ -43,6 +44,7 @@ export default {
 	onBackPress() {},
 	onReady() {},
 	onLoad(option) {
+		this.$store.state.hasLogin = false;
 		//option为object类型，会序列化上个页面传递的参数
 		// console.log(option.query);
 		if (uni.getSystemInfoSync().platform === 'android') {
@@ -57,7 +59,7 @@ export default {
 		toForgetPassword() {
 			uni.showToast({
 				icon: 'none',
-				title: '请联系管理员重置密码'
+				title: '请联系管理员重置密码!'
 			});
 		},
 		async toLogin() {
@@ -88,6 +90,8 @@ export default {
 				data: data
 			});
 			if (res != '') {
+				//console.log(res);
+				this.$store.state.user.readLastNoticeTime = res.lastReadNoticeTime;
 				var filePath = '';
 				let userInfo = {
 					id: res.userId,
@@ -113,9 +117,12 @@ export default {
 									userInfo.portrait = filePath;
 								},
 								complete() {
-									//console.log(userInfo.portrait)
+									console.log(userInfo.portrait);
 									_this.login(userInfo); // -> ...mapMutations(['login'])
-									uni.navigateBack();
+									//uni.navigateBack();
+									uni.switchTab({
+										url: '/pages/main/main'
+									});
 								}
 							});
 							// #endif
@@ -123,8 +130,8 @@ export default {
 							//console.log(userInfo);
 							_this.login(userInfo); // -> ...mapMutations(['login'])
 							uni.switchTab({
-								url:'/pages/main/main'
-							})
+								url: '/pages/main/main'
+							});
 							// #endif
 						}
 					}
@@ -145,6 +152,13 @@ export default {
 page {
 	background: #fff;
 }
+	.zai-input{
+		background: #e2f5fc;
+		margin-top: 10upx;
+		border-radius: 100upx;
+		padding: 10upx 20upx;
+		font-size: 36upx;
+	}
 .container {
 	padding-top: 115px;
 	position: relative;
@@ -232,7 +246,6 @@ page {
 	align-items: flex-start;
 	justify-content: center;
 	padding: 0 30upx;
-	background: $page-color-light;
 	height: 120upx;
 	border-radius: 4px;
 	margin-bottom: 50upx;
@@ -285,5 +298,13 @@ page {
 		color: $font-color-spec;
 		margin-left: 10upx;
 	}
+}
+.logo {
+	position: absolute;
+	left: 60upx;
+	top: -150upx;
+	width: 320upx;
+	height: 180upx;
+	border-radius: 10px;
 }
 </style>

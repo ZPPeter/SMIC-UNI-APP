@@ -1,26 +1,73 @@
 <script>
-import { mapMutations } from 'vuex';
+import { mapState, mapMutations } from 'vuex';
+import config from 'libs/common/config.js';
+//import * as signalR from '@aspnet/signalr';
 export default {
+	computed: mapState(['hasLogin', 'userInfo']),
 	methods: {
-		...mapMutations(['login'])
+		...mapMutations(['login']), // ... 扩展函数要放在其它函数后面
+		CheckNetworkStatus() {
+			uni.getNetworkType({
+				success: function(res) {
+					//console.log(res.networkType); // wifi 4g 3g 2g ethernet unknown none
+					if (res.networkType === 'none') {
+						// unknown 是一种网络类型
+						uni.showToast({
+							icon: 'none',
+							title: '没有网络!!!'
+						});
+					}
+				}
+			});
+		}
 	},
-	onLaunch: function() {
+	onLaunch: async function() {
+		//console.log(config.Settings.useMockData());
+		this.CheckNetworkStatus();
 		uni.getStorage({
 			key: 'userInfo',
 			success: res => {
-				//console.log(res.data);
 				this.login(res.data);
 			}
 		});
-		setTimeout(() => {
-			uni.setTabBarBadge({
-				index: 1,
-				text: '31'
+		let rep = await this.$store.dispatch({
+			type: 'app/init'
+		});
+		if (this.hasLogin) {
+			setTimeout(() => {
+				// -> main.vue
+				this.$store.state.user.readLastNoticeTime = rep.user.readLastNoticeTime;
+				//console.log(this.$store.state.user.readLastNoticeTime);
+				uni.setTabBarBadge({
+					index: 1,
+					text: '31'
+				});
+				uni.showTabBarRedDot({
+					index: 3
+				});
+				//uni.showTabBarRedDot({
+				//	index: 4
+				//});
+			}, 1000);
+		}
+		var _this = this;
+		//const signalR = require('@aspnet/signalr');
+console.log(require('@aspnet/signalr'));
+		var connection = new signalR.HubConnectionBuilder().withUrl(config.apiDomain + '/signalr-myChatHub').build();
+		connection.on('getMessage', function(message) {
+			// Register for incoming messages
+			//_this.$store.state.ur_notice.unreadCount = 1;
+			console.log('received message: ' + message);
+		});
+		connection
+			.start()
+			.then(function() {
+				console.log('Connected signalR server!');
+			})
+			.catch(function(err) {
+				return console.error(err.toString());
 			});
-			uni.showTabBarRedDot({
-				index: 3
-			});
-		}, 1000);		
+
 		console.log('App Launch');
 	},
 	onShow: function() {
@@ -28,20 +75,30 @@ export default {
 	},
 	onHide: function() {
 		console.log('App Hide');
+	},
+	created: function() {
+		// App.vue 不支持 OnLoad()
+		console.log('App created');
+		//this.timer = setInterval(() => { // 后台持续运行
+		//	console.log(new Date().Format("yyyy年MM月dd日 hh:mm:ss"));
+		//}, 1000);
 	}
 };
 </script>
 
 <style>
-	@import "common/iconfont.css";
-	@import "common/uni.css";
+@import 'colorui/main.css';
+@import 'colorui/icon.css';
+@import 'common/iconfont.css';
+@import 'common/uni.css';
+@import 'common/qiun.css';
 </style>
 <style lang="scss">
 @font-face {
 	font-family: yticon;
 	font-weight: normal;
 	font-style: normal;
-	src: url('static/font_1078604_w4kpxh0rafi.ttf') format('truetype');	
+	src: url('static/font_1078604_w4kpxh0rafi.ttf') format('truetype');
 }
 
 .yticon {

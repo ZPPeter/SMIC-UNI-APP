@@ -144,7 +144,7 @@
 				// #endif
 				// #ifndef MP-TOUTIAO || H5
 				uni.createSelectorQuery().select(`#${this.elId}`).boundingClientRect().exec((ret) => {
-					this.animation = `notice ${ret[0].width / this.speed}s linear infinite both`;
+					//this.animation = `notice ${ret[0].width / this.speed}s linear infinite both`;
 				});
 				// #endif
 			}

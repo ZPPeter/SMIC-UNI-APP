@@ -1,0 +1,13 @@
+后台一直运行
+
+App.vue
+	// onShow: function() {
+	//	console.log('App Show');
+	created: function() { // App.vue 不支持 OnLoad()			
+		console.log('App created'); 
+		this.timer = setInterval(() => {
+			console.log(new Date().Format("yyyy年MM月dd日 hh:mm:ss"));
+		}, 1000);			
+	},
+	
+OnLoad() 不支持的	

@@ -1,0 +1,23 @@
+获取当前时间戳
+var time = (new Date()).getTime();
+console.log('time==' + time);
+
+日期格式转毫秒值
+var time = ‘2019-08-08 12:09:34’;
+var time222 = time.replace("-", "/").replace("-", "/");
+var timestamp = Date.parse(time222);
+
+
+var date = "2019-8-14 10:03:45"
+//不兼容ios
+var newDate = new Date(date);
+//解决
+var newDate = new Date(date.replace(/-/ig, '/'));
+
+时间类型 2019-08-09T18:23:27.000+0800
+var date = '2019-08-09T18:23:27.000+0800';
+var data = date.substr(0, 19); //'2019-08-09T18:23:27'
+var newDate = new Date(data.replace(/T/g, ' ').replace(/-/g, '/'));
+
+moment
+http://momentjs.cn/docs/

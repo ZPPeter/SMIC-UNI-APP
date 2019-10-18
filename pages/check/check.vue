@@ -85,8 +85,8 @@ export default {
 <style lang="scss">
 	.fab-box {
 		position: absolute;
-		right: 20upx;
-		bottom: 20upx;
+		right: 40upx;
+		bottom: 40upx;
 		width: 90upx;
 		height: 90upx;	
 		//position: fixed;
@@ -151,7 +151,7 @@ export default {
 	border: 1px #DCDCDC solid;
 }
 .list-info{
-	height: 210upx;
+	//height: 210upx;
 	padding: 12upx 15upx;
 	//box-sizing: border-box;
 	display: flex;

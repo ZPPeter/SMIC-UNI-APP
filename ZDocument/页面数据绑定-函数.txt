@@ -1,0 +1,8 @@
+		<view class="list-cell m-t">
+			<text class="cell-tit">数据模拟</text>
+			<switch :checked="this.useMockData()" color="#fa436a" @change="switchChangeMk" />
+		</view>
+		
+		: 后面是 methods -> this... 或者 Data 属性
+		
+		@click 后面是 methods 没有 this.

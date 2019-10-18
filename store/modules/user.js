@@ -6,7 +6,10 @@ import fly from '@/libs/ajax/request.js';
 class UserModule {
 	constructor() {
 		this.namespaced = true;
-		this.state = {};
+		this.state = {
+			newNotices: 0,
+			readLastNoticeTime: ''
+		};
 		this.actions = {
 			async changePassword(state, payload) {              
 				//console.log(payload);

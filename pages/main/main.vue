@@ -1,44 +1,65 @@
 <template>
 	<view class="container">
 		<view class="content">
-		<view class="user-section">
-			<image class="bg" src="/static/img/user-bg.jpg"></image>
-			<image class="logo" src="/static/img/logo.png"></image>
-			<view class="user-info-box">
-				<view class="portrait-box"><image class="portrait" :src="userInfo.portrait || '/static/img/missing-face.png'" @click="GotoLogo"></image></view>
-				<view>
-					<text class="username">{{ userInfo.realname || '未登录' }}</text>
+			<view class="user-section">
+				<image class="bg" src="/static/img/user-bg.jpg"></image>
+				<image class="logo" src="/static/img/logo.png"></image>
+				<view class="user-info-box">
+					<view class="portrait-box"><image class="portrait" :src="userInfo.portrait || '/static/img/missing-face.png'" @click="GotoLogo"></image></view>
+					<view>
+						<text class="username">{{ userInfo.realname || '未登录' }}</text>
+					</view>
+				</view>
+				<view class="list-info-box">
+					<view class="list-item">
+						<text class="list-num">{{ latestData.Data[0] }}</text>
+						<text class="list">待检</text>
+					</view>
+					<view class="list-item">
+						<text class="list-num">{{ latestData.Data[1] }}</text>
+						<text class="list">在检</text>
+					</view>
+					<view class="list-item">
+						<text class="list-num">{{ latestData.Data[2] }}</text>
+						<text class="list">核验</text>
+					</view>
+					<view class="list-item">
+						<text class="list-num">{{ latestData.Data[3] }}</text>
+						<text class="list">批准</text>
+					</view>
 				</view>
 			</view>
-			<view class="list-info-box">
-				<view class="list-item">
-					<text class="list-num">11</text>
-					<text class="list">待检</text>
+			<view class="dashboard">
+				<view class="dashboard1">工作台</view>
+				<view class="dashboard2">
+					<view class="cu-capsule radius">
+						<view class="cu-tag bg-grey ">我的工作量</view>
+						<view class="cu-tag line-grey">{{ latestData.Data[4] }}</view>
+					</view>
 				</view>
-				<view class="list-item">
-					<text class="list-num">51</text>
-					<text class="list">在检</text>
+			</view>
+			<view style="padding-top: 20upx;"><u-charts></u-charts></view>
+			<view class="uni-swiper-msg" style="text-align: left;width: 100%;font-size: 32upx;padding-top: 10upx;">
+				<view class="uni-swiper-msg-icon">
+					<!-- icon type="info" size="14" color="darkgray" / -->
+					<!-- image src="/static/img/info4.jpg" mode="widthFix" style="margin-left: 20upx;"></image -->
+					<text class="cuIcon-title text-orange " style="margin-left: 30upx;font-size: 30upx;"></text>
 				</view>
-				<view class="list-item">
-					<text class="list-num">32</text>
-					<text class="list">核验</text>
-				</view>
-				<view class="list-item">
-					<text class="list-num">56</text>
-					<text class="list">批准</text>
-				</view>
+				<swiper vertical="true" autoplay="true" circular="true" interval="3000">
+					<swiper-item v-for="(item, index) in latestData.List" :key="index">
+						<navigator>{{ item }}</navigator>
+					</swiper-item>
+				</swiper>
 			</view>
 		</view>
-		<view class="dashboard">
-			<view class="dashboard1">工作台</view>
-			<view class="dashboard2">
-				<!-- uni-notice-bar class="dashboard3" background-color="#e4e7ed" speed="50" scrollable="true" single="true" text="最新送检:济南市勘察测绘院2台。"></uni-notice-bar -->
+		<view class="infoBox">
+			<view class="fab-box fab">
+				<view class="fab-circle" @click="doScan"><text class="iconfont icon-saoma1 fontsize"></text></view>
 			</view>
+			<!-- App+ 不支持滚动 -->
+			<view><uni-notice-bar class="noticebar" show-icon="true" :text="latestData.HomeInfo"></uni-notice-bar></view>
 		</view>
-		<view style="padding-top: 20upx;"><u-charts></u-charts></view>
-		<view class="noticebar"><uni-notice-bar class="noticebar" show-icon="true" :text="homeInfo"></uni-notice-bar></view>
-	</view>
-	<view class="time">{{ gDate }}{{ gTime }}</view>
+		<view class="time">{{ gDate }}{{ gTime }}</view>
 	</view>
 </template>
 
@@ -59,7 +80,15 @@ export default {
 		return {
 			gDate: new Date().Format('yyyy年MM月dd日 ') + weekAry[d.getDay()],
 			gTime: new Date().Format(' hh:mm:ss'),
-			homeInfo: ''
+			modalName: null,
+			latestData: {
+				HomeInfo: '欢迎使用SMIC测绘仪器检定系统！', // HomeInfo.ID = 1
+				List: [
+					' 正在连接服务器..',
+					' 正在连接服务器...'
+				],// 只有一条消息要再重复一遍
+				Data: [0, 0, 0, 0, 0]
+			}
 		};
 	},
 	computed: mapState(['hasLogin', 'userInfo']),
@@ -88,12 +117,16 @@ export default {
 			//uni.navigateTo({
 			//	url: '/pages/notice/notice'
 			//});
+			//this.navTo('/pages/wtd/wtd');
 			this.navTo('/pages/test/test');
 			//}
 		}
 	},
 	// #endif
 	methods: {
+		GotoTest() {
+			this.navTo('/pages/test/test');
+		},
 		GotoLogo() {
 			if (this.hasLogin) this.$Router.push('/pages/user/userinfo');
 			else this.$Router.push('/pages/login/login');
@@ -115,17 +148,37 @@ export default {
 		}
 	},
 	onLoad: async function(e) {
+		// console.log(this.latestData.HomeInfo);
+		/*
+		   读取缓存 LatestData
+		   读取服务器，成功后刷新并缓存
+		*/
+
+		// 只加载一次
+		if (!this.hasLogin) this.$Router.push('/pages/login/login');
+		/*
+		uni.showModal({
+			title:'提示',
+			content:'服务器消息。',
+			showCancel: false,
+			success:function(){
+			   uni.navigateTo({
+			      url:"/pages/login"
+			   });
+			}
+		})*/
+
 		// #ifdef APP-PLUS
 		//console.log(plus.screen.resolutionHeight);
 		//uni.getSystemInfo({
 		//	success: function(res) {
-				//console.log(res.model);
-				//console.log(res.pixelRatio);
-				//console.log(res.windowWidth);
-				//console.log(res.windowHeight); // 单位 px 非 upx
-				//console.log(res.language);
-				//console.log(res.version);
-				//console.log(res.platform);
+		//console.log(res.model);
+		//console.log(res.pixelRatio);
+		//console.log(res.windowWidth);
+		//console.log(res.windowHeight); // 单位 px 非 upx
+		//console.log(res.language);
+		//console.log(res.version);
+		//console.log(res.platform);
 		//	}
 		//});
 		// #endif
@@ -136,17 +189,34 @@ export default {
 		}, 500);
 
 		const res = await this.$store.dispatch({
-			type: 'app/GetHomeInfo'
+			type: 'app/GetHomeInfos'
 		});
-		this.homeInfo = res.description;
-		this.homeInfo += res.description;
-		this.homeInfo += res.description;
-		this.homeInfo += res.description;
-		this.homeInfo += res.description;
-		//if (res != '') {}
+
+		if (res != '') {
+			//console.log(res.length);
+			this.latestData.HomeInfo = res[0].description.replace('<br>', '');
+			if (res.length > 1) {
+				this.$store.state.user.newNotices = res.length-1;
+				uni.showTabBarRedDot({
+					index: 4
+				});
+			}
+			if (res.length == 2) {
+				this.latestData.List.push(' ' + res[1].description.replace('<br>', ''));
+				this.latestData.List.push(' ' + res[1].description.replace('<br>', ''));
+			}
+			if (res.length >= 2) {
+				this.latestData.List.length = 0;
+				for (var i = 1; i < res.length; i++) {
+					this.latestData.List.push(' ' + res[i].description.replace('<br>', ''));
+				}
+			}
+		} else {
+			this.latestData.List.push(' 正在连接服务器.');
+		}
 	},
 	onShow() {
-		//console.log(this.userInfo.portrait);
+		// 页面刷新
 	}
 };
 </script>
@@ -155,22 +225,31 @@ page,
 view {
 	display: flex;
 	font-size: 25upx;
-	color: #303133;	
+	color: #303133;
 }
 page {
 	min-height: 100%;
 	background-color: #ffffff;
-}	
-.fab-box {
+}
+.infoBox {
 	position: absolute;
-	right: 40upx;
-	top: 180upx;
+	bottom: 120upx;
+	left: 60upx;
+	//width: 100%;
+	flex-direction: row;
+	flex: 1;
+}
+.noticebar {
+	//margin-left: 90upx;
+	padding-left: 25upx;
+	font-size: $font-lg;
+	//height:240upx;
+}
+.fab-box {
 	width: 90upx;
 	height: 90upx;
-	//position: fixed;
-	//display: flex;
-	justify-content: center;
-	align-items: center;
+	//justify-content: center;
+	//align-items: center;
 	z-index: 2;
 }
 
@@ -219,7 +298,7 @@ page {
 }
 .user-section {
 	flex-direction: column;
-	height: 520upx;
+	height: 500upx;
 	padding: 100upx 30upx 0;
 	position: relative;
 	.bg {
@@ -236,7 +315,7 @@ page {
 	position: absolute;
 	right: 190upx;
 	top: 110upx;
-	width: 210upx;
+	width: 190upx;
 	height: 170upx;
 }
 .user-info-box {
@@ -264,14 +343,14 @@ page {
 	justify-content: space-around;
 	align-content: center;
 	position: relative;
-	margin-top: 70upx;	
+	margin-top: 70upx;
 	z-index: 1;
 	.list-item {
 		//display: flex;
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		width: 150upx;
+		width: 120upx;
 		height: 120upx;
 		//border-radius: 10upx;
 		font-size: $font-sm + 2upx;
@@ -290,36 +369,30 @@ page {
 		color: #e4e7ed;
 	}
 }
-.noticebar {
-	width: 100%;
-	padding: 10upx;
-	font-size: $font-lg;
-}
 .dashboard {
 	width: 100%;
 	height: 75upx;
-	text-align: left;	
+	text-align: left;
 	color: #808080;
 	padding: 10upx;
 	background-color: #e4e7ed;
 	.dashboard1 {
 		font-size: $font-base + 2upx;
-		width: 210upx;
+		width: 120upx;
 	}
-	.dashboard2 {}
-	.dashboard3 {
-		width: 400upx;
-		height: 60upx;		
+	.dashboard2 {
+		width: 100%;
+		justify-content: flex-end;
 	}
 }
 .container {
 	flex-direction: column;
 	flex: 1;
-	.time {		
+	.time {
 		position: relative;
 		justify-content: center;
 		align-items: center;
-		text-align: center;		
+		text-align: center;
 		bottom: 5px;
 		width: 100%;
 		font-size: $font-base - 1upx;
@@ -328,7 +401,7 @@ page {
 	}
 }
 .content {
-	flex-direction: column;	
+	flex-direction: column;
 	flex: 1;
 }
 </style>

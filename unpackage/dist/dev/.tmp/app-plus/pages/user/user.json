@@ -17,8 +17,7 @@
         "text": "",
         "fontSize": "28",
         "color": "#303133",
-        "background": "rgba(0,0,0,0)",
-        "redDot": true
+        "background": "rgba(0,0,0,0)"
       }
     ]
   },

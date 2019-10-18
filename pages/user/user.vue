@@ -15,7 +15,7 @@
 				<view class="b-btn" @click="showOpenSrcInfo()">获取源码</view>
 				<view class="tit">
 					<text class="yticon icon-iLinkapp-"></text>
-					SMIC.智慧检定系统
+					SMIC.测绘仪器检定系统
 				</view>
 				<text class="e-m">公正&nbsp;科学&nbsp;准确&nbsp;可靠</text>
 				<text class="e-b">精心.精细.精准.精益求精，测绘仪器数据处理系统。</text>
@@ -54,9 +54,9 @@
 				</view>
 			</view>
 			<view class="history-section icon">
-				<!-- list-cell icon="icon-dizhi" iconColor="#5fcda2" title="地址管理" @eventClick="navTo('/pages/address/address')"></list-cell -->
+				<list-cell icon="icon-dizhi" iconColor="#5fcda2" title="检定地点管理" @eventClick="navTo('/pages/address/address')"></list-cell>
 				<list-cell icon="icon-shezhi1" iconColor="#e07472" title="设置" border="" @eventClick="navTo2('/pages/user/set')"></list-cell>
-			</view>
+			</view>			
 		</view>
 	</view>
 </template>
@@ -78,13 +78,21 @@ export default {
 			moving: false
 		};
 	},
-	onLoad() {},
+	onLoad() {
+			// #ifdef APP-PLUS
+			const pages = getCurrentPages();
+			const page = pages[pages.length - 1];
+			const currentWebview = page.$getAppWebview();
+			if(this.$store.state.user.newNotices>0)
+				currentWebview.showTitleNViewButtonRedDot({index:1}); // 新消息
+			// #endif
+	},
 	// #ifndef MP
 	onNavigationBarButtonTap(e) {
 		const index = e.index;
 		if (index === 0) {
 			this.navTo('/pages/user/set');
-		} else if (index === 1) {
+		} else if (index === 1) { // 消息红点
 			// #ifdef APP-PLUS
 			const pages = getCurrentPages();
 			const page = pages[pages.length - 1];
@@ -92,6 +100,9 @@ export default {
 			currentWebview.hideTitleNViewButtonRedDot({
 				index
 			});
+			uni.hideTabBarRedDot({
+				index:4
+			});			
 			// #endif
 			//uni.navigateTo({
 			//	url: '/pages/notice/notice'
@@ -99,7 +110,7 @@ export default {
 			this.navTo('/pages/notice/notice');
 		}
 	},
-	// #endif
+	// #endif	
 	computed: {
 		...mapState(['hasLogin', 'userInfo'])
 	},

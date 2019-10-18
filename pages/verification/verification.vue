@@ -12,7 +12,11 @@
 						<h4 class="xhgg">{{ items.xhgg }} / {{ items.ccbh }}</h4>
 					</view>
 					<p class="wtdw">送检单位：{{ items.wtdw }}</p>
-					<p class="wtdw">检定期限：{{ items.yqjcrq }}</p>
+					<p class="jdqx">检定期限：{{ items.yqjcrq }}</p>
+					<view class="wtdw">检定项目：
+					<view class='cu-tag radius bg-red'>测角</view>
+					<view class='cu-tag radius bg-blue'>测距</view>
+					</view>
 				</view>
 			</view>
 		</view>
@@ -43,7 +47,7 @@ export default {
 					img: 0,
 					xhgg: 'GTS-201N',
 					ccbh: '23345',
-					wtdw: '青岛市莱西地图测绘院',
+					wtdw: '青岛市莱西地图测绘院济青高速二线济青高速快速路项目部',
 					yqjcrq: '2019-09-21'
 				}
 			]
@@ -80,8 +84,8 @@ export default {
 <style lang="scss">
 .fab-box {
 	position: absolute;
-	right: 20upx;
-	bottom: 20upx;
+	right: 40upx;
+	bottom: 40upx;
 	width: 90upx;
 	height: 90upx;
 	//position: fixed;
@@ -147,7 +151,7 @@ export default {
 	border: 1px #dcdcdc solid;
 }
 .list-info {
-	height: 150upx;
+	//height: 280upx;
 	padding: 12upx 15upx;
 	//box-sizing: border-box;
 	display: flex;
@@ -175,6 +179,12 @@ export default {
 			font-size: 26upx;
 			color: #8f8f94;
 		}
+		.jdqx {
+			font-size: 26upx;
+			color:#E54D42;
+			font-weight: 600;
+			text-decoration: line-through;
+		}		
 	}
 }
 </style>

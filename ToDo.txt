@@ -71,6 +71,14 @@ SMIC 数据库在 Ubuntu
 
 user1/2/3 123qwe
 ----------------------------------------------------------------------------------------------------------
-AppLaunch
-Login
-Upload 保存到本地
+	let statusTip = e.detail.value ? '打开' : '关闭';
+	util.showToast(`${statusTip}消息推送`);
+
+    if(config.Settings.useMockData())
+----------------------------------------------------------------------------------------------------------
+
+主页缓存  LatestData,ChartsData  ，无法访问网络则显示该数据
+
+List + 最近送检
+
+SignalR - 新消息代替首页刷新按钮

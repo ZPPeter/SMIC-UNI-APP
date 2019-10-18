@@ -1,7 +1,7 @@
-import Vue from 'vue'
-import App from './App'
-
-import store from './store'
+import Vue from 'vue';
+import App from './App';
+import store from './store';
+import moment from 'moment';
 
 /*
 //系统错误捕获(未测试)  
@@ -42,9 +42,11 @@ Vue.prototype.$api = API
 // 调用 this.$api.Login(data);
 */
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 
-Vue.prototype.$store = store
+Vue.prototype.$store = store;
+Vue.prototype.$moment = moment;
+
 //Vue.prototype.$eventHub = new Vue(); 
 App.mpType = 'app'
 

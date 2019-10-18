@@ -13,9 +13,13 @@
 			<text class="cell-tit">消息推送</text>
 			<switch checked color="#fa436a" @change="switchChange" />
 		</view>
-		<view class="list-cell m-t b-b" @click="navTo()" hover-class="cell-hover" :hover-stay-time="50">
+		<view class="list-cell m-t">
+			<text class="cell-tit">数据模拟</text>
+			<switch :checked="useMockData" color="#fa436a" @change="switchChangeMk" />
+		</view>
+		<view class="list-cell m-t b-b" hover-class="cell-hover" :hover-stay-time="50">
 			<text class="cell-tit">清除缓存</text>
-			<text class="cell-more yticon icon-you"></text>
+			<view style="padding: 0upx;"><button class="cu-btn bg-green shadow" @tap="clearStorage">确认</button></view>
 		</view>
 		<view class="list-cell b-b" @click="navTo('/pages/about/about')" hover-class="cell-hover" :hover-stay-time="50">
 			<text class="cell-tit">关于系统</text>
@@ -34,15 +38,14 @@
 import { mapState, mapMutations } from 'vuex';
 import config from '@/libs/common/config.js';
 import util from '../../libs/common/utils.js';
-
 // var VConsole = require('@/libs/common/vconsole.min.js');
 // var vConsole = new VConsole(); // 不支持 APP+
-
 var _self;
 export default {
 	data() {
 		return {
-			version: '1.01'
+			version: '1.01',
+			useMockData: false
 		};
 	},
 	onLoad() {
@@ -52,12 +55,16 @@ export default {
 		if (uni.getSystemInfoSync().platform === 'android') {
 			this.version = plus.runtime.version; // 打包后有效，打包前是基座的版本号
 		}
+		this.useMockData = config.Settings.useMockData();
 	},
 	computed: {
 		...mapState(['hasLogin', 'userInfo'])
 	},
 	methods: {
 		...mapMutations(['logout']),
+		//useMockData(){
+		//	return config.Settings.useMockData();
+		//},
 		navTo(url) {
 			//util.showToast(`跳转到${url}`);
 			if (url) this.$Router.push(url);
@@ -81,6 +88,31 @@ export default {
 		switchChange(e) {
 			let statusTip = e.detail.value ? '打开' : '关闭';
 			util.showToast(`${statusTip}消息推送`);
+		},
+		switchChangeMk(e) {
+			uni.setStorage({
+				key: 'useMkData',
+				data: e.detail.value
+			});
+		},
+		clearStorage() {
+			// uni.clearStorage();
+			// this.useMockData = false;
+			
+			let _this = this;
+			uni.removeStorage({
+				key: 'useMkData',
+				success() {
+					_this.useMockData = false;
+					//console.log(config.Settings.useMockData());
+				}
+			});
+			uni.removeStorage({
+				key: 'LatestData'
+			});
+			uni.removeStorage({
+				key: 'ChartsData'
+			});
 		},
 		uploadFile(tempFilePath) {
 			_self = this;
@@ -189,10 +221,10 @@ export default {
 		}
 	},
 	onShow() {
-		if (!this.hasLogin) { // 避免取消登录
+		if (!this.hasLogin) {
+			// 避免取消登录
 			this.$Router.push('/pages/login/login');
 		}
-		//console.log(this.userInfo.portrait);
 	}
 };
 </script>
@@ -239,13 +271,13 @@ page {
 	width: 210upx;
 	height: 76upx;
 	line-height: 76upx;
-	border-radius: 50px;
+	border-radius: 20px;
 	margin-top: 0upx;
-	background-color:lightslategray; // #449ded;
+	background-color: lightslategray; // #449ded;
 	color: #fff;
 	font-size: $font-base;
 	&:after {
-		border-radius: 100px;
+		border-radius: 20px;
 	}
 }
 .list-cell {

@@ -8,17 +8,30 @@ import config from '@/libs/common/config.js'
 // 配置请求根域名
 fly.config.baseURL = config.apiDomain;
 fly.config.timeout = 15000; // 超时时间，为0时则无超时限制 
+//fly.config.params = {"maxResultCount":5,"skipCount":0};
+//console.log(fly.config);
+
+var showLoading = true;
 
 // 配置请求拦截器
-fly.interceptors.request.use((request) => {
-	console.log('全局请求拦截');
+fly.interceptors.request.use((request) => {	
+	if(!!request.body)
+		request.params = request.body.params;
+	console.log('全局请求拦截');// + JSON.stringify(request) );
+	if(request.ShowLoading===false)
+		showLoading = false;
+	else
+		showLoading = true;	
+	
 	//console.log(request.url.includes(config.Authenticate));
-	uni.showLoading();
+	if(showLoading)
+		uni.showLoading();	
+	
 	if (!!uni.getStorageSync('token')) {
 		request.headers['Authorization'] = 'Bearer ' + uni.getStorageSync('token');
 	}
 	//else if(!request.url.includes(config.Authenticate)){ // 非登录页面必须先登录
-	//}	
+	//}
 	return request;
 })
 
@@ -26,11 +39,13 @@ fly.interceptors.request.use((request) => {
 fly.interceptors.response.use((response) => {
 		//console.log('全局响应拦截：' + JSON.stringify(response));
 		console.log('全局响应拦截');
-		uni.hideLoading();
+		if(showLoading)
+			uni.hideLoading();
 		return response.data;
 	},
 	(err) => {
-		uni.hideLoading();
+		if(showLoading)
+			uni.hideLoading();
 		if (err.status === 500) { // 错误详情有两种类别 error.details 和 error.message
 			let errMsg = '';
 			if (err.response) {

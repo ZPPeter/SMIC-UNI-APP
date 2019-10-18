@@ -4,16 +4,17 @@ Vue.use(Vuex)
 
 import app from './modules/app';
 import user from './modules/user';
+import notice from './modules/notice';
 import config from '@/libs/common/config.js';
 
 const store = new Vuex.Store({
 	state: {
 		hasLogin: false,
-		userInfo: {},
+		userInfo: {}
 		//portrait: config.avatarImgPath + 'null.png'
 	},
 	mutations: {
-		login(state, data) {
+		login(state, data) {			
 			state.hasLogin = true;
 			state.userInfo = data;
 			uni.setStorage({
@@ -57,7 +58,8 @@ const store = new Vuex.Store({
 	},
 	modules: {
 		app,
-		user
+		user,
+		notice
 	}
 })
 

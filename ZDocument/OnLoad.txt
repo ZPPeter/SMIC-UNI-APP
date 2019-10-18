@@ -1,0 +1,10 @@
+App.vue 不支持 onLoad
+
+	onLoad: function() {
+		console.log('App onLoad 不支持'); // 官方建议用 created
+	},
+	created: function() {
+		console.log('App created'); // OK 
+	}
+	
+其它的 xxx.vue 可以 

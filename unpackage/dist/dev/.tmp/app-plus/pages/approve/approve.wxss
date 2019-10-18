@@ -24,6 +24,7 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
+/*--------------------   自定义 -------------------*/
 /* 页面左右间距 */
 /* 文字尺寸 */
 /*文字颜色*/
@@ -32,8 +33,8 @@
 /* 行为相关颜色 */
 .btnrightbottom {
   position: absolute;
-  right: 20rpx;
-  bottom: 20rpx;
+  right: 40rpx;
+  bottom: 40rpx;
   width: 210rpx;
   height: 80rpx;
   border-radius: 50px;
@@ -56,7 +57,6 @@
   border: 1px #DCDCDC solid;
 }
 .list-info {
-  height: 210rpx;
   padding: 12rpx 15rpx;
   display: -webkit-box;
   display: -webkit-flex;
