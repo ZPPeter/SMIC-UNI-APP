@@ -1,4 +1,9 @@
 {
   "navigationBarTitleText": "通知消息",
-  "usingComponents": {}
+  "disableScroll": true,
+  "bounce": "none",
+  "usingComponents": {
+    "mescroll-uni": "/components/mescroll-uni/mescroll-uni",
+    "pd-list": "/pages/component/notice_list/notice_list"
+  }
 }

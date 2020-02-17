@@ -1,0 +1,15 @@
+{
+  "navigationBarTitleText": "手持测距仪检定批准",
+  "bounce": "none",
+  "titleNView": {
+    "buttons": [
+      {
+        "fontSrc": "/static/iconfont.ttf",
+        "text": "",
+        "fontSize": "21",
+        "color": "White"
+      }
+    ]
+  },
+  "usingComponents": {}
+}

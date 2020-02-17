@@ -1,7 +1,20 @@
 {
   "navigationBarTitleText": "通知消息",
+  "disableScroll": true,
   "bounce": "none",
+  "titleNView": {
+    "buttons": [
+      {
+        "fontSrc": "/static/iconfont.ttf",
+        "text": "",
+        "fontSize": "21",
+        "color": "ghostwhite",
+        "background": "rgba(0,0,0,0)"
+      }
+    ]
+  },
   "usingComponents": {
-    "uni-pagination": "/components/uni-pagination/uni-pagination"
+    "mescroll-uni": "/components/mescroll-uni/mescroll-uni",
+    "pd-list": "/pages/component/notice_list/notice_list"
   }
 }

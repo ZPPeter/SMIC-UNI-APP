@@ -15,7 +15,7 @@
 		</view>
 		<view class="list-cell m-t">
 			<text class="cell-tit">数据模拟</text>
-			<switch :checked="useMockData" color="#fa436a" @change="switchChangeMk" />
+			<switch disabled="true" :checked="useMockData" color="#fa436a" @change="switchChangeMk" />
 		</view>
 		<view class="list-cell m-t b-b" hover-class="cell-hover" :hover-stay-time="50">
 			<text class="cell-tit">清除缓存</text>
@@ -78,7 +78,10 @@ export default {
 					if (e.confirm) {
 						this.logout();
 						setTimeout(() => {
-							uni.navigateBack();
+							//uni.navigateBack();
+							uni.switchTab({
+								url:'/pages/main/main'
+							})
 						}, 200);
 					}
 				}
@@ -97,8 +100,7 @@ export default {
 		},
 		clearStorage() {
 			// uni.clearStorage();
-			// this.useMockData = false;
-			
+			// this.useMockData = false;			
 			let _this = this;
 			uni.removeStorage({
 				key: 'useMkData',
@@ -107,9 +109,9 @@ export default {
 					//console.log(config.Settings.useMockData());
 				}
 			});
-			uni.removeStorage({
-				key: 'LatestData'
-			});
+			//uni.removeStorage({
+			//	key: 'LatestData'
+			//});
 			uni.removeStorage({
 				key: 'ChartsData'
 			});
@@ -224,7 +226,8 @@ export default {
 		if (!this.hasLogin) {
 			// 避免取消登录
 			this.$Router.push('/pages/login/login');
-		}
+		}		
+		uni.hideKeyboard(); // 无效???
 	}
 };
 </script>

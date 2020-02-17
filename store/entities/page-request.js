@@ -1,4 +1,4 @@
-export default class  PagedFilterAndSortedRequest{
+export default class PagedFilterAndSortedRequest{
     //maxResultCount:number;
     //skipCount:number;
     //sorting:string;

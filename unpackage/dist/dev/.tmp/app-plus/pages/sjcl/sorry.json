@@ -1,0 +1,15 @@
+{
+  "navigationBarTitleText": "仪器检定",
+  "bounce": "none",
+  "titleNView": {
+    "buttons": [
+      {
+        "fontSrc": "/static/iconfont.ttf",
+        "text": "",
+        "fontSize": "21",
+        "color": "white"
+      }
+    ]
+  },
+  "usingComponents": {}
+}

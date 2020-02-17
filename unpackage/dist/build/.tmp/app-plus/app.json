@@ -1,22 +1,32 @@
 {
   "pages": [
     "pages/main/main",
-    "pages/login/login",
-    "pages/component/ucharts/ucharts",
-    "pages/user/user",
-    "pages/main/home",
-    "pages/test/test",
-    "pages/set/set",
-    "pages/address/address",
-    "pages/address/addressManage",
-    "pages/notice/notice",
-    "pages/userinfo/userinfo",
-    "pages/about/about",
-    "pages/scan/scan",
     "pages/verification/verification",
     "pages/check/check",
     "pages/approve/approve",
-    "pages/wtd/wtd"
+    "pages/login/login",
+    "pages/component/ucharts/ucharts",
+    "pages/user/user",
+    "pages/test/test",
+    "pages/user/set",
+    "pages/address/address",
+    "pages/address/addressManage",
+    "pages/notice/notice",
+    "pages/about/about",
+    "pages/scan/scan",
+    "pages/wtd/wtd",
+    "pages/user/changePwd",
+    "pages/user/userinfo",
+    "pages/zhcx/zhcx",
+    "pages/wtdcx/wtdcx",
+    "pages/sjcl/1000/1000",
+    "pages/sjcl/1000/1000_hy",
+    "pages/sjcl/1000/1000_pz",
+    "pages/sjcl/sorry",
+    "pages/sjcl/1000/set",
+    "pages/sjcl/update_ccbh",
+    "pages/sjcl/1000/update_jbcs",
+    "pages/sign/sign"
   ],
   "window": {
     "navigationBarTextStyle": "white",
@@ -41,15 +51,16 @@
         "selectedIconPath": "static/img/verificationHL.png"
       },
       {
-        "pagePath": "pages/scan/scan",
-        "iconPath": "static/img/scan.png",
-        "selectedIconPath": "static/img/scanHL.png"
+        "pagePath": "pages/check/check",
+        "iconPath": "static/img/check.png",
+        "selectedIconPath": "static/img/checkHL.png",
+        "text": "核验"
       },
       {
-        "pagePath": "pages/check/check",
+        "pagePath": "pages/approve/approve",
         "iconPath": "static/img/approve.png",
         "selectedIconPath": "static/img/approveHL.png",
-        "text": "核验"
+        "text": "批准"
       },
       {
         "pagePath": "pages/user/user",
@@ -59,13 +70,14 @@
       }
     ]
   },
-  "nvueCompiler": "weex",
+  "nvueCompiler": "uni-app",
+  "renderer": "auto",
   "splashscreen": {
     "alwaysShowBeforeRender": false,
     "autoclose": true
   },
-  "appname": "hello_uni_login",
-  "compilerVersion": "2.1.3",
+  "appname": "测绘仪器检定",
+  "compilerVersion": "2.5.1",
   "usingComponents": {
     "router-link": "/node-modules/uni-simple-router/component/router-link"
   }

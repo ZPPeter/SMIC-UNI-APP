@@ -33,21 +33,18 @@
 /* 行为相关颜色 */
 .fab-box {
   position: absolute;
-  right: 40rpx;
+  left: 40rpx;
   bottom: 40rpx;
   width: 90rpx;
   height: 90rpx;
   display: -webkit-box;
   display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
   -webkit-justify-content: center;
-      -ms-flex-pack: center;
           justify-content: center;
   -webkit-box-align: center;
   -webkit-align-items: center;
-      -ms-flex-align: center;
           align-items: center;
   z-index: 2;
 }
@@ -57,15 +54,12 @@
 .fab-circle {
   display: -webkit-box;
   display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
   -webkit-justify-content: center;
-      -ms-flex-pack: center;
           justify-content: center;
   -webkit-box-align: center;
   -webkit-align-items: center;
-      -ms-flex-align: center;
           align-items: center;
   position: absolute;
   width: 110rpx;
@@ -73,8 +67,7 @@
   background: dodgerblue;
   /* background: #5989b9; */
   border-radius: 50%;
-  -webkit-box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.2);
-          box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.2);
   z-index: 11;
 }
 .fab-circle.left {
@@ -93,7 +86,6 @@
   color: #ffffff;
   font-size: 50rpx;
   -webkit-transition: all 0.3s;
-  -o-transition: all 0.3s;
   transition: all 0.3s;
   font-weight: bold;
 }
@@ -104,24 +96,21 @@
 }
 .list_items {
   margin: 21rpx;
-  background-color: #F8F8F8;
-  border: 1px #DCDCDC solid;
+  background-color: #f8f8f8;
+  border: 1px #dcdcdc solid;
 }
 .list-info {
   padding: 12rpx 15rpx;
   display: -webkit-box;
   display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
   width: 100%;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
   -webkit-flex-direction: row;
-      -ms-flex-direction: row;
           flex-direction: row;
   -webkit-box-align: center;
   -webkit-align-items: center;
-      -ms-flex-align: center;
           align-items: center;
   position: relative;
   z-index: 1;
@@ -144,5 +133,11 @@
 .list-info .content .wtdw {
       font-size: 26rpx;
       color: #8f8f94;
+}
+.list-info .content .jdqx {
+      font-size: 26rpx;
+      color: #e54d42;
+      font-weight: 600;
+      text-decoration: line-through;
 }
 

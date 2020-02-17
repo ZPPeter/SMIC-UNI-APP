@@ -7,7 +7,7 @@
 				<text class="info">用户：{{ userInfo.realname }}</text>
 			</view>
 			<view>
-				<text class="info">权限：{{ userInfo.roles.toString() }}</text>
+				<text class="info">权限：{{ userInfo.roleNames.toString() }}</text>
 			</view>
 		</view>
 	</view>

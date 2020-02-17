@@ -65,10 +65,11 @@ page {
   color: #303133;
 }
 .left-top-sign {
-  font-size: 120rpx;
+  font-size: 80rpx;
   color: #f8f8f8;
   position: relative;
-  left: 10rpx;
+  left: 380rpx;
+  top: -10rpx;
 }
 .right-top-sign {
   position: absolute;
@@ -86,7 +87,6 @@ page {
 }
 .right-top-sign:before {
     -webkit-transform: rotate(50deg);
-        -ms-transform: rotate(50deg);
             transform: rotate(50deg);
     border-radius: 0 50px 0 0;
 }
@@ -95,7 +95,6 @@ page {
     right: -198rpx;
     top: 0;
     -webkit-transform: rotate(-50deg);
-        -ms-transform: rotate(-50deg);
             transform: rotate(-50deg);
     border-radius: 50px 0 0 0;
     /* background: pink; */
@@ -112,7 +111,7 @@ page {
 .welcome {
   position: relative;
   left: 50rpx;
-  top: -90rpx;
+  top: -50rpx;
   font-size: 46rpx;
   color: #555;
   text-shadow: 1px 0px 1px rgba(0, 0, 0, 0.3);
@@ -120,30 +119,26 @@ page {
 .welcome1 {
   position: relative;
   left: 50rpx;
-  top: -90rpx;
+  top: -50rpx;
   font-size: 30rpx;
   color: #c0c0c0;
 }
 .input-content {
-  padding: 0 60rpx;
+  padding: 0 20rpx;
 }
 .input-item {
   display: -webkit-box;
   display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
   -webkit-flex-direction: column;
-      -ms-flex-direction: column;
           flex-direction: column;
   -webkit-box-align: start;
   -webkit-align-items: flex-start;
-      -ms-flex-align: start;
           align-items: flex-start;
   -webkit-box-pack: center;
   -webkit-justify-content: center;
-      -ms-flex-pack: center;
           justify-content: center;
   padding: 0 30rpx;
   height: 120rpx;

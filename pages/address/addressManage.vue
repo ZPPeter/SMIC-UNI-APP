@@ -2,11 +2,11 @@
 	<view class="content">
 		<view class="row b-b">
 			<text class="tit">联系人</text>
-			<input class="input" type="text" v-model="addressData.name" placeholder="收货人姓名" placeholder-class="placeholder" />
+			<input class="input" type="text" v-model="addressData.name" placeholder="联系人姓名" placeholder-class="placeholder" />
 		</view>
 		<view class="row b-b">
 			<text class="tit">手机号</text>
-			<input class="input" type="number" v-model="addressData.mobile" placeholder="收货人手机号码" placeholder-class="placeholder" />
+			<input class="input" type="number" v-model="addressData.mobile" placeholder="联系人手机号码" placeholder-class="placeholder" />
 		</view>
 		<view class="row b-b">
 			<text class="tit">地址</text>
@@ -16,8 +16,8 @@
 			<text class="yticon icon-shouhuodizhi"></text>
 		</view>
 		<view class="row b-b"> 
-			<text class="tit">门牌号</text>
-			<input class="input" type="text" v-model="addressData.area" placeholder="楼号、门牌" placeholder-class="placeholder" />
+			<text class="tit">区域</text>
+			<input class="input" type="text" v-model="addressData.area" placeholder="具体位置" placeholder-class="placeholder" />
 		</view>
 		
 		<view class="row default-row">
@@ -43,9 +43,9 @@
 			}
 		},
 		onLoad(option){
-			let title = '新增收货地址';
+			let title = '新增地址';
 			if(option.type==='edit'){
-				title = '编辑收货地址'
+				title = '编辑地址'
 				
 				this.addressData = JSON.parse(option.data)
 			}
@@ -73,7 +73,7 @@
 			confirm(){
 				let data = this.addressData;
 				if(!data.name){
-					this.$api.msg('请填写收货人姓名');
+					this.$api.msg('请填写联系人姓名');
 					return;
 				}
 				if(!/(^1[3|4|5|7|8][0-9]{9}$)/.test(data.mobile)){

@@ -1,0 +1,17 @@
+{
+  "navigationBarTitleText": "GPS接收机检定核验",
+  "bounce": "none",
+  "titleNView": {
+    "buttons": [
+      {
+        "fontSrc": "/static/iconfont.ttf",
+        "text": "",
+        "fontSize": "21",
+        "color": "White"
+      }
+    ]
+  },
+  "usingComponents": {
+    "result-data": "/pages/sjcl/1030/result"
+  }
+}

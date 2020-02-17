@@ -1,56 +1,56 @@
 <template>
 	<view>
-		<view class="notice-item">
-			<view class="content0">
-				<text class="title0">欢迎{{ showInfo }}{{ userInfo.realname }}</text>
-			</view>
-		</view>
-		<view class="notice-item" v-for="(item, index) in list" :key="index">
-			<view class="content">
-				<view class="title1">
-					<div style="background-color: #0081FF;width:4px;height:12px;vertical-align: bottom;"></div>
-					<text class="title">{{ item.title }}</text>
+		<mescroll-uni @down="downCallback" @up="upCallback">
+			<view class="notice-item">
+				<view class="content0">
+					<text class="title0">欢迎{{ showInfo }}{{ userInfo.realname }}</text>
 				</view>
-				<hr />
-				<text class="details">{{ item.description }}</text>
-				<text :class="before(item.creationTime)? 'time2' : 'time'">
-				{{ format(item.creationTime) }}</text>
 			</view>
-		</view>
-		<view style="padding-top: 48upx;">
-			<uni-pagination :current="current" :total="total" :pageSize="pageSize" title="消息" prev-text="上一页" next-text="下一页" @change="change" />
-		</view>
-		<view class="btn-view">
-			<view>当前页：{{ current }}，数据总量：{{ total }}条，每页数据：{{ pageSize }}</view>
-		</view>
+			<pd-list :list="pdList"></pd-list>
+		</mescroll-uni>
 	</view>
 </template>
 
 <script>
 import { mapState } from 'vuex';
-import uniPagination from '@/components/uni-pagination/uni-pagination.vue';
 import utils from '@/libs/common/utils.js';
+import MescrollUni from '@/components/mescroll-uni/mescroll-uni.vue';
+import PdList from '@/pages/component/notice_list/notice_list.vue';
 import PageRequest from '@/store/entities/page-request';
-class PageNoticeRequest extends PageRequest {
-}
+class PageNoticeRequest extends PageRequest {};
 export default {
 	components: {
-		uniPagination
+		MescrollUni,
+		PdList
 	},
 	data() {
 		return {
-			current: 1,
-			total: 0,
-			pageSize: 3,
-			list: [],
-			pagerequest: new PageNoticeRequest()
+			pageNum: 1,
+			pagerequest: new PageNoticeRequest(),
+			pdList: []
 		};
 	},
-	onLoad: async function(e) {
-		this.getNotice();		
+	onNavigationBarButtonTap(e) {
+		const index = e.index;
+		//console.log(index);
+		if (index === 0) {
+			uni.switchTab({
+				url: '/pages/main/main'
+			});
+		}
 	},
+	onLoad: async function(e) {},
+	/*
+	onPullDownRefresh() {
+		console.log('refresh');
+		setTimeout(function() {
+			uni.stopPullDownRefresh();
+		}, 1000);
+	},*/
 	onUnload: function() {
-		this.$store.dispatch("notice/setReadLastNoticeTime");
+		//console.log('UnLoad');
+		this.$store.state.user.newNotices = 0;
+		this.$store.dispatch('notice/setReadLastNoticeTime');
 		this.$store.state.user.readLastNoticeTime = new Date();
 		//console.log(this.$store.state.user.readLastNoticeTime);
 	},
@@ -64,32 +64,80 @@ export default {
 		}
 	},
 	methods: {
-		change(e) {			
-			this.current = e.current;
-			this.getNotice();
+		/*下拉刷新的回调 */
+		downCallback(mescroll) {
+			// 这里加载你想下拉刷新的数据, 比如刷新轮播数据
+			// loadSwiper();
+			// 下拉刷新的回调,默认重置上拉加载列表为第一页 (自动执行 mescroll.num=1, 再触发upCallback方法 )
+			mescroll.resetUpScroll();
 		},
-		format(item) {
-			//return new Date(item).Format('yyyy.MM.dd hh:mm:ss');
-			return this.$moment(item).format('YYYY.MM.DD HH:mm:ss');
+		/*上拉加载的回调: mescroll携带page的参数, 其中num:当前页 从1开始, size:每页数据条数,默认10 */
+		upCallback(mescroll) {
+			//联网加载数据
+			this.getListDataFromNet(
+				mescroll.num,
+				mescroll.size,
+				curPageData => {
+					//console.log(curPageData);
+					//curPageData=[]; //打开本行注释,可演示列表无任何数据empty的配置
+
+					//联网成功的回调,隐藏下拉刷新和上拉加载的状态;
+					//mescroll会根据传的参数,自动判断列表如果无任何数据,则提示空;列表无下一页数据,则提示无更多数据;
+					//console.log('mescroll.num=' + mescroll.num + ', mescroll.size=' + mescroll.size + ', curPageData.length=' + curPageData.length);
+
+					//方法一(推荐): 后台接口有返回列表的总页数 totalPage
+					//mescroll.endByPage(curPageData.length, totalPage); //必传参数(当前页的数据个数, 总页数)
+
+					//方法二(推荐): 后台接口有返回列表的总数据量 totalSize
+					//mescroll.endBySize(curPageData.length, totalSize); //必传参数(当前页的数据个数, 总数据量)
+
+					//方法三(推荐): 您有其他方式知道是否有下一页 hasNext
+					//mescroll.endSuccess(curPageData.length, hasNext); //必传参数(当前页的数据个数, 是否有下一页true/false)
+
+					//方法四 (不推荐),会存在一个小问题:比如列表共有20条数据,每页加载10条,共2页.如果只根据当前页的数据个数判断,则需翻到第三页才会知道无更多数据
+					mescroll.endSuccess(curPageData.length);
+
+					//设置列表数据
+					if (mescroll.num == 1) this.pdList = []; //如果是第一页需手动制空列表
+					this.pdList = this.pdList.concat(curPageData); //追加新数据
+					//console.log(curPageData);
+				},
+				() => {
+					//联网失败的回调,隐藏下拉刷新的状态
+					mescroll.endErr();
+				}
+			);
 		},
-		before(item){
-			return this.$moment(this.$store.state.user.readLastNoticeTime).isBefore(item)
-		},
-		lastReadTime() {
-			return this.$store.state.user.readLastNoticeTime;
-		},
-		async getNotice() {
-			this.pagerequest.maxResultCount = this.pageSize;
-			this.pagerequest.skipCount = (this.current - 1) * this.pageSize;
+		// 官方写法: http://www.mescroll.com/uni.html#tagUpCallback
+		async getListDataFromNet(pageNum, pageSize, successCallback, errorCallback) {
+			this.pagerequest.maxResultCount = pageSize;
+			this.pagerequest.skipCount = (pageNum - 1) * pageSize;			
 			const res = await this.$store.dispatch({
 				type: 'notice/GetNotices',
 				data: this.pagerequest
-			});			
-			this.total = res.totalCount;			                 
-			this.list = res.items;
-			//console.log(res);
-			//console.log(this.list);
-			//console.log(this.lastReadTime());
+			});
+			if (res != '') {
+				//console.log(res);
+				successCallback && successCallback(res.items);
+			}
+			else
+			errorCallback && errorCallback();
+			/*
+			//延时一秒,模拟联网
+			setTimeout(() => {
+				try {					
+					let data = pdlistNor;
+					let listData = [];
+					for (let i = (pageNum - 1) * pageSize; i < pageNum * pageSize; i++) {
+						if (i == data.length) break;
+						listData.push(data[i]);
+					}
+					successCallback && successCallback(listData);
+				} catch (e) {					
+					errorCallback && errorCallback();
+				}
+			}, 1000);
+			*/
 		}
 	}
 };
@@ -119,98 +167,5 @@ hr {
 	flex-direction: column;
 	align-items: center;
 	padding-top: 12upx;
-}
-.title1 {
-	display: flex;
-	width: 90%;
-	text-align: left;
-	margin-left: 0px;
-	align-items: center;
-}
-.time {
-	display: flex;
-	align-items: center;
-	justify-content: flex-end;
-	text-align: right;
-	height: 80upx;
-	padding-top: 10upx;
-	padding-right: 50upx;
-	font-size: 26upx;
-	color: #7d7d7d;
-	width: 100%;
-}
-.time2 {
-	display: flex;
-	align-items: center;
-	justify-content: flex-end;
-	text-align: right;
-	height: 80upx;
-	padding-top: 10upx;
-	padding-right: 50upx;
-	font-size: 26upx;
-	color: red;
-	width: 100%;
-}
-.content {
-	width: 710upx;
-	padding: 0 24upx;
-	border-radius: 18upx;
-	background-color: #f0f0f0;
-}
-.title {
-	display: flex;
-	align-items: center;
-	height: 90upx;
-	font-size: 28upx;
-	margin-left: 5px;
-	//color: #0081ff; //#303133;
-}
-.img-wrapper {
-	width: 100%;
-	height: 260upx;
-	position: relative;
-}
-.pic {
-	display: block;
-	width: 100%;
-	height: 100%;
-	border-radius: 6upx;
-}
-
-.cover {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	position: absolute;
-	left: 0;
-	top: 0;
-	width: 100%;
-	height: 100%;
-	background-color: rgba(0, 0, 0, 0.5);
-	font-size: 36upx;
-	color: #fff;
-}
-.details {
-	display: inline-block;
-	padding: 12upx 0;
-	font-size: 28upx;
-	color: #606266;
-	line-height: 38upx;
-}
-.bot {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	height: 80upx;
-	font-size: 24upx;
-	color: #707070;
-	position: relative;
-}
-.more-icon {
-	font-size: 32upx;
-}
-.btn-view {
-	margin: 30upx 30upx 0;
-	text-align: center;
 }
 </style>

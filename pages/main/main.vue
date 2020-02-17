@@ -1,44 +1,8 @@
 <template>
 	<view class="container">
 		<view class="content">
-			<view class="user-section">
-				<image class="bg" src="/static/img/user-bg.jpg"></image>
-				<image class="logo" src="/static/img/logo.png"></image>
-				<view class="user-info-box">
-					<view class="portrait-box"><image class="portrait" :src="userInfo.portrait || '/static/img/missing-face.png'" @click="GotoLogo"></image></view>
-					<view>
-						<text class="username">{{ userInfo.realname || '未登录' }}</text>
-					</view>
-				</view>
-				<view class="list-info-box">
-					<view class="list-item">
-						<text class="list-num">{{ latestData.Data[0] }}</text>
-						<text class="list">待检</text>
-					</view>
-					<view class="list-item">
-						<text class="list-num">{{ latestData.Data[1] }}</text>
-						<text class="list">在检</text>
-					</view>
-					<view class="list-item">
-						<text class="list-num">{{ latestData.Data[2] }}</text>
-						<text class="list">核验</text>
-					</view>
-					<view class="list-item">
-						<text class="list-num">{{ latestData.Data[3] }}</text>
-						<text class="list">批准</text>
-					</view>
-				</view>
-			</view>
-			<view class="dashboard">
-				<view class="dashboard1">工作台</view>
-				<view class="dashboard2">
-					<view class="cu-capsule radius">
-						<view class="cu-tag bg-grey ">我的工作量</view>
-						<view class="cu-tag line-grey">{{ latestData.Data[4] }}</view>
-					</view>
-				</view>
-			</view>
-			<view style="padding-top: 20upx;"><u-charts></u-charts></view>
+			<view class="dashboard0"><dash-board :datas="GetHomeData()"></dash-board></view>
+			<view style="padding-top: 20upx;"><u-charts :percentage="GetStats()"></u-charts></view>
 			<view class="uni-swiper-msg" style="text-align: left;width: 100%;font-size: 32upx;padding-top: 10upx;">
 				<view class="uni-swiper-msg-icon">
 					<!-- icon type="info" size="14" color="darkgray" / -->
@@ -46,26 +10,25 @@
 					<text class="cuIcon-title text-orange " style="margin-left: 30upx;font-size: 30upx;"></text>
 				</view>
 				<swiper vertical="true" autoplay="true" circular="true" interval="3000">
-					<swiper-item v-for="(item, index) in latestData.List" :key="index">
-						<navigator>{{ item }}</navigator>
-					</swiper-item>
+					<swiper-item v-for="(item, index) in NoticeList" :key="index">{{ item }}</swiper-item>
 				</swiper>
 			</view>
 		</view>
 		<view class="infoBox">
-			<view class="fab-box fab">
+			<!-- view class="fab-box fab">
 				<view class="fab-circle" @click="doScan"><text class="iconfont icon-saoma1 fontsize"></text></view>
-			</view>
+			</view -->
 			<!-- App+ 不支持滚动 -->
-			<view><uni-notice-bar class="noticebar" show-icon="true" :text="latestData.HomeInfo"></uni-notice-bar></view>
+			<view><uni-notice-bar class="noticebar" show-icon="true" :text="GetHomeInfo()"></uni-notice-bar></view>
 		</view>
-		<view class="time">{{ gDate }}{{ gTime }}</view>
+		<view class="time" @longpress="GotoTest()">{{ gDate }}{{ gTime }}</view>
 	</view>
 </template>
 
 <script>
 import { mapState } from 'vuex';
 import uCharts from '@/pages/component/ucharts/ucharts.vue';
+import dashBoard from '@/pages/component/dashboard/dashboard.vue';
 import uniNoticeBar from '@/components/uni-notice-bar/uni-notice-bar.vue';
 import utils from '@/libs/common/utils.js';
 import App from '@/App';
@@ -74,38 +37,55 @@ var d = new Date();
 export default {
 	components: {
 		uCharts,
-		uniNoticeBar
+		uniNoticeBar,
+		dashBoard
 	},
 	data() {
 		return {
 			gDate: new Date().Format('yyyy年MM月dd日 ') + weekAry[d.getDay()],
 			gTime: new Date().Format(' hh:mm:ss'),
+			NoticeList: [' 正在连接服务器..', ' 正在连接服务器...'],
 			modalName: null,
-			latestData: {
-				HomeInfo: '欢迎使用SMIC测绘仪器检定系统！', // HomeInfo.ID = 1
-				List: [
-					' 正在连接服务器..',
-					' 正在连接服务器...'
-				],// 只有一条消息要再重复一遍
-				Data: [0, 0, 0, 0, 0]
-			}
+			tabbar: true,
+			windowHeight: ''
 		};
 	},
 	computed: mapState(['hasLogin', 'userInfo']),
 	// #ifndef MP
+	onNavigationBarSearchInputClicked() {
+		//console.log('Clicked');
+		if (this.hasLogin) {
+			this.$Router.push('/pages/wtdcx/wtdcx');
+		} else this.$Router.push('/pages/login/login');
+	},
+	onNavigationBarSearchInputConfirmed(e) {
+		// 内容顶起 乱
+		if (this.hasLogin) {
+			//console.log(e.text);
+			//this.$Router.push('/pages/wtd/wtd');
+			// 带查询参数，变成 /router1?filterText=private
+			this.$Router.push({ path: '/pages/wtdcx/wtdcx', query: { filterText: e.text } });
+		} else this.$Router.push('/pages/login/login');
+	},
 	onNavigationBarButtonTap(e) {
+		// 二维码扫描
 		if (!this.hasLogin) this.$Router.push('/pages/login/login');
 		else {
 			const index = e.index;
-			//if (index === 0) {
-			//	uni.scanCode({
-			//		onlyFromCamera: true,
-			//		success: function(res) {
-			//			console.log('条码类型：' + res.scanType);
-			//			console.log('条码内容：' + res.result);
-			//		}
-			//	});
-			//} else if (index === 1) {
+			//console.log(index);
+			if (index === 1) {
+				//this.navTo('/pages/test/test');
+				uni.scanCode({
+					onlyFromCamera: true,
+					success: function(res) {
+						console.log('条码类型：' + res.scanType);
+						console.log('条码内容：' + res.result);
+					}
+				});
+			}
+			if (index === 2) {
+				this.$Router.push('/pages/zhcx/zhcx');
+			}
 			// #ifdef APP-PLUS
 			const pages = getCurrentPages();
 			const page = pages[pages.length - 1];
@@ -118,14 +98,35 @@ export default {
 			//	url: '/pages/notice/notice'
 			//});
 			//this.navTo('/pages/wtd/wtd');
-			this.navTo('/pages/test/test');
 			//}
 		}
 	},
 	// #endif
 	methods: {
+		test() {
+			/*
+			const subNVue = uni.getSubNVueById('test');
+			console.log(subNVue);
+			subNVue.show('slide-in-left',200,()=>{
+			    console.log('subNVue 原生子窗体显示成功');
+			})*/
+		},
+		GetHomeInfo() {
+			return this.$store.state.latestData.HomeInfo;
+		},
+		GetStats() {
+			if (this.$store.state.isConnected) {
+				this.NoticeList = this.$store.state.latestData.List;
+			}
+			return this.$store.state.latestData.stats;
+		},
+		GetHomeData() {
+			//console.log(this.$store.state.latestData.Data);
+			return this.$store.state.latestData.Data || [0, 0, 0, 0, 0, 0, 1, 0, 0];
+		},
 		GotoTest() {
-			this.navTo('/pages/test/test');
+			//this.navTo('/pages/test/test');
+			this.navTo('/pages/sign/sign');
 		},
 		GotoLogo() {
 			if (this.hasLogin) this.$Router.push('/pages/user/userinfo');
@@ -148,7 +149,23 @@ export default {
 		}
 	},
 	onLoad: async function(e) {
-		// console.log(this.latestData.HomeInfo);
+		// #ifdef APP-PLUS
+		var webView = this.$mp.page.$getAppWebview();
+		// 修改buttons
+		// index: 按钮索引, style {WebviewTitleNViewButtonStyles }
+		webView.setTitleNViewButtonStyle(0, {
+			text: '',
+			width: '35px',
+			fontWeight: 'bold',
+			fontSize: '18px',
+			background: '#0081FF'
+		});
+		var view = new plus.nativeObj.View('LogoImg', { top: '30px', left: '7px', height: '35px', width: '35px' }, [
+			{ tag: 'img', id: 'img', src: '/static/img/logo.png', position: { top: '0px', left: '0px', width: '100%', height: '100%' } }
+		]);
+		view.show();
+		// #endif
+
 		/*
 		   读取缓存 LatestData
 		   读取服务器，成功后刷新并缓存
@@ -156,6 +173,7 @@ export default {
 
 		// 只加载一次
 		if (!this.hasLogin) this.$Router.push('/pages/login/login');
+
 		/*
 		uni.showModal({
 			title:'提示',
@@ -187,36 +205,17 @@ export default {
 		this.timer = setInterval(() => {
 			this.gTime = new Date().Format(' hh:mm:ss'); // new Date().Format("yyyy年MM月dd日 hh:mm:ss");
 		}, 500);
-
-		const res = await this.$store.dispatch({
-			type: 'app/GetHomeInfos'
-		});
-
-		if (res != '') {
-			//console.log(res.length);
-			this.latestData.HomeInfo = res[0].description.replace('<br>', '');
-			if (res.length > 1) {
-				this.$store.state.user.newNotices = res.length-1;
-				uni.showTabBarRedDot({
-					index: 4
-				});
-			}
-			if (res.length == 2) {
-				this.latestData.List.push(' ' + res[1].description.replace('<br>', ''));
-				this.latestData.List.push(' ' + res[1].description.replace('<br>', ''));
-			}
-			if (res.length >= 2) {
-				this.latestData.List.length = 0;
-				for (var i = 1; i < res.length; i++) {
-					this.latestData.List.push(' ' + res[i].description.replace('<br>', ''));
-				}
-			}
-		} else {
-			this.latestData.List.push(' 正在连接服务器.');
-		}
 	},
 	onShow() {
-		// 页面刷新
+		if (uni.getSystemInfoSync().platform === 'android') {
+			var icon = plus.nativeObj.View.getViewById('LogoImg');
+			if (icon) {
+				setTimeout(function() {
+					icon.show();
+					plus.key.hideSoftKeybord();
+				}, 100);
+			}
+		}
 	}
 };
 </script>
@@ -233,15 +232,16 @@ page {
 }
 .infoBox {
 	position: absolute;
-	bottom: 120upx;
-	left: 60upx;
-	//width: 100%;
+	bottom: 80upx;
+	//left: 60upx;
+	width: 100%;
 	flex-direction: row;
 	flex: 1;
+	background-color: #fffbe8;
 }
 .noticebar {
 	//margin-left: 90upx;
-	padding-left: 25upx;
+	padding: 10upx;
 	font-size: $font-lg;
 	//height:240upx;
 }
@@ -313,18 +313,22 @@ page {
 }
 .logo {
 	position: absolute;
-	right: 190upx;
-	top: 110upx;
-	width: 190upx;
-	height: 170upx;
+	left: 10upx;
+	top: 100upx;
+	width: 90upx;
+	height: 70upx;
 }
 .user-info-box {
 	//flex-direction: column;
+	width: 95%;
 	height: 180upx;
 	//display: flex;
 	align-items: center;
-	position: relative;
+	position: absolute; //relative
+	top: 150upx;
 	z-index: 1;
+	.portrait-box {
+	}
 	.portrait {
 		width: 130upx;
 		height: 130upx;
@@ -339,11 +343,43 @@ page {
 		text-shadow: 1px 0px 1px rgba(0, 0, 0, 0.3);
 	}
 }
+.list-info {
+	justify-content: space-around;
+	align-content: center;
+	//position: relative;
+	position: absolute;
+	right: 120upx;
+	margin-top: 0upx;
+	z-index: 1;
+	.list-item {
+		//display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: right;
+		width: 100%;
+		height: 120upx;
+		//border-radius: 10upx;
+		font-size: $font-sm + 2upx;
+		color: $font-color-dark;
+	}
+	.data {
+		font-size: $font-lg + 96upx;
+		color: #e4e7ed; //#555;
+		text-shadow: 1px 5px 5px rgba(0, 0, 0, 0.8);
+	}
+	.data1 {
+		font-size: $font-lg;
+		color: #555;
+		position: absolute;
+		top: 60upx;
+		right: -40upx;
+	}
+}
 .list-info-box {
 	justify-content: space-around;
 	align-content: center;
 	position: relative;
-	margin-top: 70upx;
+	margin-top: 240upx;
 	z-index: 1;
 	.list-item {
 		//display: flex;
@@ -386,6 +422,10 @@ page {
 	}
 }
 .container {
+	position: relative;
+	width: 100vw;
+	height: 100vh;
+	overflow: hidden;
 	flex-direction: column;
 	flex: 1;
 	.time {
@@ -403,5 +443,8 @@ page {
 .content {
 	flex-direction: column;
 	flex: 1;
+}
+.dashboard0 {
+	width: 100%;
 }
 </style>

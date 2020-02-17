@@ -11,20 +11,38 @@
 					"bounce": "none",
 					"titleNView": {
 						"type": "transparent",
-						"buttons": [
-							/*{
-								"text": "\ue624",
-								"fontSrc": "/static/iconfont.ttf",								
-								"fontSize": "24px",
-								"color": "navajowhite"
-								//,
-								//"width": "46px",
-								//"background": "rgba(0,0,0,0)"
-							},*/
+						/*"titleText": "",
+						"tags": [{
+							"tag": "img",
+							"src": "/static/nav.png",
+							"position": {
+								"left": "auto",
+								"top": "auto",
+								"width": "110px",
+								"height": "26px"
+							}
+						}],*/
+						"searchInput": {
+							"backgroundColor": "rgba(231, 231, 231,.7)",
+							"borderRadius": "8px",
+							"placeholder": "委托单信息查询",
+							"disabled": true, // true -> Clicked
+							"placeholderColor": "#606266"
+						},
+						"buttons": [{
+								"text": "", //\ue613
+								"float": "left"
+							},
 							{
-								"text": "\ue613",
-								"fontSrc": "/static/iconfont.ttf",								
-								"fontSize": "24px",
+								"text": "\ue624", // 二维码
+								"fontSrc": "/static/iconfont.ttf",
+								"fontSize": "19",
+								"color": "black"
+							},
+							{
+								"text": "\ue64f", // 送检明细
+								"fontSrc": "/static/iconfont.ttf",
+								"fontSize": "19",
 								"color": "black"
 							}
 						]
@@ -32,32 +50,29 @@
 				}
 			}
 		},
-{
+		{
 			"path": "pages/verification/verification",
 			"style": {
 				"navigationBarTitleText": "仪器检定",
+				"disableScroll": true,
 				"app-plus": {
 					"bounce": "none",
 					"titleNView": {
 						//"type": "transparent",
 						"searchInput": {
 							"backgroundColor": "rgba(231, 231, 231,.7)",
-							"borderRadius": "16px",
-							"placeholder": "出厂编号/委托单号",
-							"disabled": true,
+							"borderRadius": "8px",
+							"placeholder": "委托单位/委托单号/出厂编号",
+							"disabled": false,
 							"placeholderColor": "#606266"
 						},
 						"buttons": [{
-								"fontSrc": "/static/iconfont.ttf",
-								"text": "\ue613",
-								"fontSize": "21",
-								"color": "white",
-								"float": "left",
-								"background": "rgba(0,0,0,0)"
+								"text": "",
+								"float": "left"
 							},
 							{
 								"fontSrc": "/static/iconfont.ttf",
-								"text": "\ue657",
+								"text": "\ue624",
 								"fontSize": "24",
 								"color": "ghostwhite",
 								"width": "46px",
@@ -77,28 +92,24 @@
 						//"type": "transparent",
 						"searchInput": {
 							"backgroundColor": "rgba(231, 231, 231,.7)",
-							"borderRadius": "16px",
-							"placeholder": "出厂编号/委托单号",
-							"disabled": true,
+							"borderRadius": "8px",
+							"placeholder": "委托单位/委托单号/出厂编号",
+							"disabled": false,
 							"placeholderColor": "#606266"
 						},
-						"buttons": [
-							{
-									"fontSrc": "/static/iconfont.ttf",
-									"text": "\ue613",
-									"fontSize": "21",
-									"color": "white",
-									"float": "left",
-									"background": "rgba(0,0,0,0)"
+						"buttons": [{
+								"text": "",
+								"float": "left"
 							},
 							{
-							"fontSrc": "/static/iconfont.ttf",
-							"text": "\ue657",
-							"fontSize": "24",
-							"color": "ghostwhite"
-							//,"width": "46px",
-							//"background": "rgba(0,0,0,0)"
-						}]
+								"fontSrc": "/static/iconfont.ttf",
+								"text": "\ue624",
+								"fontSize": "24",
+								"color": "ghostwhite"
+								//,"width": "46px",
+								//"background": "rgba(0,0,0,0)"
+							}
+						]
 					}
 				}
 			}
@@ -106,34 +117,29 @@
 			"path": "pages/approve/approve",
 			"style": {
 				"navigationBarTitleText": "检定结果批准",
-				"enablePullDownRefresh":true,
+				// "enablePullDownRefresh": true, //下拉刷新 mescroll-uni 需要关闭这个
 				//"navigationStyle": "custom",
 				"app-plus": {
-					"bounce": "none",					
+					"bounce": "none",
 					"titleNView": {
 						"searchInput": {
 							"backgroundColor": "rgba(231, 231, 231,.7)",
-							"borderRadius": "16px",
-							"placeholder": "委托单号",
-							"disabled": true,
+							"borderRadius": "8px",
+							"placeholder": "委托单位/委托单号/出厂编号",
+							"disabled": false,
 							"placeholderColor": "#606266"
 						},
-						"buttons": [
-						{
+						"buttons": [{
+								"text": "",
+								"float": "left"
+							},
+							{
 								"fontSrc": "/static/iconfont.ttf",
-								"text": "\ue613",
-								"fontSize": "21",
-								"color": "white",
-								"float": "left",
+								"text": "\ue624",
+								"fontSize": "24",
+								"color": "ghostwhite",
 								"background": "rgba(0,0,0,0)"
-							},	
-						{
-							"fontSrc": "/static/iconfont.ttf",
-							"text": "\ue657",
-							"fontSize": "24",
-							"color": "ghostwhite",
-							"background": "rgba(0,0,0,0)"
-						}						
+							}
 						]
 					},
 					"animationType": "slide-in-bottom"
@@ -179,6 +185,13 @@
 					"titleNView": {
 						"type": "transparent",
 						"buttons": [{
+								"text": "测绘仪器检定", //\ue613
+								"float": "left",
+								"width": "195px",
+								"fontSize": "18",
+								"background": "rgba(0,0,0,0)"
+							},
+							{
 								"fontSrc": "/static/yticon.ttf",
 								"text": "\ue60f",
 								"fontSize": "24",
@@ -199,11 +212,6 @@
 				}
 			}
 		}, {
-			"path": "pages/main/home",
-			"style": {
-				"navigationBarTitleText": "主页"
-			}
-		}, {
 			"path": "pages/test/test",
 			"style": {
 				"navigationBarTitleText": "测试"
@@ -211,10 +219,10 @@
 		}, {
 			"path": "pages/user/set",
 			"style": {
-				"navigationBarTitleText": "设置",
+				"navigationBarTitleText": "系统设置",
 				"app-plus": {
 					"bounce": "none",
-					"animationType":"none"
+					"animationType": "none"
 				}
 			}
 		}, {
@@ -231,9 +239,21 @@
 			"path": "pages/notice/notice",
 			"style": {
 				"navigationBarTitleText": "通知消息",
+				"disableScroll": true, // 禁止滚动, 解决scroll-view在Android小程序卡顿的问题
+				// "enablePullDownRefresh" : false, // 不开启下拉刷新, 默认就是false			
 				"app-plus": {
-					"bounce": "none" //关闭窗口回弹效果
+					"bounce": "none",
+					"titleNView": {
+						"buttons": [{
+							"fontSrc": "/static/iconfont.ttf",
+							"text": "\ue61d",
+							"fontSize": "21",
+							"color": "ghostwhite",
+							"background": "rgba(0,0,0,0)"
+						}]
+					}
 				}
+
 			}
 		}, {
 			"path": "pages/about/about",
@@ -263,28 +283,654 @@
 				}
 
 			}
-		},  {
+		}, {
 			"path": "pages/wtd/wtd",
 			"style": {
 				"navigationBarTitleText": "委托单列表"
 			}
-		}
-	    ,{
-            "path" : "pages/user/changePwd",
-            "style" : {
+		}, {
+			"path": "pages/user/changePwd",
+			"style": {
 				"navigationBarTitleText": "修改登录密码"
 			}
-        }
-        ,{
-            "path" : "pages/user/userinfo",
-            "style" : {
+		}, {
+			"path": "pages/user/userinfo",
+			"style": {
 				"navigationBarTitleText": "用户信息",
 				"app-plus": {
 					"bounce": "none"
 				}
 			}
-        }
-    ],
+		}, {
+			"path": "pages/zhcx/zhcx",
+			"style": {
+				"navigationBarTitleText": "送检明细查询",
+				"app-plus": {
+					"bounce": "none",
+					"titleNView": {
+						//"type": "transparent",
+						"searchInput": {
+							"backgroundColor": "rgba(231, 231, 231,.7)",
+							"borderRadius": "8px",
+							"placeholder": "委托单位/单号或型号规格/出厂编号",
+							"disabled": false,
+							"placeholderColor": "#606266"
+						},
+						"buttons": [{
+							//"text": "委托单",
+							//"fontSize": "14px",
+							//"select": true,
+							//"width": "auto"
+							"fontSrc": "/static/iconfont.ttf",
+							"text": "\ue61d",
+							"fontSize": "24",
+							"color": "ghostwhite",
+							"background": "rgba(0,0,0,0)"
+						}]
+					}
+				}
+			}
+		}, {
+			"path": "pages/wtdcx/wtdcx",
+			"style": {
+				"navigationBarTitleText": "委托单查询",
+				"app-plus": {
+					"bounce": "none",
+					"titleNView": {
+						//"type": "transparent",
+						"searchInput": {
+							"backgroundColor": "rgba(231, 231, 231,.7)",
+							"borderRadius": "8px",
+							"placeholder": "委托单位或委托单号",
+							"disabled": false,
+							"placeholderColor": "#606266",
+							"align": "left"
+						},
+						"buttons": [{
+							//"text": "委托单",
+							//"fontSize": "14px",
+							//"select": true,
+							//"width": "auto"
+							"fontSrc": "/static/iconfont.ttf",
+							"text": "\ue61d",
+							"fontSize": "24",
+							"color": "ghostwhite",
+							"background": "rgba(0,0,0,0)"
+						}]
+					}
+				}
+			}
+		},
+		{
+			"path": "pages/sign/sign",
+			"style": {}
+		}, {
+			"path": "pages/wtdcx/wtd_details",
+			"style": {
+				"navigationBarTitleText": "委托单详情",
+				"app-plus": {
+					"bounce": "none",
+					"titleNView": {
+						"buttons": [{
+							"fontSrc": "/static/iconfont.ttf",
+							"text": "\ue61d",
+							"fontSize": "24",
+							"color": "ghostwhite",
+							"background": "rgba(0,0,0,0)"
+						}]
+					}
+				}
+			}
+		},
+		{
+			"path": "pages/czrz/czrz",
+			"style": {
+				"navigationBarTitleText": "系统操作日志",
+				"app-plus": {
+					"bounce": "none",
+					"titleNView": {
+						//"type": "transparent",
+						"searchInput": {
+							"backgroundColor": "rgba(231, 231, 231,.7)",
+							"borderRadius": "8px",
+							"placeholder": "操作者 / 操作内容",
+							"disabled": false,
+							"placeholderColor": "#606266"
+						},
+						"buttons": [{
+							"fontSrc": "/static/iconfont.ttf",
+							"text": "\ue61d",
+							"fontSize": "24",
+							"color": "ghostwhite",
+							"background": "rgba(0,0,0,0)"
+						}]
+					}
+				}
+			}
+		},
+		{
+			"path": "pages/sjcl/getalltasks",
+			"style": {
+				"navigationBarTitleText": "未完成任务列表",
+				"app-plus": {
+					"bounce": "none",
+					"titleNView": {
+						//"type": "transparent",
+						"searchInput": {
+							"backgroundColor": "rgba(231, 231, 231,.7)",
+							"borderRadius": "8px",
+							"placeholder": "委托单位/器具名称/型号规格/出厂编号",
+							"disabled": false,
+							"placeholderColor": "#606266"
+						},
+						"buttons": [{
+							"fontSrc": "/static/iconfont.ttf",
+							"text": "\ue61d",
+							"fontSize": "24",
+							"color": "ghostwhite",
+							"background": "rgba(0,0,0,0)"
+						}]
+					}
+				}
+			}
+		},
+		{
+			"path": "pages/sjcl/sorry",
+			"style": {
+				"navigationBarTitleText": "仪器检定",
+				"app-plus": {
+					"bounce": "none",
+					"titleNView": {
+						"buttons": [{
+							"fontSrc": "/static/iconfont.ttf",
+							"text": "\ue61d",
+							"fontSize": "21",
+							"color": "white"
+						}]
+					}
+				}
+			}
+		},
+		{
+			"path": "pages/sjcl/update_ccbh",
+			"style": {
+				"navigationBarTitleText": "出厂编号修改",
+				"app-plus": {
+					"bounce": "none"
+				}
+			}
+		},
+		{ //1000
+			"path": "pages/sjcl/1000/1000",
+			"style": {
+				"navigationBarTitleText": "全站仪检定",
+				"app-plus": {
+					"bounce": "none",
+					"titleNView": {
+						"buttons": [{
+							"fontSrc": "/static/iconfont.ttf",
+							"text": "\ue61d",
+							"fontSize": "21",
+							"color": "White"
+						}]
+					}
+				}
+			}
+		},
+		{
+			"path": "pages/sjcl/1000/hy",
+			"style": {
+				"navigationBarTitleText": "全站仪检定核验",
+				"app-plus": {
+					"bounce": "none",
+					"titleNView": {
+						"buttons": [{
+							"fontSrc": "/static/iconfont.ttf",
+							"text": "\ue61d",
+							"fontSize": "21",
+							"color": "White"
+						}]
+					}
+				}
+			}
+		},
+		{
+			"path": "pages/sjcl/1000/pz",
+			"style": {
+				"navigationBarTitleText": "全站仪检定批准",
+				"app-plus": {
+					"bounce": "none",
+					"titleNView": {
+						"buttons": [{
+							"fontSrc": "/static/iconfont.ttf",
+							"text": "\ue61d",
+							"fontSize": "21",
+							"color": "White"
+						}]
+					}
+				}
+			}
+		},
+		{
+			"path": "pages/sjcl/1000/cx",
+			"style": {
+				"navigationBarTitleText": "全站仪检定信息",
+				"app-plus": {
+					"bounce": "none",
+					"titleNView": {
+						"buttons": [{
+							"fontSrc": "/static/iconfont.ttf",
+							"text": "\ue61d",
+							"fontSize": "21",
+							"color": "White"
+						}]
+					}
+				}
+			}
+		},
+		{
+			"path": "pages/sjcl/1000/set",
+			"style": {
+				"navigationBarTitleText": "全站仪检定 - 参数设置",
+				"app-plus": {
+					"bounce": "none"
+				}
+			}
+		}, {
+			"path": "pages/sjcl/1000/update_jbcs",
+			"style": {
+				"navigationBarTitleText": "仪器基本参数",
+				"app-plus": {
+					"bounce": "none"
+				}
+			}
+		},
+		{ //1030
+			"path": "pages/sjcl/1030/1030",
+			"style": {
+				"navigationBarTitleText": "GPS接收机检定",
+				"app-plus": {
+					"bounce": "none",
+					"titleNView": {
+						"buttons": [{
+							"fontSrc": "/static/iconfont.ttf",
+							"text": "\ue61d",
+							"fontSize": "21",
+							"color": "White"
+						}]
+					}
+				}
+			}
+		},
+		{
+			"path": "pages/sjcl/1030/hy",
+			"style": {
+				"navigationBarTitleText": "GPS接收机检定核验",
+				"app-plus": {
+					"bounce": "none",
+					"titleNView": {
+						"buttons": [{
+							"fontSrc": "/static/iconfont.ttf",
+							"text": "\ue61d",
+							"fontSize": "21",
+							"color": "White"
+						}]
+					}
+				}
+			}
+		},
+		{
+			"path": "pages/sjcl/1030/pz",
+			"style": {
+				"navigationBarTitleText": "GPS接收机检定批准",
+				"app-plus": {
+					"bounce": "none",
+					"titleNView": {
+						"buttons": [{
+							"fontSrc": "/static/iconfont.ttf",
+							"text": "\ue61d",
+							"fontSize": "21",
+							"color": "White"
+						}]
+					}
+				}
+			}
+		},
+		{
+			"path": "pages/sjcl/1030/cx",
+			"style": {
+				"navigationBarTitleText": "GPS接收机检定信息",
+				"app-plus": {
+					"bounce": "none",
+					"titleNView": {
+						"buttons": [{
+							"fontSrc": "/static/iconfont.ttf",
+							"text": "\ue61d",
+							"fontSize": "21",
+							"color": "White"
+						}]
+					}
+				}
+			}
+		},
+		{
+			"path": "pages/sjcl/1030/set",
+			"style": {
+				"navigationBarTitleText": "GPS接收机检定 - 参数设置",
+				"app-plus": {
+					"bounce": "none"
+				}
+			}
+		},
+		{ //1040
+			"path": "pages/sjcl/1040/1040",
+			"style": {
+				"navigationBarTitleText": "手持测距仪检定",
+				"app-plus": {
+					"bounce": "none",
+					"titleNView": {
+						"buttons": [{
+							"fontSrc": "/static/iconfont.ttf",
+							"text": "\ue61d",
+							"fontSize": "21",
+							"color": "White"
+						}]
+					}
+				}
+			}
+		},
+		{
+			"path": "pages/sjcl/1040/hy",
+			"style": {
+				"navigationBarTitleText": "手持测距仪检定核验",
+				"app-plus": {
+					"bounce": "none",
+					"titleNView": {
+						"buttons": [{
+							"fontSrc": "/static/iconfont.ttf",
+							"text": "\ue61d",
+							"fontSize": "21",
+							"color": "White"
+						}]
+					}
+				}
+			}
+		},
+		{
+			"path": "pages/sjcl/1040/pz",
+			"style": {
+				"navigationBarTitleText": "手持测距仪检定批准",
+				"app-plus": {
+					"bounce": "none",
+					"titleNView": {
+						"buttons": [{
+							"fontSrc": "/static/iconfont.ttf",
+							"text": "\ue61d",
+							"fontSize": "21",
+							"color": "White"
+						}]
+					}
+				}
+			}
+		},
+		{
+			"path": "pages/sjcl/1040/cx",
+			"style": {
+				"navigationBarTitleText": "手持测距仪检定信息",
+				"app-plus": {
+					"bounce": "none",
+					"titleNView": {
+						"buttons": [{
+							"fontSrc": "/static/iconfont.ttf",
+							"text": "\ue61d",
+							"fontSize": "21",
+							"color": "White"
+						}]
+					}
+				}
+			}
+		},
+		{
+			"path": "pages/sjcl/1040/set",
+			"style": {
+				"navigationBarTitleText": "手持测距仪检定 - 参数设置",
+				"app-plus": {
+					"bounce": "none"
+				}
+			}
+		},
+		{ //1010
+			"path": "pages/sjcl/1010/1010",
+			"style": {
+				"navigationBarTitleText": "经纬仪检定",
+				"app-plus": {
+					"bounce": "none",
+					"titleNView": {
+						"buttons": [{
+							"fontSrc": "/static/iconfont.ttf",
+							"text": "\ue61d",
+							"fontSize": "21",
+							"color": "White"
+						}]
+					}
+				}
+			}
+		},
+		{
+			"path": "pages/sjcl/1010/hy",
+			"style": {
+				"navigationBarTitleText": "经纬仪检定核验",
+				"app-plus": {
+					"bounce": "none",
+					"titleNView": {
+						"buttons": [{
+							"fontSrc": "/static/iconfont.ttf",
+							"text": "\ue61d",
+							"fontSize": "21",
+							"color": "White"
+						}]
+					}
+				}
+			}
+		},
+		{
+			"path": "pages/sjcl/1010/pz",
+			"style": {
+				"navigationBarTitleText": "经纬仪检定批准",
+				"app-plus": {
+					"bounce": "none",
+					"titleNView": {
+						"buttons": [{
+							"fontSrc": "/static/iconfont.ttf",
+							"text": "\ue61d",
+							"fontSize": "21",
+							"color": "White"
+						}]
+					}
+				}
+			}
+		},
+		{
+			"path": "pages/sjcl/1010/cx",
+			"style": {
+				"navigationBarTitleText": "经纬仪检定信息",
+				"app-plus": {
+					"bounce": "none",
+					"titleNView": {
+						"buttons": [{
+							"fontSrc": "/static/iconfont.ttf",
+							"text": "\ue61d",
+							"fontSize": "21",
+							"color": "White"
+						}]
+					}
+				}
+			}
+		},
+		{
+			"path": "pages/sjcl/1010/set",
+			"style": {
+				"navigationBarTitleText": "经纬仪检定 - 参数设置",
+				"app-plus": {
+					"bounce": "none"
+				}
+			}
+		},
+		{ //1100
+			"path": "pages/sjcl/1100/1100",
+			"style": {
+				"navigationBarTitleText": "电子经纬仪检定",
+				"app-plus": {
+					"bounce": "none",
+					"titleNView": {
+						"buttons": [{
+							"fontSrc": "/static/iconfont.ttf",
+							"text": "\ue61d",
+							"fontSize": "21",
+							"color": "White"
+						}]
+					}
+				}
+			}
+		},
+		{
+			"path": "pages/sjcl/1100/hy",
+			"style": {
+				"navigationBarTitleText": "电子经纬仪检定核验",
+				"app-plus": {
+					"bounce": "none",
+					"titleNView": {
+						"buttons": [{
+							"fontSrc": "/static/iconfont.ttf",
+							"text": "\ue61d",
+							"fontSize": "21",
+							"color": "White"
+						}]
+					}
+				}
+			}
+		},
+		{
+			"path": "pages/sjcl/1100/pz",
+			"style": {
+				"navigationBarTitleText": "电子经纬仪检定批准",
+				"app-plus": {
+					"bounce": "none",
+					"titleNView": {
+						"buttons": [{
+							"fontSrc": "/static/iconfont.ttf",
+							"text": "\ue61d",
+							"fontSize": "21",
+							"color": "White"
+						}]
+					}
+				}
+			}
+		},
+		{
+			"path": "pages/sjcl/1100/cx",
+			"style": {
+				"navigationBarTitleText": "电子经纬仪检定信息",
+				"app-plus": {
+					"bounce": "none",
+					"titleNView": {
+						"buttons": [{
+							"fontSrc": "/static/iconfont.ttf",
+							"text": "\ue61d",
+							"fontSize": "21",
+							"color": "White"
+						}]
+					}
+				}
+			}
+		},
+		{
+			"path": "pages/sjcl/1100/set",
+			"style": {
+				"navigationBarTitleText": "电子经纬仪检定 - 参数设置",
+				"app-plus": {
+					"bounce": "none"
+				}
+			}
+		},
+		{ //1020
+			"path": "pages/sjcl/1020/1020",
+			"style": {
+				"navigationBarTitleText": "水准仪检定",
+				"app-plus": {
+					"bounce": "none",
+					"titleNView": {
+						"buttons": [{
+							"fontSrc": "/static/iconfont.ttf",
+							"text": "\ue61d",
+							"fontSize": "21",
+							"color": "White"
+						}]
+					}
+				}
+			}
+		},
+		{
+			"path": "pages/sjcl/1020/hy",
+			"style": {
+				"navigationBarTitleText": "水准仪检定核验",
+				"app-plus": {
+					"bounce": "none",
+					"titleNView": {
+						"buttons": [{
+							"fontSrc": "/static/iconfont.ttf",
+							"text": "\ue61d",
+							"fontSize": "21",
+							"color": "White"
+						}]
+					}
+				}
+			}
+		},
+		{
+			"path": "pages/sjcl/1020/pz",
+			"style": {
+				"navigationBarTitleText": "水准仪检定批准",
+				"app-plus": {
+					"bounce": "none",
+					"titleNView": {
+						"buttons": [{
+							"fontSrc": "/static/iconfont.ttf",
+							"text": "\ue61d",
+							"fontSize": "21",
+							"color": "White"
+						}]
+					}
+				}
+			}
+		},
+		{
+			"path": "pages/sjcl/1020/cx",
+			"style": {
+				"navigationBarTitleText": "水准仪检定信息",
+				"app-plus": {
+					"bounce": "none",
+					"titleNView": {
+						"buttons": [{
+							"fontSrc": "/static/iconfont.ttf",
+							"text": "\ue61d",
+							"fontSize": "21",
+							"color": "White"
+						}]
+					}
+				}
+			}
+		},
+		{
+			"path": "pages/sjcl/1020/set",
+			"style": {
+				"navigationBarTitleText": "水准仪检定 - 参数设置",
+				"app-plus": {
+					"bounce": "none"
+				}
+			}
+		}
+	],
 	"tabBar": {
 		"color": "#7a7e83",
 		"selectedColor": "#0faeff",

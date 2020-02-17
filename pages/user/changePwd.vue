@@ -5,7 +5,7 @@
 				<view class="list-call">
 					<image class="img" src="/static/img/2.png"></image>
 					原密码：
-					<input class="biaoti" v-model="opassword" name="opassword" type="text" maxlength="12" placeholder="请输入原密码" :password="!showPassword" />
+					<input class="biaoti" v-model="opassword" :focus="focus" name="opassword" type="text" maxlength="12" placeholder="请输入原密码" :password="!showPassword" />
 				</view>
 				<view class="list-call">
 					<image class="img" src="/static/img/2.png"></image>
@@ -20,7 +20,7 @@
 				</view>
 			</view>
 			<button class="confirm-btn" formType="submit" type="primary">确认</button>
-			<view style="padding-top: 30upx;"><uni-notice-bar style="padding-left: 70upx;" show-icon="true" text="注意：App密码和PC客户端密码一致。"></uni-notice-bar></view>
+			<view style="padding-top: 30upx;"><uni-notice-bar style="padding-left: 70upx;" show-icon="true" text="注意:App密码和PC客户端密码一致,如忘记密码请联系管理员。"></uni-notice-bar></view>
 		</form>
 	</view>
 </template>
@@ -37,8 +37,26 @@ export default {
 			opassword: '',
 			password1: '',
 			password2: '',
-			showPassword: false
+			showPassword: false,
+			focus: true
 		};
+	},
+	/*
+	directives: {
+		focus: {
+			// 指令的定义
+			inserted: function(el) {
+				el.focus(); // 不起作用
+			}
+		}
+	},*/
+	onUnload: function() {},
+	onBackPress(options) {
+		// #ifdef APP-PLUS
+		plus.key.hideSoftKeybord(); //强制隐藏
+		// #endif
+		//uni.hideKeyboard(); //无效?
+		//return true;
 	},
 	methods: {
 		display() {
@@ -66,11 +84,20 @@ export default {
 				});
 				//console.log(res);
 				if (res) {
-					uni.showToast({ title: '密码修改成功！', icon: 'none' });
+					const data2 = {
+						cznr: '修改密码',
+						bzsm: 'App'
+					};
+					//console.log(data2);
+					const res2 = await this.$store.dispatch({
+						type: 'xtgl/AddtoCZRZ',
+						data: data2
+					});
+					uni.showToast({ title: '密码修改成功！', icon: 'none', duration: 3000 });
 					uni.navigateBack();
 				}
 			} else {
-				uni.showToast({ title: graceChecker.error, icon: 'none' });
+				uni.showToast({ title: graceChecker.error, icon: 'none', duration: 3000 });
 			}
 		}
 	}
@@ -111,10 +138,10 @@ export default {
 	margin-left: 16upx;
 }
 .confirm-btn {
-	width: 380upx;
+	width: 500upx;
 	height: 76upx;
 	line-height: 76upx;
-	border-radius: 50px;
+	border-radius: 30px;
 	margin-top: 70upx;
 	background: $uni-color-primary;
 	color: #fff;

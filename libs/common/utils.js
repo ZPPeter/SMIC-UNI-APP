@@ -1,3 +1,4 @@
+import config from '@/libs/common/config.js';
 const utils = {
 	showToast: function(params) {
 		if (params != undefined && params.title != undefined && params.title.length > 0) {
@@ -120,34 +121,122 @@ const utils = {
 				console.log('Compress error!' + error.message);
 			}
 		);
-	}
+	},
+	test() {
+		return config.apiDomain;
+	},
+	getImg(zzc) {
+		var img = '000';
+		if (~zzc.indexOf('徕卡')) img = '100';
+		else if (~zzc.indexOf('拓普康')) img = '101';
+		else if (~zzc.indexOf('天宝')) img = '103';
+		else if (~zzc.indexOf('索佳')) img = '102';
+		else if (~zzc.indexOf('南方')) img = '106';
+		else if (~zzc.indexOf('尼康')) img = '105';
+		else if (~zzc.indexOf('宾得')) img = '104';
+		else if (~zzc.indexOf('常州大地')) img = '107';
+		else if (~zzc.indexOf('苏一光')) img = '108';
+		else if (~zzc.indexOf('中海达')) img = '109';
+		else if (~zzc.indexOf('科力达')) img = '110';
+		else if (~zzc.indexOf('中翰')) img = '111';
+		else if (~zzc.indexOf('欧波')) img = '112';
+		return '/static/ins/' + img + '.png';
+	},
+	getJdzt(zt2) {
+		//console.log(zt2);
+		switch (zt2) {
+			case '100':
+				return '登记';
+				break;
+			case '111':
+				return '在检';
+				break;
+			case '122':
+				return '在检';
+				break;
+			case '200':
+				return '在检';
+				break;	
+			case '222':
+				return '检完';
+				break;
+			default:
+				return '登记';
+				break;
+		}
+	},
+	OpenDoc(bm, id) {
+		let docUrl = config.apiDomain + '/Results/Doc/' + new Date().getFullYear() + '/' + bm + '/' + id + '.docx';
+		//this.xlsUrl = config.apiDomain + '/Results/Xls/'+ new Date().getFullYear() +'/'+o.qjmcbm+'/' + o.id + '.xls';		
+		uni.downloadFile({
+			url: docUrl,
+			success: function(res) {
+				var filePath = res.tempFilePath;
+				uni.openDocument({
+					filePath: filePath,
+					success: function(res) {
+						//console.log('打开文档成功');
+					}
+				});
+			}
+		});
+	},
+	OpenXls(bm, id) {
+		let docUrl = config.apiDomain + '/Results/Xls/' + new Date().getFullYear() + '/' + bm + '/' + id + '.xls';
+		uni.downloadFile({
+			url: docUrl,
+			success: function(res) {
+				var filePath = res.tempFilePath;
+				uni.openDocument({
+					filePath: filePath,
+					success: function(res) {
+						//console.log('打开文档成功');
+					}
+				});
+			}
+		});
+	},
 }
 
 export default utils;
 
-/* 得到日期年月日等加数字后的日期 */ 
-Date.prototype.DateAdd = function(interval,number) 
-{ 
-    var d = this; 
-    var k={'y':'FullYear', 'q':'Month', 'm':'Month', 'w':'Date', 'd':'Date', 'h':'Hours', 'n':'Minutes', 's':'Seconds', 'ms':'MilliSeconds'}; 
-    var n={'q':3, 'w':7}; 
-    eval('d.set'+k[interval]+'(d.get'+k[interval]+'()+'+((n[interval]||1)*number)+')'); 
-    return d; 
-} 
-/* 计算两日期相差的日期年月日等 */ 
-Date.prototype.DateDiff = function(interval,objDate2) 
-{ 
-    var d=this, i={}, t=d.getTime(), t2=objDate2.getTime(); 
-    i['y']=objDate2.getFullYear()-d.getFullYear(); 
-    i['q']=i['y']*4+Math.floor(objDate2.getMonth()/4)-Math.floor(d.getMonth()/4); 
-    i['m']=i['y']*12+objDate2.getMonth()-d.getMonth(); 
-    i['ms']=objDate2.getTime()-d.getTime(); 
-    i['w']=Math.floor((t2+345600000)/(604800000))-Math.floor((t+345600000)/(604800000)); 
-    i['d']=Math.floor(t2/86400000)-Math.floor(t/86400000); 
-    i['h']=Math.floor(t2/3600000)-Math.floor(t/3600000); 
-    i['n']=Math.floor(t2/60000)-Math.floor(t/60000); 
-    i['s']=Math.floor(t2/1000)-Math.floor(t/1000); 
-    return i[interval]; 
+/* 得到日期年月日等加数字后的日期 */
+Date.prototype.DateAdd = function(interval, number) {
+	var d = this;
+	var k = {
+		'y': 'FullYear',
+		'q': 'Month',
+		'm': 'Month',
+		'w': 'Date',
+		'd': 'Date',
+		'h': 'Hours',
+		'n': 'Minutes',
+		's': 'Seconds',
+		'ms': 'MilliSeconds'
+	};
+	var n = {
+		'q': 3,
+		'w': 7
+	};
+	eval('d.set' + k[interval] + '(d.get' + k[interval] + '()+' + ((n[interval] || 1) * number) + ')');
+	return d;
+}
+/* 计算两日期相差的日期年月日等 */
+Date.prototype.DateDiff = function(interval, objDate2) {
+	var d = this,
+		i = {},
+		t = d.getTime(),
+		t2 = objDate2.getTime();
+	i['y'] = objDate2.getFullYear() - d.getFullYear();
+	i['q'] = i['y'] * 4 + Math.floor(objDate2.getMonth() / 4) - Math.floor(d.getMonth() / 4);
+	i['m'] = i['y'] * 12 + objDate2.getMonth() - d.getMonth();
+	i['ms'] = objDate2.getTime() - d.getTime();
+	i['w'] = Math.floor((t2 + 345600000) / (604800000)) - Math.floor((t + 345600000) / (604800000));
+	i['d'] = Math.floor(t2 / 86400000) - Math.floor(t / 86400000);
+	i['h'] = Math.floor(t2 / 3600000) - Math.floor(t / 3600000);
+	i['n'] = Math.floor(t2 / 60000) - Math.floor(t / 60000);
+	i['s'] = Math.floor(t2 / 1000) - Math.floor(t / 1000);
+	return i[interval];
 }
 
 // 对Date的扩展，将 Date 转化为指定格式的String   

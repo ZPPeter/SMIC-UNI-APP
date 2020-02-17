@@ -1,0 +1,41 @@
+create trigger trig_insert
+on YQSF_SJMX
+after insert
+as
+BEGIN
+declare @id sysname
+declare @sjdid sysname
+SELECT @id=id from inserted
+SELECT @sjdid=sjdid from inserted
+UPDATE YQSF_SJD
+SET yqjs = (
+SELECT COUNT(*)
+    FROM
+        YQSF_SJMX
+		WHERE sjdid = @sjdid
+)
+where ID=@sjdid
+insert into YQSF_DPII_JDRQ(ID) values(@id)
+END
+
+// ---------------------------------
+
+create trigger trig_delete
+on YQSF_SJMX
+after delete
+as
+BEGIN
+declare @id sysname
+declare @sjdid sysname
+SELECT @id=id from deleted
+SELECT @sjdid=sjdid from deleted
+UPDATE YQSF_SJD
+SET yqjs = (
+SELECT COUNT(*)
+    FROM
+        YQSF_SJMX
+		WHERE sjdid = @sjdid
+)
+where ID=@sjdid
+delete from YQSF_DPII_JDRQ where ID=@id
+END

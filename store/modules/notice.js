@@ -15,7 +15,7 @@ class NoticeModule {
 				return rep; // return '登录成功'; 返回到此处
 			},
             async setReadLastNoticeTime(context) {
-                await fly.post('/api/services/app/Session/SetReadLastNoticeTime'); 
+                await fly.post('/api/services/app/Session/SetReadLastNoticeTime',null,{ShowLoading:false});
             },			
 		};
 		this.mutations = {}

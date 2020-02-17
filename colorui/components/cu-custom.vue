@@ -33,7 +33,7 @@
 				if (this.bgImage) {
 					style = `${style}background-image:url(${bgImage});`;
 				}
-				return style
+				return style;
 			}
 		},
 		props: {

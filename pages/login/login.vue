@@ -4,11 +4,11 @@
 		<!-- view class="back-btn yticon icon-zuojiantou-up" @click="navBack"></view -->
 		<view class="right-top-sign"></view>
 		<!-- 设置白色背景防止软键盘把下部绝对定位元素顶上来盖住输入框等 -->
-		<view class="wrapper">			
+		<view class="wrapper">
 			<image class="logo" src="/static/tlg5.jpg"></image>
 			<view class="left-top-sign">LOGIN</view>
 			<view class="welcome">你好，</view>
-			<view class="welcome1">欢迎登录测绘仪器智检系统</view>
+			<view class="welcome1">欢迎登录测绘仪器检定系统</view>
 			<view class="input-content">
 				<view class="input-item">
 					<text class="tit">账&nbsp;号:</text>
@@ -16,7 +16,7 @@
 				</view>
 				<view class="input-item">
 					<text class="tit">密&nbsp;码:</text>
-					<input class="zai-input" v-model="password" placeholder-class password placeholder="请输入密码" @confirm="toLogin"/>
+					<input class="zai-input" v-model="password" placeholder-class password placeholder="请输入密码" @confirm="toLogin" />
 				</view>
 			</view>
 			<button class="confirm-btn" @click="toLogin" :disabled="logining">登录</button>
@@ -31,11 +31,12 @@ import Vue from 'vue';
 import { mapMutations } from 'vuex';
 //import request from '@/libs/ajax/request.js';
 import config from '../../libs/common/config.js';
+import ShowHomeData from 'libs/ShowHomeData.js';
 
 export default {
 	data() {
 		return {
-			userNameOrEmailAddress: 'admin',
+			userNameOrEmailAddress: 'user10',
 			password: '123qwe',
 			logining: false,
 			version: '1.01'
@@ -51,6 +52,17 @@ export default {
 			this.version = plus.runtime.version; // 打包后有效，打包前是基座的版本号
 		}
 	},
+	onShow() {
+		if (uni.getSystemInfoSync().platform === 'android') {
+			var icon = plus.nativeObj.View.getViewById('LogoImg');
+			//console.log(icon);
+			if (icon) {
+				setTimeout(function() {
+					icon.hide();
+				}, 300);
+			}
+		}
+	},
 	methods: {
 		...mapMutations(['login']),
 		navBack() {
@@ -63,11 +75,15 @@ export default {
 			});
 		},
 		async toLogin() {
+			uni.showLoading({
+				title: '登录中...'
+			});
 			if (this.userNameOrEmailAddress.length < 5) {
 				uni.showToast({
 					icon: 'none',
 					title: '账号最短为 5 个字符'
 				});
+				uni.hideLoading();
 				return;
 			}
 			if (this.password.length < 6) {
@@ -75,6 +91,7 @@ export default {
 					icon: 'none',
 					title: '密码最短为 6 个字符'
 				});
+				uni.hideLoading();
 				return;
 			}
 			this.logining = true;
@@ -89,6 +106,7 @@ export default {
 				type: 'app/Login',
 				data: data
 			});
+			//console.log(res);
 			if (res != '') {
 				//console.log(res);
 				this.$store.state.user.readLastNoticeTime = res.lastReadNoticeTime;
@@ -97,10 +115,24 @@ export default {
 					id: res.userId,
 					userName: this.userNameOrEmailAddress,
 					realname: res.surName,
-					roles: res.roles,
+					roles: res.roles, //"roles": ["一般用户", "1000", "1030"],
+					roleNames: res.roleNames, //"roleNames": ["一般用户", "全站仪", "GPS接收机"],
 					portrait: null // config.avatarImgPath + res.userId + '.png?t=' + new Date().getTime()
 					//changeAvata: false
 				};
+
+				/*
+				const res2 = await this.$store.dispatch({
+					type: 'app/CacheUserData'
+				});
+				if (res2 != '') {
+					uni.setStorage({
+						key: 'userData',
+						data: res2
+					});
+				}
+				*/
+				
 				var _this = this;
 				uni.downloadFile({
 					url: config.avatarImgPath + res.userId + '.png',
@@ -117,9 +149,11 @@ export default {
 									userInfo.portrait = filePath;
 								},
 								complete() {
-									console.log(userInfo.portrait);
+									//console.log(userInfo.portrait);
 									_this.login(userInfo); // -> ...mapMutations(['login'])
+									_this.$signalR.connection(config.SignalR);
 									//uni.navigateBack();
+									uni.hideLoading();
 									uni.switchTab({
 										url: '/pages/main/main'
 									});
@@ -129,6 +163,7 @@ export default {
 							// #ifdef H5
 							//console.log(userInfo);
 							_this.login(userInfo); // -> ...mapMutations(['login'])
+							uni.hideLoading();
 							uni.switchTab({
 								url: '/pages/main/main'
 							});
@@ -136,15 +171,15 @@ export default {
 						}
 					}
 				});
-
 				//this.$Router.replace({ name: 'notice'}); //从 notice 返回不到 设置界面
 				//this.$Router.push({ name: 'notice'}); // 缓存 login
+				let showHomeData = new ShowHomeData.ShowHomeData();
+				showHomeData.showData();
 			} else {
 				this.logining = false;
 			}
 		}
-	},
-	onShow() {}
+	}	
 };
 </script>
 
@@ -152,13 +187,13 @@ export default {
 page {
 	background: #fff;
 }
-	.zai-input{
-		background: #e2f5fc;
-		margin-top: 10upx;
-		border-radius: 100upx;
-		padding: 10upx 20upx;
-		font-size: 36upx;
-	}
+.zai-input {
+	background: #e2f5fc;
+	margin-top: 10upx;
+	border-radius: 100upx;
+	padding: 10upx 20upx;
+	font-size: 36upx;
+}
 .container {
 	padding-top: 115px;
 	position: relative;
@@ -183,10 +218,11 @@ page {
 	color: $font-color-dark;
 }
 .left-top-sign {
-	font-size: 120upx;
+	font-size: 80upx;
 	color: $page-color-base;
 	position: relative;
-	left: 10upx;
+	left: 380upx;
+	top: -10upx;
 }
 .right-top-sign {
 	position: absolute;
@@ -225,7 +261,7 @@ page {
 .welcome {
 	position: relative;
 	left: 50upx;
-	top: -90upx;
+	top: -50upx;
 	font-size: 46upx;
 	color: #555;
 	text-shadow: 1px 0px 1px rgba(0, 0, 0, 0.3);
@@ -233,12 +269,12 @@ page {
 .welcome1 {
 	position: relative;
 	left: 50upx;
-	top: -90upx;
+	top: -50upx;
 	font-size: 30upx;
 	color: #c0c0c0;
 }
 .input-content {
-	padding: 0 60upx;
+	padding: 0 20upx;
 }
 .input-item {
 	display: flex;

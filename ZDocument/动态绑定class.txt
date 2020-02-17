@@ -1,0 +1,37 @@
+<template>
+    <!-- 支持 -->
+    <view class="container" :class="computedClassStr"></view>
+    <view class="container" :class="{active: isActive}"></view>
+
+    <!-- 不支持 -->
+    <view class="container" :class="computedClassObject"></view>
+</template>
+<script>
+    export default {
+        data () {
+            return {
+                isActive: true
+            }
+        },
+        computed: {
+            computedClassStr () {
+                return this.isActive ? 'active' : ''
+            },
+            computedClassObject () {
+                return { active: this.isActive }
+            }
+        }
+    }
+</script>
+
+--------------------------------------------------------------------------------
+
+<p :class="{ jdqx1: jdqx(o.yqjcrq) }">检定期限：{{ format(o.yqjcrq) }}</p>
+
+		jdqx(item) {
+			if (this.$moment().isBefore(item)) {
+				return false;//'jdqx0';
+			} else {
+				return true;//'jdqx1';
+			}
+		},

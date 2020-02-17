@@ -1,0 +1,26 @@
+{
+  "navigationBarTitleText": "系统操作日志",
+  "bounce": "none",
+  "titleNView": {
+    "searchInput": {
+      "backgroundColor": "rgba(231, 231, 231,.7)",
+      "borderRadius": "8px",
+      "placeholder": "操作者 / 操作内容",
+      "disabled": false,
+      "placeholderColor": "#606266"
+    },
+    "buttons": [
+      {
+        "fontSrc": "/static/iconfont.ttf",
+        "text": "",
+        "fontSize": "24",
+        "color": "ghostwhite",
+        "background": "rgba(0,0,0,0)"
+      }
+    ]
+  },
+  "usingComponents": {
+    "mescroll-uni": "/components/mescroll-uni/mescroll-uni",
+    "notice-list": "/pages/czrz/veri_list"
+  }
+}

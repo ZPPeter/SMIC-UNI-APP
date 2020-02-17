@@ -1,0 +1,15 @@
+{
+  "navigationBarTitleText": "全站仪检定信息",
+  "bounce": "none",
+  "titleNView": {
+    "buttons": [
+      {
+        "fontSrc": "/static/iconfont.ttf",
+        "text": "",
+        "fontSize": "21",
+        "color": "White"
+      }
+    ]
+  },
+  "usingComponents": {}
+}

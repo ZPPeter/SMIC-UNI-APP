@@ -24,6 +24,7 @@
 /* 垂直间距 */
 /* 透明度 */
 /* 文章场景相关 */
+/*--------------------   自定义 -------------------*/
 /* 页面左右间距 */
 /* 文字尺寸 */
 /*文字颜色*/
@@ -36,11 +37,9 @@
 .mix-list-cell {
   display: -webkit-box;
   display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
   -webkit-box-align: baseline;
   -webkit-align-items: baseline;
-      -ms-flex-align: baseline;
           align-items: baseline;
   padding: 20rpx 30rpx;
   line-height: 60rpx;
@@ -54,7 +53,6 @@
 }
 .mix-list-cell .cell-icon {
     -webkit-align-self: center;
-        -ms-flex-item-align: center;
             align-self: center;
     width: 56rpx;
     max-height: 60rpx;
@@ -62,7 +60,6 @@
 }
 .mix-list-cell .cell-more {
     -webkit-align-self: center;
-        -ms-flex-item-align: center;
             align-self: center;
     font-size: 30rpx;
     color: #606266;
@@ -71,7 +68,6 @@
 .mix-list-cell .cell-tit {
     -webkit-box-flex: 1;
     -webkit-flex: 1;
-        -ms-flex: 1;
             flex: 1;
     font-size: 32rpx;
     color: #303133;

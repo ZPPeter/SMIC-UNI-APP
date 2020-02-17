@@ -2,17 +2,15 @@
 	<view class="container">
 		<view class="user-section">
 			<image class="bg" src="/static/img/user-bg.jpg"></image>
-			<view class="user-info-box">
-				<view>
-					<image class="portrait" :src="userInfo.portrait || '/static/img/missing-face.png'" @click="GotoLogo"></image>
-				</view>
+			<!-- <view class="user-info-box">				
+				<view><image class="portrait" :src="userInfo.portrait || '/static/img/missing-face.png'" @click="GotoLogo"></image></view>
 				<view>
 					<text class="username">{{ userInfo.realname || '未登录' }}</text>
-				</view>
-			</view>
+				</view>				
+			</view>-->
 			<view class="vip-card-box">
 				<image class="card-bg" src="/static/img/vip-card-bg.png" mode=""></image>
-				<view class="b-btn" @click="showOpenSrcInfo()">获取源码</view>
+				<view class="b-btn" @click="showOpenSrcInfo()">关于系统</view>
 				<view class="tit">
 					<text class="yticon icon-iLinkapp-"></text>
 					SMIC.测绘仪器检定系统
@@ -37,26 +35,36 @@
 			<image class="arc" src="/static/img/arc.png"></image>
 			<view class="tj-sction">
 				<view class="tj-item">
-					<text class="num">110</text>
-					<text>全站仪</text>
+					<text class="num">{{Datas[1]}}</text>					
+					<text class="qjmc">全站仪</text>
+					<text class="num">{{Datas[0]}}</text>
 				</view>
 				<view class="tj-item">
-					<text class="num">210</text>
-					<text>经纬仪</text>
+					<text class="num">{{Datas[9]}}</text>
+					<text class="qjmc">GPS接收机</text>
+					<text class="num">{{Datas[8]}}</text>
 				</view>
 				<view class="tj-item">
-					<text class="num">326</text>
-					<text>水准仪</text>
+					<text class="num">{{Datas[3]+Datas[5]}}</text>
+					<text class="qjmc">经纬仪</text>
+					<text class="num">{{Datas[2]+Datas[4]}}</text>
 				</view>
 				<view class="tj-item">
-					<text class="num">326</text>
-					<text>其它仪</text>
+					<text class="num">{{Datas[7]}}</text>
+					<text class="qjmc">水准仪</text>
+					<text class="num">{{Datas[6]}}</text>
 				</view>
+				<view class="tj-item">
+					<text class="num">{{Datas[11]}}</text>
+					<text class="qjmc">手持测距仪</text>
+					<text class="num">{{Datas[10]}}</text>
+				</view>				
 			</view>
 			<view class="history-section icon">
 				<list-cell icon="icon-dizhi" iconColor="#5fcda2" title="检定地点管理" @eventClick="navTo('/pages/address/address')"></list-cell>
-				<list-cell icon="icon-shezhi1" iconColor="#e07472" title="设置" border="" @eventClick="navTo2('/pages/user/set')"></list-cell>
-			</view>			
+				<list-cell icon="icon-gongwenchuli" iconColor="#5fcda2" title="操作日志" @eventClick="navTo2('/pages/czrz/czrz')"></list-cell>
+				<list-cell icon="icon-shezhi1" iconColor="#e07472" title="系统设置" border="" @eventClick="navTo2('/pages/user/set')"></list-cell>
+			</view>
 		</view>
 	</view>
 </template>
@@ -75,24 +83,51 @@ export default {
 		return {
 			coverTransform: 'translateY(0px)',
 			coverTransition: '0s',
-			moving: false
+			moving: false,
+			Datas: [0,0,0,0,0,0,0,0,0,0,0,0]
 		};
 	},
+	onReady() {
+		//onLoad  1
+		//onShow  2
+		//onReady 3
+	},
+	onShow() {
+		if (!this.hasLogin) {
+			this.$Router.push('/pages/login/login');
+		}
+		if (uni.getSystemInfoSync().platform === 'android') {
+			var icon = plus.nativeObj.View.getViewById('LogoImg');
+			if (icon) {
+				setTimeout(function() {
+					icon.show();
+				}, 100);
+			}
+		}
+		// #ifdef APP-PLUS
+		const pages = getCurrentPages();
+		const page = pages[pages.length - 1];
+		const currentWebview = page.$getAppWebview();
+		//console.log(this.$store.state.user.newNotices);
+		if (this.$store.state.user.newNotices > 0) currentWebview.showTitleNViewButtonRedDot({ index: 2 }); // 新消息
+		// #endif
+	},
+	onError(err) {
+		// 这里只能捕获方法内的异常，不能捕获生命周期中的逻辑异常
+		// 不能捕获Unhandled promise rejection
+		console.log(err);
+	},	
 	onLoad() {
-			// #ifdef APP-PLUS
-			const pages = getCurrentPages();
-			const page = pages[pages.length - 1];
-			const currentWebview = page.$getAppWebview();
-			if(this.$store.state.user.newNotices>0)
-				currentWebview.showTitleNViewButtonRedDot({index:1}); // 新消息
-			// #endif
+		//console.log('onLoad');
+		this.getCountData();
 	},
 	// #ifndef MP
 	onNavigationBarButtonTap(e) {
 		const index = e.index;
-		if (index === 0) {
+		if (index === 1) {
 			this.navTo('/pages/user/set');
-		} else if (index === 1) { // 消息红点
+		} else if (index === 2) {
+			// 消息红点
 			// #ifdef APP-PLUS
 			const pages = getCurrentPages();
 			const page = pages[pages.length - 1];
@@ -101,8 +136,8 @@ export default {
 				index
 			});
 			uni.hideTabBarRedDot({
-				index:4
-			});			
+				index: 4
+			});
 			// #endif
 			//uni.navigateTo({
 			//	url: '/pages/notice/notice'
@@ -110,17 +145,25 @@ export default {
 			this.navTo('/pages/notice/notice');
 		}
 	},
-	// #endif	
+	// #endif
 	computed: {
 		...mapState(['hasLogin', 'userInfo'])
 	},
 	methods: {
-		GotoLogo(){
-			if (this.hasLogin) 
-				this.$Router.push('/pages/user/userinfo');
-			else
-				this.$Router.push('/pages/login/login');
-		},		
+		async getCountData(){
+			const res = await this.$store.dispatch({
+				type: 'sjmx/getStatsData'				
+			});
+			if (res != '') {
+				//this.Datas = [];
+				//this.Datas = this.Datas.concat(res)
+				this.Datas = res;
+			}
+		},
+		GotoLogo() {
+			if (this.hasLogin) this.$Router.push('/pages/user/userinfo');
+			else this.$Router.push('/pages/login/login');
+		},
 		navTo(url) {
 			// this.$Router.push({path:url, query: {}});
 			this.$Router.push(url); // 拦截未登录路由
@@ -129,14 +172,22 @@ export default {
 			return;
 		},
 		navTo2(url) {
-			uni.navigateTo({url:url}); // 不传递 query 参数，uni.chooseImage 不会引发 unhandled promise rejection
+			uni.navigateTo({ url: url }); // 不传递 query 参数，uni.chooseImage 不会引发 unhandled promise rejection
 			return;
-		},		
+		},
+		navTo3(url) {
+			if(!this.userInfo.roles.includes('ADMIN'))
+			  return;
+			uni.navigateTo({ url: url });
+		},
 		showOpenSrcInfo() {
+			this.navTo('/pages/about/about');
+			/*
 			util.showToast(`  Copyright (c) 2019 SMIC is licensed 
- under the Mulan PSL v1.You can use  
-this software according to the terms
-and conditions of the Mulan PSL v1.`);
+			under the Mulan PSL v1.You can use  
+			this software according to the terms
+			and conditions of the Mulan PSL v1.`);
+			*/
 		},
 		/**
 		 *  会员卡下拉和回弹
@@ -160,11 +211,11 @@ and conditions of the Mulan PSL v1.`);
 				return;
 			}
 			this.moving = true;
-			if (moveDistance >= 80 && moveDistance < 100) {
-				moveDistance = 80;
+			if (moveDistance >= 55 && moveDistance < 80) {
+				moveDistance = 55;
 			}
 
-			if (moveDistance > 0 && moveDistance <= 80) {
+			if (moveDistance > 0 && moveDistance <= 55) {
 				this.coverTransform = `translateY(${moveDistance}px)`;
 			}
 		},
@@ -176,14 +227,6 @@ and conditions of the Mulan PSL v1.`);
 			this.coverTransition = 'transform 0.3s cubic-bezier(.21,1.93,.53,.64)';
 			this.coverTransform = 'translateY(0px)';
 		}
-	},
-	onShow() {
-		//console.log(this.userInfo.portrait);
-	},
-	onError(err){
-	// 这里只能捕获方法内的异常，不能捕获生命周期中的逻辑异常  
-	// 不能捕获Unhandled promise rejection
-		console.log(err);
 	}
 };
 </script>
@@ -203,9 +246,9 @@ and conditions of the Mulan PSL v1.`);
 }
 
 .user-section {
-	height: 520upx;
-	padding: 100upx 30upx 0;
 	position: relative;
+	height: 520upx;
+	padding: 100upx 30upx 0;	
 	.bg {
 		position: absolute;
 		left: 0;
@@ -217,6 +260,7 @@ and conditions of the Mulan PSL v1.`);
 	}
 }
 .user-info-box {
+	margin-left: 290upx;
 	height: 180upx;
 	display: flex;
 	align-items: center;
@@ -236,6 +280,7 @@ and conditions of the Mulan PSL v1.`);
 }
 
 .vip-card-box {
+	margin-top: 70upx;
 	display: flex;
 	flex-direction: column;
 	color: #f7d680;
@@ -267,6 +312,8 @@ and conditions of the Mulan PSL v1.`);
 		z-index: 1;
 	}
 	.tit {
+		position: absolute;
+		top: 6upx;
 		font-size: $font-base + 2upx;
 		color: #f7d680;
 		margin-bottom: 28upx;
@@ -275,6 +322,9 @@ and conditions of the Mulan PSL v1.`);
 			margin-right: 16upx;
 		}
 	}
+	.e-m {
+		margin-top: 55upx;
+	}	
 	.e-b {
 		font-size: $font-sm;
 		color: #d8cba9;
@@ -283,7 +333,7 @@ and conditions of the Mulan PSL v1.`);
 }
 .cover-container {
 	background: $page-color-base;
-	margin-top: -150upx;
+	margin-top: -255upx;
 	padding: 0 30upx;
 	position: relative;
 	background: #f5f5f5;
@@ -294,21 +344,6 @@ and conditions of the Mulan PSL v1.`);
 		top: -34upx;
 		width: 100%;
 		height: 36upx;
-	}
-}
-.tj-sction {
-	@extend %section;
-	.tj-item {
-		@extend %flex-center;
-		flex-direction: column;
-		height: 140upx;
-		font-size: $font-sm;
-		color: #75787d;
-	}
-	.num {
-		font-size: $font-lg;
-		color: $font-color-dark;
-		margin-bottom: 8upx;
 	}
 }
 .order-section {
@@ -366,6 +401,26 @@ and conditions of the Mulan PSL v1.`);
 			margin-right: 20upx;
 			border-radius: 10upx;
 		}
+	}
+}
+.tj-sction {
+	@extend %section;
+	.tj-item {
+		@extend %flex-center;
+		flex-direction: column;
+		height: 210upx;
+		font-size: $font-sm;
+		color: #75787d;
+	}
+	.num {
+		font-size: $font-sm+1;
+		color: $font-color-dark;
+		margin-bottom: 4upx;
+	}
+	.qjmc {
+		font-size: $font-sm+1;
+		//color: #da0000;
+		margin-bottom: 4upx;
 	}
 }
 </style>

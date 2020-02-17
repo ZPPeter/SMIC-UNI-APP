@@ -3,17 +3,35 @@
   "bounce": "none",
   "titleNView": {
     "type": "transparent",
+    "searchInput": {
+      "backgroundColor": "rgba(231, 231, 231,.7)",
+      "borderRadius": "8px",
+      "placeholder": "委托单信息查询",
+      "disabled": false,
+      "placeholderColor": "#606266"
+    },
     "buttons": [
       {
-        "text": "",
-        "fontSrc": "/static/yticon.ttf",
-        "fontSize": "24px",
+        "text": "",
+        "float": "left"
+      },
+      {
+        "text": "",
+        "fontSrc": "/static/iconfont.ttf",
+        "fontSize": "19",
+        "color": "black"
+      },
+      {
+        "text": "",
+        "fontSrc": "/static/iconfont.ttf",
+        "fontSize": "19",
         "color": "black"
       }
     ]
   },
   "usingComponents": {
     "u-charts": "/pages/component/ucharts/ucharts",
-    "uni-notice-bar": "/components/uni-notice-bar/uni-notice-bar"
+    "uni-notice-bar": "/components/uni-notice-bar/uni-notice-bar",
+    "dash-board": "/pages/component/dashboard/dashboard"
   }
 }

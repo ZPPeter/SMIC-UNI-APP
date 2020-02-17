@@ -2,7 +2,7 @@
 	<view class="qiun-columns">
 		<view class="info">
 			<div style="background-color: red;width:4px;height:12px;vertical-align: bottom;"></div>
-			<view class="tj-item">近两年月工作量统计【0/0】</view>
+			<view class="tj-item">近两年月工作量统计【{{ percentage }}%】</view>
 		</view>
 		<view class="qiun-charts"><canvas canvas-id="canvasColumn" id="canvasColumn" class="charts" /></view>
 	</view>
@@ -10,69 +10,95 @@
 
 <script>
 import uCharts from '@/components/u-charts/u-charts.min.js';
+import config from '@/libs/common/config.js';
 var _self;
 var canvaColumn = null;
 export default {
 	name: 'ucharts',
+	props: {
+		percentage: [String, Number]
+	},
 	data() {
 		return {
 			cWidth: '',
 			cHeight: '',
 			pixelRatio: 1,
 			chartData: {
-			categories: ['1月', '', '3月', '', '5月', '', '7月', '', '9月', '', '11月', ''],
-			series: [
-				{
-					name: (new Date()).DateAdd('y',-1).Format("yyyy") + "年",
-					data: [35, 36, 31, 33, 13, 34,35, 136, 31, 33, 13, 134]
-					// data: [15, { value: 20, color: '#f04864' }, 45, 37, 43, 34]
-				},
-				{
-					name: (new Date()).Format("yyyy") + "年",
-					data: [18, 27, 21, 214, 6, 28,235, 36, 31, 33, 13, 34]
-				}
-			]
+				date: '', //统计日期 7 天后失效
+				categories: ['1月', '', '3月', '', '5月', '', '7月', '', '9月', '', '11月', ''],
+				series: [
+					{
+						name: new Date().DateAdd('y', -1).Format('yyyy') + '年',
+						data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+						// data: [15, { value: 20, color: '#f04864' }, 45, 37, 43, 34]
+					},
+					{
+						name: new Date().Format('yyyy') + '年',
+						data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+					}
+				]
 			}
 		};
 	},
-	created() {
+	beforeCreate() {},
+	//created() {
+	created: async function() {
 		_self = this;
 		this.cWidth = uni.upx2px(750);
 		this.cHeight = uni.upx2px(450);
-		this.getServerData();
+		// 读取缓存数据
+		const res = uni.getStorageSync('ChartsData');
+		//console.log(res);
+		if (res) {
+			this.chartData.series[0].data = res.data1; // from ChartsData
+			this.chartData.series[1].data = res.data2;
+			this.chartData.date = res.date;
+		}
+		else{
+			await _self.getServerData(); // 今年无数据情况
+		}
+		let Column = { categories: [], series: [] };
+		Column.categories = this.chartData.categories;
+		Column.series = this.chartData.series;
+		_self.showColumn('canvasColumn', Column);
+	},
+	updated() {
+		//console.log('updated');
 	},
 	methods: {
-		getServerData() {
-			/*
-				每周读取1次服务器数据，存在 ChartsData 缓存中，ChartsData 存在则判断是否需要刷新数据
-				参数：
-				   年度 (new Date()).Format("yyyy")
-				   最近一次读取服务器时间，大于7日刷新数据
-				   年度总计  1 x 2
-				   每月合计 12 x 2 
-			*/
-			let Column = { categories: [], series: [] };
-			Column.categories = this.chartData.categories;
-			Column.series = this.chartData.series;
-			_self.showColumn('canvasColumn', Column);
-			/*
-			uni.request({
-				url: 'https://www.ucharts.cn/data.json',
-				data: {},
-				success: function(res) {
-					//console.log(res.data.data);
-					let Column = { categories: [], series: [] };
-					Column.categories = res.data.data.ColumnB.categories;
-					Column.series = res.data.data.ColumnB.series;
-					console.log(Column.categories);
-					console.log(Column.series);
-					_self.showColumn('canvasColumn', Column);
-				},
-				fail: () => {
-					_self.tips = '网络错误';
+		async getServerData() {
+			try {
+				// 7天统计一次
+				if (
+					!this.$moment()
+						.add(-7, 'days')
+						.isBefore(this.$moment(this.chartData.date))
+				) {
+					const res2 = await this.$store.dispatch({
+						type: 'sjmx/GetStatsData'
+					});
+					if (res2 && res2 != '') {
+						//console.log(res);
+						this.chartData.series[0].data = res2[1];
+						this.chartData.series[1].data = res2[0];
+						uni.setStorage({
+							key: 'ChartsData',
+							data: { date: new Date(), data1: this.chartData.series[0].data, data2: this.chartData.series[1].data }
+						});
+						let Column = { categories: [], series: [] };
+						Column.categories = this.chartData.categories;
+						Column.series = this.chartData.series;
+						_self.showColumn('canvasColumn', Column);
+					}
 				}
-			});
-			*/
+			} catch (e) {
+				//console.log(e);
+				if (config.isDevelopment) {
+					uni.showModal({
+						content: 'sjmx/GetStatsData 错误！' + e
+					});
+				}
+			}
 		},
 		showColumn(canvasId, chartData) {
 			canvaColumn = new uCharts({
@@ -116,6 +142,22 @@ export default {
 					}
 				}
 			});
+		}
+	},
+	watch: {
+		percentage: function() {
+			// DOM 更新了
+			// #ifdef APP-PLUS
+			// 定义：在下次 DOM 更新循环结束之后执行延迟回调。在修改数据之后立即使用这个方法，获取更新后的 DOM。
+			Vue.nextTick().then(function() {
+				//console.log('2');
+				//let Column = { categories: [], series: [] };
+				//Column.categories = _self.chartData.categories;
+				//Column.series = _self.chartData.series;
+				//_self.showColumn('canvasColumn', Column);
+				_self.getServerData(); // 检查缓存，7天统计一次
+			});
+			// #endif
 		}
 	}
 };

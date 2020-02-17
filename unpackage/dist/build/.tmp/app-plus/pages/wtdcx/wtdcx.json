@@ -1,0 +1,27 @@
+{
+  "navigationBarTitleText": "委托单查询",
+  "bounce": "none",
+  "titleNView": {
+    "searchInput": {
+      "backgroundColor": "rgba(231, 231, 231,.7)",
+      "borderRadius": "8px",
+      "placeholder": "委托单位或委托单号",
+      "disabled": false,
+      "placeholderColor": "#606266",
+      "align": "left"
+    },
+    "buttons": [
+      {
+        "fontSrc": "/static/iconfont.ttf",
+        "text": "",
+        "fontSize": "24",
+        "color": "ghostwhite",
+        "background": "rgba(0,0,0,0)"
+      }
+    ]
+  },
+  "usingComponents": {
+    "mescroll-uni": "/components/mescroll-uni/mescroll-uni",
+    "wtd-list": "/pages/wtdcx/wtd_list"
+  }
+}

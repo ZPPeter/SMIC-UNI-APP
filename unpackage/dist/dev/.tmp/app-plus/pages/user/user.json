@@ -5,6 +5,13 @@
     "type": "transparent",
     "buttons": [
       {
+        "text": "测绘仪器检定",
+        "float": "left",
+        "width": "195px",
+        "fontSize": "18",
+        "background": "rgba(0,0,0,0)"
+      },
+      {
         "fontSrc": "/static/yticon.ttf",
         "text": "",
         "fontSize": "24",

@@ -1,26 +1,23 @@
 {
   "navigationBarTitleText": "仪器检定",
+  "disableScroll": true,
   "bounce": "none",
   "titleNView": {
     "searchInput": {
       "backgroundColor": "rgba(231, 231, 231,.7)",
-      "borderRadius": "16px",
-      "placeholder": "出厂编号/委托单号",
-      "disabled": true,
+      "borderRadius": "8px",
+      "placeholder": "委托单位/委托单号/出厂编号",
+      "disabled": false,
       "placeholderColor": "#606266"
     },
     "buttons": [
       {
-        "fontSrc": "/static/iconfont.ttf",
-        "text": "",
-        "fontSize": "21",
-        "color": "white",
-        "float": "left",
-        "background": "rgba(0,0,0,0)"
+        "text": "",
+        "float": "left"
       },
       {
         "fontSrc": "/static/iconfont.ttf",
-        "text": "",
+        "text": "",
         "fontSize": "24",
         "color": "ghostwhite",
         "width": "46px",
@@ -28,5 +25,8 @@
       }
     ]
   },
-  "usingComponents": {}
+  "usingComponents": {
+    "mescroll-uni": "/components/mescroll-uni/mescroll-uni",
+    "pd-list": "/pages/verification/veri_list"
+  }
 }

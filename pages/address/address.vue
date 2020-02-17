@@ -14,7 +14,7 @@
 			<text class="yticon icon-bianji" @click.stop="addAddress('edit', item)"></text>
 		</view>
 		<text style="display:block;padding: 16upx 30upx 10upx;lihe-height: 1.6;color: #fa436a;font-size: 24upx;">
-			重要：添加和修改地址回调仅增加了一条数据做演示，实际开发中将回调改为请求后端接口刷新一下列表即可
+			重要：该功能尚未启用。
 		</text>
 		
 		<button class="add-btn" @click="addAddress('add')">新增地址</button>
@@ -28,18 +28,18 @@
 				source: 0,
 				addressList: [
 					{
-						name: '刘晓晓',
-						mobile: '18666666666',
-						addressName: '贵族皇仕牛排(东城店)',
-						address: '北京市东城区',
-						area: 'B区',
+						name: '孙海笑',
+						mobile: '15689695186',
+						addressName: '历山东路9号实验室',
+						address: '山东省济南市历下区',
+						area: 'A区',
 						default: true
 					},{
-						name: '刘大大',
-						mobile: '18667766666',
-						addressName: '龙回1区12号楼',
+						name: '张月峰',
+						mobile: '13954189912',
+						addressName: '遥墙机场比长检定基线场',
 						address: '山东省济南市历城区',
-						area: '西单元302',
+						area: 'C-02',
 						default: false,
 					}
 				]

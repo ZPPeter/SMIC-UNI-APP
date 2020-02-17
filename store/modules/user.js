@@ -11,7 +11,7 @@ class UserModule {
 			readLastNoticeTime: ''
 		};
 		this.actions = {
-			async changePassword(state, payload) {              
+			async changePassword(state, payload) {
 				//console.log(payload);
 				let rep = await fly.post(config.ChangePwd, payload.data).then(function(res) {
 					//console.log(res);
@@ -27,7 +27,7 @@ class UserModule {
 				// var formData = new FormData();
 				// fly.post(config.uploadAvatar,formData).then().catch();				
 				let rep = await fly.post(config.uploadAvatar, payload.data).then(function(res) {	
-					console.log(res);
+					//console.log(res);
 					if (res.success) {
 						return res.result;
 					}
@@ -43,7 +43,6 @@ class UserModule {
 				//console.log('GetUsers:' + rep);
 				return rep; // return '登录成功'; 返回到此处
 			}
-			
 		};
 		this.mutations = {}
 	}

@@ -1,0 +1,1 @@
+getApp().globalData.userInfoid = this.userInfo.id;

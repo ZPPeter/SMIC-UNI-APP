@@ -1,0 +1,5 @@
+首页 main/amin
+检定 verification/verification
+核验 check/check
+批准 approve/approve
+我的 user/user
