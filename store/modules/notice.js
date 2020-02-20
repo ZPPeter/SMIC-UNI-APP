@@ -9,7 +9,7 @@ class NoticeModule {
 		this.actions = {
 			async GetNotices(state, payload) {
 				//console.log(payload.data);
-				let rep = await fly.get(config.GetNotices, {params:payload.data}).then(function(res) {
+				let rep = await fly.get(config.GetNotices, {params:payload.data},{ShowLoading:false}).then(function(res) {
 					return res.result;
 				})
 				return rep; // return '登录成功'; 返回到此处

@@ -1,0 +1,9 @@
+/* 微信版 fly 不支持 FormData 参数
+				    console.log(res.tempFiles[0]);
+					var formData = new FormData();
+					formData.append('file',res.tempFiles[0]);
+					const ret = await _self.$store.dispatch({
+						type: 'user/uploadAvatar',
+						data: formData
+					});
+*/

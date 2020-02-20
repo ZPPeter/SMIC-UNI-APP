@@ -1,12 +1,12 @@
 <template>
-	<view style="padding-left: 20upx;" v-show="res">
+	<view style="padding-left: 20upx;">
 		<view style="display: flex; width:90%;text-align: left;margin-left: 0px;align-items: center;" class="wtdw2">
 			<div style="background-color: skyblue;width:4px;height:12px;vertical-align: bottom;margin-right: 2px;padding-right: 2px;"></div>
 			检定结果
 		</view>
 		<view style="display: flex;"><div style="background-color: skyblue;width:98%;height:1px;vertical-align:top;"></div></view>
 		<view style="margin-top: 20upx;" class="wtdw">证书编号：{{ res[1] }}</view>
-		<view class="wtdw">温度：({{ res[2] }})℃</view>		
+		<view class="wtdw">温度：{{ res[2] }}℃</view>		
 		<view class="wtdw">1、测微器行差与回程差：{{ res[8] }}；{{ res[9] }}</view>
 		<view class="wtdw">2、视准线的安平误差：{{ res[4] }}″</view>
 		<view class="wtdw">3、交叉误差: {{ res[5] }}′</view>

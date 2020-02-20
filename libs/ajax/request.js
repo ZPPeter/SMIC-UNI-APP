@@ -15,6 +15,7 @@ fly.config.timeout = 30000; // 超时时间，为0时则无超时限制
 var showLoading = true;
 
 // 配置请求拦截器
+//let rep = await fly.get(config.GetHomeDatas,null,{ShowLoading:false}).then(function(res) {
 fly.interceptors.request.use((request) => {
 	if (!!request.body)
 		request.params = request.body.params;	

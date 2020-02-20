@@ -32,7 +32,7 @@
 /* 图片加载中颜色 */
 /* 行为相关颜色 */
 .list {
-  padding-top: 100rpx;
+  padding-top: 65rpx;
 }
 .list_items {
   margin: 21rpx;
@@ -141,10 +141,17 @@
 }
 .jdy {
   position: absolute;
-  right: 7px;
-  bottom: 50rpx;
-  color: #868686;
+  right: 15px;
+  bottom: 20rpx;
   font-size: 14px;
   font-weight: bold;
+}
+.isme {
+  color: #c5c5c5;
+}
+.tj-item {
+  color: #75787d;
+  font-size: 30rpx;
+  margin-left: 4px;
 }
 

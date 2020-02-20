@@ -1,17 +1,23 @@
 <template>
 	<view class="list">
+		<view style="display: flex; width:90%;text-align: left; margin-left: 6px;align-items: center;overflow:hidden;">
+			<view class="tj-item">器具名称:【{{ qjmcnames }}】</view>
+		</view>
 		<view class="list_items" v-for="o in list" :key="o.id">
 			<view class="list-info" @tap="showDetails(o)">
-				<view class="qjmc"><image class="portrait" :src="getImg(o.zzcnr)"></image>
-				<view>{{ o.qjmc }}</view>
-				</view>				
+				<view class="qjmc">
+					<image class="portrait" :src="getImg(o.zzcnr)"></image>
+					<view>{{ o.qjmc }}</view>
+				</view>
 				<view class="content">
 					<view>
 						<h4 class="xhgg">{{ o.xhggmc }} / {{ o.ccbh }}</h4>
 					</view>
-					<p class="wtdw">送检单位：{{ o.dwmc }}</p>					
+					<p class="wtdw">送检单位：{{ o.dwmc }}</p>
 					<view v-if="jdqx(o.yqjchrq)" class="font-seal">已超期</view>
-					<p class="wtdw">检定员:{{ o.surname }}</p>
+					<view class="jdy cu-capsule">
+						<view class="cu-tag bg-gray" :class="{ isme: isme(o.surname) }">{{ o.surname }}</view>
+					</view>
 					<p class="wtdw">登记时间：{{ format(o.djrq) }}</p>
 					<p :class="{ jdqx1: jdqx(o.yqjchrq) }">检定期至：{{ format(o.yqjchrq) }}</p>
 				</view>
@@ -20,9 +26,11 @@
 	</view>
 </template>
 <script>
-	import utils from '@/libs/common/utils.js';
+import utils from '@/libs/common/utils.js';
+import { mapState, mapMutations } from 'vuex';
 export default {
 	props: {
+		qjmcnames: String,
 		list: {
 			// 数据列表
 			type: Array,
@@ -49,6 +57,7 @@ export default {
 			zzc: "瑞士徕卡"
 		*/
 	},
+	computed: mapState(['userInfo']),
 	data() {
 		return {
 			isActive: true
@@ -58,10 +67,13 @@ export default {
 		console.log('----------------组件 onLoad 是无效的 ---------------');
 	},
 	methods: {
-		showDetails(o){
+		isme(obj) {
+			return this.userInfo.realname == obj;
+		},
+		showDetails(o) {
 			let bm = o.qjmcbm;
 			uni.navigateTo({
-				url: '/pages/sjcl/'+bm+'/hy?o=' +  JSON.stringify(o)
+				url: '/pages/sjcl/' + bm + '/hy?o=' + JSON.stringify(o)
 			});
 			//url: '/pages/sjcl/sorry?o=' +  JSON.stringify(o)
 		},
@@ -88,7 +100,7 @@ export default {
 
 <style lang="scss">
 .list {
-	padding-top: 100upx;
+	padding-top: 65upx;
 }
 .list_items {
 	margin: 21upx;
@@ -189,10 +201,26 @@ export default {
 }
 
 .triangle-topright.working_wtd {
-	border-top: 44px solid #0099FF;
+	border-top: 44px solid #0099ff;
 }
 
 .triangle-topright.over_wtd {
 	border-top-color: #cccccc;
+}
+.tj-item {
+	color: #75787d;
+	font-size: $font-sm + 2upx;
+	margin-left: 4px;
+}
+.jdy {
+	position: absolute;
+	right: 15px;
+	bottom: 20upx;
+	//color: #868686;
+	font-size: 14px;
+	font-weight: bold;
+}
+.isme {
+	color: #c5c5c5;
 }
 </style>

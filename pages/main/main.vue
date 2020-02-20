@@ -21,7 +21,7 @@
 			<!-- App+ 不支持滚动 -->
 			<view><uni-notice-bar class="noticebar" show-icon="true" :text="GetHomeInfo()"></uni-notice-bar></view>
 		</view>
-		<view class="time" @longpress="GotoTest()">{{ gDate }}{{ gTime }}</view>
+		<view class="time">{{ gDate }}{{ gTime }}</view>
 	</view>
 </template>
 
@@ -123,10 +123,6 @@ export default {
 		GetHomeData() {
 			//console.log(this.$store.state.latestData.Data);
 			return this.$store.state.latestData.Data || [0, 0, 0, 0, 0, 0, 1, 0, 0];
-		},
-		GotoTest() {
-			//this.navTo('/pages/test/test');
-			this.navTo('/pages/sign/sign');
 		},
 		GotoLogo() {
 			if (this.hasLogin) this.$Router.push('/pages/user/userinfo');

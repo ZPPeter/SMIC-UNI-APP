@@ -100,7 +100,7 @@ _signalR.on('ReceiveMessage', async function(message) {
 		uni.showTabBarRedDot({
 			index: 4
 		});
-	} else if (msg.MessageType == 90) {
+	} else if (msg.MessageType == 90) {// 首页数字刷新
 		showHomeData.showData();
 	} else if (msg.MessageType == 98) { // 上线通知
 		if (msg.MessageBody.replace('[PC]', '').replace('[App]', '').trim() != userName) {

@@ -13,7 +13,7 @@
 						<view style="font-weight:bold;">{{ o.ccbh }}</view>
 					</view>
 					<p class="wtdw">制造厂家：{{ o.zzc }}</p>
-					<p v-if="o.jdzt == 111" class="wtdw2">检定员:{{ o.surname }}</p>
+					<p v-if="o.jdzt == 111" class="wtdw2">检定员：<text style="font-weight:bold;">{{ o.surname }}</text></p>					                                       
 				</view>
 			</view>
 			<view style="padding-left: 20upx;" v-show="res">

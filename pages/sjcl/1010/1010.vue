@@ -12,11 +12,12 @@
 						出厂编号：
 						<view style="font-weight:bold;">{{ o.ccbh }}</view>
 					</view>
+					<p class="wtdw">精度指标：J{{ jdzb2 }}</p>
 					<p class="wtdw">制造厂家：{{ o.zzc }}</p>
-					<p v-if="o.jdzt == 111" class="wtdw2">检定员:{{ o.surname }}</p>
+					<p v-if="o.jdzt == 111" class="wtdw2">检定员：<text style="font-weight:bold;">{{ o.surname }}</text></p>
 				</view>
 			</view>
-			<result-data :res="res"></result-data>
+			<result-data v-if="res" :res="res"></result-data>
 		</view>
 		<view class="fab-box fab">
 			<view class="fab-circle" @click="doSetting(o)"><text class="iconfont icon-Setting fontsize"></text></view>
@@ -47,7 +48,8 @@ export default {
 			WEATHER:config.WeatherType.In,
 			o: new JDJLFM(),
 			btnJDWB: '检完确认',
-			res: ''
+			res: '',
+			jdzb2:''
 		};
 	},
 	computed: mapState(['hasLogin', 'userInfo']),
@@ -76,6 +78,9 @@ export default {
 		this.o.jdzt = o.jdzt;
 
 		this.o.surname = o.surname;
+		
+		this.jdzb2 = "2"; // 2 6
+		this.o.jdzb = this.jdzb2;
 
 		if (this.o.jdzt == 111 || this.o.jdzt == 122) {
 			// 显示计算结果
@@ -90,6 +95,10 @@ export default {
 		if (currPage.data) {
 			if (currPage.data.ccbh) {
 				this.o.ccbh = currPage.data.ccbh;
+			}
+			if (currPage.data.jdzb) {
+				this.jdzb2 = currPage.data.jdzb;
+				this.o.jdzb = this.jdzb2;
 			}
 		}
 	},
@@ -142,6 +151,8 @@ export default {
 			//console.log(JSON.parse(res));
 			if (res) {
 				this.res = JSON.parse(res);
+				this.jdzb2 = this.res[10];
+				this.o.jdzb = this.jdzb2;
 			}
 		},
 		async getRawData() {
@@ -170,7 +181,13 @@ export default {
 				xhgg: this.o.xhggmc,
 				zzc: this.o.zzc,
 				ccbh: this.o.ccbh,
-				jjwd: WQ[0]
+				jjwd: WQ[0],
+				cjjd: this.jdzb2, //经纬仪 2 6
+				qt01:'',
+				qt02:'',
+				qt03:'',
+				qt04:'',
+				qt05:''
 			};
 			const rawTemplate = {
 				qjmcbm: this.o.qjmcbm,

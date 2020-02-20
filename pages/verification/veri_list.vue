@@ -1,5 +1,8 @@
-<template>
+<template> 
 	<view class="list">
+		<view style="display: flex; width:90%;text-align: left; margin-left: 6px;align-items: center;overflow:hidden;">
+			<view class="tj-item">器具名称:【{{ qjmcnames }}】</view>
+		</view>
 		<view class="list_items" v-for="o in list" :key="o.id">
 			<view class="list-info" @tap="showDetails(o)">
 				<view class="qjmc"><image class="portrait" :src="getImg(o.zzcnr)"></image>
@@ -13,9 +16,11 @@
 					
 					<p v-show="o.jdzt == 100" class="font-seal0">登记</p>
 					<p v-if="o.jdzt == 111" class="font-seal0">在检</p>
-					<view v-if="jdqx(o.yqjchrq)" class="font-seal">已超期</view>
+					<view v-if="jdqx(o.yqjchrq)" class="font-seal">已超期</view>					
 					
-					<p v-if="o.jdzt == 111" class="jdy">检定员:{{ o.surname }}</p>
+					<view v-if="o.jdzt == 111" class="jdy cu-capsule">
+						<view class="cu-tag bg-gray" :class="{ isme: !isme(o.surname) }">{{ o.surname }}</view>
+					</view>
 					
 					<p v-if="o.jdzt == 100" class="triangle-topright add_wtd"></p>
 					<p v-else class="triangle-topright working_wtd"></p>
@@ -29,9 +34,11 @@
 	</view>
 </template>
 <script>
+	import { mapState, mapMutations } from 'vuex';
 	import utils from '@/libs/common/utils.js';
 export default {
 	props: {
+		qjmcnames:String,
 		list: {
 			// 数据列表
 			type: Array,
@@ -58,6 +65,7 @@ export default {
 			zzc: "瑞士徕卡"
 		*/
 	},
+	computed: mapState(['userInfo']),
 	data() {
 		return {
 			isActive: true
@@ -67,6 +75,9 @@ export default {
 		console.log('----------------组件 onLoad 是无效的 ---------------');
 	},
 	methods: {
+		isme(obj) {
+			return this.userInfo.realname == obj;
+		},
 		showDetails(o){
 			let bm = o.qjmcbm;
 			uni.navigateTo({
@@ -97,7 +108,7 @@ export default {
 
 <style lang="scss">
 .list {
-	padding-top: 100upx;
+	padding-top: 65upx;
 }
 .list_items {
 	margin: 21upx;
@@ -206,10 +217,18 @@ export default {
 }
 .jdy {
 	position: absolute;
-	right: 7px;
-	bottom: 50upx;
-	color: #868686;
+	right: 15px;
+	bottom: 20upx;
+	//color: #868686;
 	font-size: 14px;
 	font-weight: bold;
+}
+.isme {
+	color: #c5c5c5;
+}
+.tj-item {
+	color: #75787d;
+	font-size: $font-sm + 2upx;
+	margin-left: 4px;
 }
 </style>

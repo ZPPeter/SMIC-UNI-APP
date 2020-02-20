@@ -2,13 +2,10 @@
 	<view style="padding-top: 10upx;">
 		<view style="display: flex; width:90%;text-align: left; margin-left: 12px;align-items: center;">
 			<div style="background-color: skyblue;width:4px;height:12px;vertical-align: bottom;"></div>
-			<view class="tj-item">您有{{ lstlength }}台仪器未检。</view>
+			<view class="tj-item">查询到{{ lstlength }}台仪器未检。</view> 
 		</view>
-		<view v-if="qjmcNames.length > 0">
-			<view style="display: flex; width:90%;text-align: left; margin-left: 6px;align-items: center;overflow:hidden;">
-				<view class="tj-item">器具名称:【{{ qjmcnames }}】</view>
-			</view>
-			<mescroll-uni @down="downCallback" @up="upCallback"><pd-list :list="pdList"></pd-list></mescroll-uni>
+		<view v-if="qjmcNames.length > 0">			
+			<mescroll-uni @down="downCallback" @up="upCallback"><pd-list :qjmcnames=qjmcnames :list="pdList"></pd-list></mescroll-uni>
 			<view class="fab-box fab">
 				<view class="fab-circle" @tap="showModal" data-target="RadioModal"><text class="iconfont icon-icon-test2 fontsize"></text></view>
 			</view>
@@ -133,7 +130,7 @@ export default {
 		},
 		checkboxChange: function(e) {
 			var values = e.detail;
-			console.log(values);
+			//console.log(values);
 			/*
 			for (var i = 0, lenI = 2; i < lenI; ++i) {
 				const item = items[i];
@@ -286,7 +283,7 @@ export default {
 		}
 		this.qjmcnames = this.$abp.utils.getRolesValue(this.userInfo.roles, this.userInfo.roleNames);
 		this.qjmcNames.length = 0; // this.qjmcNames = [];
-		this.qjmcNames = this.qjmcNames.concat(this.$abp.utils.qjmcNames);
+		this.qjmcNames = this.qjmcNames.concat(this.$abp.utils.qjmcNames);		
 		getApp().globalData.userInfoid = this.userInfo.id;
 
 		if (uni.getSystemInfoSync().platform === 'android') {
@@ -369,7 +366,7 @@ export default {
 
 .tj-item {
 	color: #75787d;
-	font-size: $font-sm + 2upx;
+	font-size: $font-sm + 4upx;
 	margin-left: 4px;
 }
 .list_items {

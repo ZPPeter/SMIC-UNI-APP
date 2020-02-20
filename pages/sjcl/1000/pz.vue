@@ -14,8 +14,8 @@
 					</view>
 					<p class="wtdw">制造厂家：{{ o.zzc }}</p>
 					<p class="wtdw">精度指标：{{ o.jbcs.cjjd }}″，{{ dsz }}，{{ o.jbcs.bcjda }}+{{ o.jbcs.bcjdb }}</p>
-					<p class="wtdw2">检定员:{{ o.surname }}</p>
-					<p class="wtdw2">核验员:{{ o.hyy }}</p>
+					<p class="wtdw2">检定员：<text style="font-weight:bold;">{{ o.surname }}</text></p>
+					<p class="wtdw2">核验员：<text style="font-weight:bold;">{{ o.hyy }}</text></p>
 				</view>
 			</view>
 			<view style="padding-left: 20upx;" v-show="res">

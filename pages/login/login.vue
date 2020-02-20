@@ -51,28 +51,84 @@ export default {
 		if (uni.getSystemInfoSync().platform === 'android') {
 			this.version = plus.runtime.version; // 打包后有效，打包前是基座的版本号
 		}
+		this.hideIcon();
 	},
 	onShow() {
-		if (uni.getSystemInfoSync().platform === 'android') {
-			var icon = plus.nativeObj.View.getViewById('LogoImg');
-			//console.log(icon);
-			if (icon) {
-				setTimeout(function() {
-					icon.hide();
-				}, 300);
-			}
-		}
+		this.hideIcon();
 	},
 	methods: {
 		...mapMutations(['login']),
 		navBack() {
 			uni.navigateBack();
+		},		
+		hideIcon() {
+			if (uni.getSystemInfoSync().platform === 'android') {
+				var icon = plus.nativeObj.View.getViewById('LogoImg');
+				//console.log(icon);
+				if (icon) {
+					setTimeout(function() {
+						icon.hide();
+					}, 300);
+				}
+			}
 		},
 		toForgetPassword() {
 			uni.showToast({
 				icon: 'none',
 				title: '请联系管理员重置密码!'
 			});
+		},
+		toDelSavedFiles() {
+			// 内部存储 Android Data io.dcloud.Hbuilder apps hbuilder doc
+			uni.getSavedFileList({
+				success: function(res) {
+					if (res.fileList.length > 0) {
+						uni.removeSavedFile({
+							filePath: res.fileList[0].filePath,
+							complete: function(res) {
+								//console.log(res);
+							}
+						});
+					}
+				}
+			});
+		},
+		getUserSign(userid){
+			var _this = this;
+			var relativePath = '_doc/logo/sign.png';
+			//检查图片是否已存在
+			plus.io.resolveLocalFileSystemURL(
+				relativePath,
+				function(entry) {
+					//console.log('图片存在');
+					entry.remove(
+						function(entry) {
+							//console.log('文件删除成功:' + relativePath);
+							_this.downloadUserSign(userid);
+						},
+						function(e) {
+							//console.log('文件删除失败:' + relativePath);
+						}
+					);
+				},
+				function(e) {
+					//console.log('图片不存在');
+					_this.downloadUserSign(userid);
+				}
+			);
+		},
+		downloadUserSign(userid) {
+			var _this = this;
+			//console.log(config.signImgPath + userid + '.png');
+			var dtask = plus.downloader.createDownload(config.signImgPath + userid + '.png', { filename: '_doc/logo/sign.png' }, function(d, status) {
+				// 下载完成
+				if (status == 200) {
+					//console.log('Download success: ' + d.filename);					
+				} else {
+					console.log('Download failed: ' + status);
+				}
+			});
+			dtask.start();
 		},
 		async toLogin() {
 			uni.showLoading({
@@ -108,6 +164,7 @@ export default {
 			});
 			//console.log(res);
 			if (res != '') {
+				this.getUserSign(res.userId);
 				//console.log(res);
 				this.$store.state.user.readLastNoticeTime = res.lastReadNoticeTime;
 				var filePath = '';
@@ -118,7 +175,6 @@ export default {
 					roles: res.roles, //"roles": ["一般用户", "1000", "1030"],
 					roleNames: res.roleNames, //"roleNames": ["一般用户", "全站仪", "GPS接收机"],
 					portrait: null // config.avatarImgPath + res.userId + '.png?t=' + new Date().getTime()
-					//changeAvata: false
 				};
 
 				/*
@@ -132,8 +188,31 @@ export default {
 					});
 				}
 				*/
-				
+
 				var _this = this;
+				var relativePath = '_doc/logo/logo.png';
+				//检查图片是否已存在
+				plus.io.resolveLocalFileSystemURL(
+					relativePath,
+					function(entry) {
+						//console.log('图片存在');
+						entry.remove(
+							function(entry) {
+								//console.log('文件删除成功:' + relativePath);
+								_this.downloadAvatar(userInfo);
+							},
+							function(e) {
+								//console.log('文件删除失败:' + relativePath);
+							}
+						);
+					},
+					function(e) {
+						//console.log('图片不存在');
+						_this.downloadAvatar(userInfo);
+					}
+				);
+				userInfo.portrait = '_doc/logo/logo.png';
+				/*
 				uni.downloadFile({
 					url: config.avatarImgPath + res.userId + '.png',
 					success: function(res) {
@@ -160,26 +239,46 @@ export default {
 								}
 							});
 							// #endif
-							// #ifdef H5
-							//console.log(userInfo);
-							_this.login(userInfo); // -> ...mapMutations(['login'])
-							uni.hideLoading();
-							uni.switchTab({
-								url: '/pages/main/main'
-							});
-							// #endif
 						}
 					}
 				});
-				//this.$Router.replace({ name: 'notice'}); //从 notice 返回不到 设置界面
-				//this.$Router.push({ name: 'notice'}); // 缓存 login
+				*/
+
 				let showHomeData = new ShowHomeData.ShowHomeData();
 				showHomeData.showData();
 			} else {
 				this.logining = false;
 			}
+		},
+		downloadAvatar(userInfo) {
+			//参数 filename: (String 类型 )下载文件保存的路径
+			//保存文件路径仅支持以"_downloads/"、"_doc/"、"_documents/"开头的字符串。
+			//文件路径以文件后缀名结尾（如"_doc/download/a.doc"）表明指定保存文件目录及名称，以“/”结尾则认为指定保存文件的目录（此时程序自动生成文件名）。
+			//如果指定的文件已经存在，则自动在文件名后面加"(i)"，其中i为数字，如果文件名称后面已经是此格式，则数字i递增，如"download(1).doc"。
+			//默认保存目录为（"_downloads"），并自动生成文件名称
+			//console.log('开始下载Logo:'+config.avatarImgPath + userInfo.id + '.png');
+			var _this = this;
+			var dtask = plus.downloader.createDownload(config.avatarImgPath + userInfo.id + '.png', { filename: '_doc/logo/logo.png' }, function(d, status) {
+				// 下载完成
+				if (status == 200) {
+					//console.log('Download success: ' + d.filename);
+					//console.log(userInfo);
+					_this.login(userInfo); // -> ...mapMutations(['login'])
+					_this.$signalR.connection(config.SignalR);
+					//uni.navigateBack();
+					uni.hideLoading();
+					uni.switchTab({
+						url: '/pages/main/main'
+					});
+				} else {
+					console.log('Download failed: ' + status);
+				}
+			});
+			//dtask.addEventListener("statechanged", onStateChanged, false);
+			dtask.start();
+			//plus.downloader.startAll();
 		}
-	}	
+	}
 };
 </script>
 

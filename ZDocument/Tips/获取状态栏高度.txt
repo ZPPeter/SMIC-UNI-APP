@@ -1,0 +1,15 @@
+App.vue
+
+onLaunch: async function() {
+		/*
+		uni.getSystemInfo({
+			success: function(e) {
+				Vue.prototype.StatusBar = e.statusBarHeight;
+				if (e.platform == 'android') {
+					Vue.prototype.CustomBar = e.statusBarHeight + 50;
+				} else {
+					Vue.prototype.CustomBar = e.statusBarHeight + 45;
+				}
+			}
+		});
+		*/

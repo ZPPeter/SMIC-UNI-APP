@@ -13,8 +13,8 @@
 						<view style="font-weight:bold;">{{ o.ccbh }}</view>
 					</view>
 					<p class="wtdw">制造厂家：{{ o.zzc }}</p>					
-					<p class="wtdw2">检定员:{{ o.surname }}</p>
-					<p class="wtdw2">核验员:{{ o.hyy }}</p>
+					<p class="wtdw2">检定员：<text style="font-weight:bold;">{{ o.surname }}</text></p>
+					<p class="wtdw2">核验员：<text style="font-weight:bold;">{{ o.hyy }}</text></p>
 				</view>
 			</view>
 			<result-data :res="res"></result-data>

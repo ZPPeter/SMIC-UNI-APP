@@ -1,0 +1,10 @@
+	   // 路径 file:///storage/emulated/0/Android/data/io.dcloud.HBuilder/apps/HBuilder/doc/uniapp_save
+	   // 保存临时文件到本地 doc/uniapp_save 目录，文件名自动生成不能指定文件名
+	   uni.saveFile({ 
+	   	tempFilePath: tempFilePath,
+	   	success: function(res) {
+	   		savedFilePath = res.savedFilePath;
+	   		_self.userInfo.portrait = savedFilePath;
+	   		//console.log(savedFilePath);
+	   	}
+	   });

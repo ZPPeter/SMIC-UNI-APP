@@ -16,6 +16,7 @@
 </template>
 
 <script>
+	import config from '@/libs/common/config.js';
 	var content = null;
 	var touchs = [];
 	var canvasw = 0;
@@ -35,20 +36,95 @@
 				isEnd: false // 是否签名
 			}
 		},
-
 		methods: {
+			uploadFile(tempFilePath) {
+					// 上传到服务器
+					const uploadTask = uni.uploadFile({
+						url: config.uploadSign,
+						filePath: tempFilePath,
+						name: 'file',
+						header: {
+							Authorization: 'Bearer ' + uni.getStorageSync('token')
+						},
+						formData: {
+							//user:'admin'
+						},
+						success: function(res) {
+							// compressImage() 已经获取固定文件路径 uni.saveFile 不能指定文件名
+							uni.showToast({
+								icon: 'none',
+								title: '签名设置完毕！'
+							});
+						},
+						fail(err) {
+							//console.log(err);
+							uni.showToast({
+								icon: 'none',
+								title: err.errMsg
+							});
+							reject(err);
+						}
+					});
+					uploadTask.onProgressUpdate(function(res) {});
+				},			
+			compressImage(url, filename) {
+				var path = '_doc/logo/' + filename;
+				plus.zip.compressImage(
+					{
+						src: url, //src: (String 类型 )压缩转换原始图片的路径
+						dst: path, //压缩转换目标图片的路径
+						width: '180px', //将图片压缩为大小
+						height: '60px',
+						quality: 50, //quality: (Number 类型 )压缩图片的质量.取值范围为1-100
+						//如同时设置了多个转换操作，则按缩放、旋转、裁剪顺序进行操作。
+						//rotate:90,  // 旋转90度
+						//clip:{top:"25%",left:"25%",width:"50%",height:"50%"}		// 裁剪图片中心区域
+						//format:"png"		// 将jpg转换成png格式
+						overwrite: true //overwrite: (Boolean 类型 )覆盖生成新文件
+					},
+					async function(event) {
+						//console.log(event);
+							var target = event.target; // 压缩转换后的图片url路径，以"file://"开头
+							var size = event.size; // 压缩转换后图片的大小，单位为字节（Byte）
+							var width = event.width; // 压缩转换后图片的实际宽度，单位为px
+							var height = event.height; // 压缩转换后图片的实际高度，单位为px
+						_that.uploadFile(event.target);
+						//_that.Image2dataURL(path);
+					},
+					function(error) {
+						console.log('Compress error!' + error.message);
+					}
+				);
+			},			
+			/**  
+			 * 图片文件转base64字符串  
+			 * @param {Object} path  
+			 */  
+			Image2dataURL (path) {  
+			    plus.io.resolveLocalFileSystemURL(path, function(entry){  
+			        entry.file(function(file){  
+			            var reader = new plus.io.FileReader();  
+			            reader.onloadend = function (e) {  
+			                console.log(e.target.result);  
+			            };  
+			            reader.readAsDataURL(file);  
+			        },function(e){  
+						console.log("读写出现异常:" + e.message);
+			        })  
+			    })  
+			},
 			overSign: function() {
 				if (this.isEnd) {
 					uni.canvasToTempFilePath({
 						canvasId: 'firstCanvas',
-
 						success: function(res) {
 							//打印图片路径
-							console.log(res.tempFilePath)
-							console.log('完成签名')
+							//console.log(res.tempFilePath);
+							//console.log('完成签名');
 							//设置图片
-							_that.signImage = res.tempFilePath
-							console.log(_that.signImage);
+							_that.signImage = res.tempFilePath;
+							//console.log(_that.signImage);	
+							_that.compressImage(_that.signImage,'sign.png');
 						}
 					})
 				} else {
@@ -65,8 +141,8 @@
 			// 画布的触摸移动开始手势响应
 			start: function(event) {
 				// console.log(event)
-				console.log("触摸开始" + event.changedTouches[0].x)
-				console.log("触摸开始" + event.changedTouches[0].y)
+				//console.log("触摸开始" + event.changedTouches[0].x)
+				//console.log("触摸开始" + event.changedTouches[0].y)
 				//获取触摸开始的 x,y
 				let point = {
 					x: event.changedTouches[0].x,
@@ -91,7 +167,7 @@
 
 			// 画布的触摸移动结束手势响应
 			end: function(e) {
-				console.log("触摸结束" + e)
+				//console.log("触摸结束" + e)
 				// 设置为已经签名
 				this.isEnd = true
 				// 清空轨迹数组
@@ -117,7 +193,7 @@
 
 			//绘制
 			draw: function(touchs) {
-				console.log(touchs[0],touchs[1])
+				//console.log(touchs[0],touchs[1])
 				let point1 = touchs[0]
 				let point2 = touchs[1]
 				touchs.shift()
@@ -155,7 +231,7 @@
 			//设置线的颜色
 			content.setStrokeStyle("#000");
 			//设置线的宽度
-			content.setLineWidth(5);
+			content.setLineWidth(6);
 			//设置线两端端点样式更加圆润
 			content.setLineCap('round');
 			//设置两条线连接处更加圆润

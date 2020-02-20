@@ -13,10 +13,10 @@
 						<view style="font-weight:bold;">{{ o.ccbh }}</view>
 					</view>
 					<p class="wtdw">制造厂家：{{ o.zzc }}</p>
-					<p v-if="o.jdzt == 111" class="wtdw2">检定员:{{ o.surname }}</p>
+					<p v-if="o.jdzt == 111" class="wtdw2">检定员：<text style="font-weight:bold;">{{ o.surname }}</text></p>
 				</view>
 			</view>
-			<result-data :res="res"></result-data>
+			<result-data v-if="res" :res="res"></result-data>
 		</view>
 		<view class="fab-box fab">
 			<view class="fab-circle" @click="doSetting(o)"><text class="iconfont icon-Setting fontsize"></text></view>

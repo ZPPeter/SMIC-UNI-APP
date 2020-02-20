@@ -39,9 +39,9 @@ var abp = abp || {};
 		abp.utils.qjmcNames = [];
 		var roles = '';
 		for (var i = 0; i < val1.length; i++) {
-			if (val1[i].toString().startsWith('1')) {
-				roles = roles + ',' + val2[i].toString();
-				abp.utils.qjmcNames.push([val1[i], val2[i]])
+			if (val1[i].toString().startsWith('1')) { 
+				roles = roles + ',' + val2[i].toString().replace('★','').replace('检定','');
+				abp.utils.qjmcNames.push([val1[i], val2[i].toString().replace('★','').replace('检定','')])
 			}
 		}
 		//console.log(abp.utils.qjmcNames);

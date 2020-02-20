@@ -12,11 +12,15 @@
 						出厂编号：
 						<view style="font-weight:bold;">{{ o.ccbh }}</view>
 					</view>
+					<p class="wtdw">精度指标：{{ jdzb2 }}</p>
 					<p class="wtdw">制造厂家：{{ o.zzc }}</p>
-					<p v-if="o.jdzt == 111" class="wtdw2">检定员:{{ o.surname }}</p>
+					<p v-if="o.jdzt == 111" class="wtdw2">
+						检定员：
+						<text style="font-weight:bold;">{{ o.surname }}</text>
+					</p>
 				</view>
 			</view>
-			<result-data :res="res"></result-data>
+			<result-data v-if="res" :res="res"></result-data>
 		</view>
 		<view class="fab-box fab">
 			<view class="fab-circle" @click="doSetting(o)"><text class="iconfont icon-Setting fontsize"></text></view>
@@ -42,12 +46,13 @@ export default {
 		ResultData
 	},
 	data() {
-		return {			
+		return {
 			MBMC:config.TemplateType.MB1020,
 			WEATHER:config.WeatherType.In,
 			o: new JDJLFM(),
 			btnJDWB: '检完确认',
-			res: ''
+			res: '',
+			jdzb2:''
 		};
 	},
 	computed: mapState(['hasLogin', 'userInfo']),
@@ -77,6 +82,10 @@ export default {
 
 		this.o.surname = o.surname;
 
+		//水准仪  DS05 DSZ05 DS1 DSZ1 DS3 DSZ3
+		this.jdzb2 = 'DS3';
+		this.o.jdzb = this.jdzb2;
+
 		if (this.o.jdzt == 111 || this.o.jdzt == 122) {
 			// 显示计算结果
 			this.showRawData();
@@ -91,9 +100,13 @@ export default {
 			if (currPage.data.ccbh) {
 				this.o.ccbh = currPage.data.ccbh;
 			}
+			if (currPage.data.jdzb) {
+				this.jdzb2 = currPage.data.jdzb;
+				this.o.jdzb = this.jdzb2;
+			}			
 		}
 	},
-	methods: {
+	methods: {		
 		OpenDoc(bm, id) {
 			utils.OpenDoc(bm, id);
 		},
@@ -142,6 +155,8 @@ export default {
 			//console.log(JSON.parse(res));
 			if (res) {
 				this.res = JSON.parse(res);
+				this.jdzb2 = this.res[12];
+				this.o.jdzb = this.jdzb2;
 			}
 		},
 		async getRawData() {
@@ -170,13 +185,19 @@ export default {
 				xhgg: this.o.xhggmc,
 				zzc: this.o.zzc,
 				ccbh: this.o.ccbh,
-				jjwd: WQ[0]
+				cjjd: this.jdzb2, //水准仪  DS05 DSZ05 DS1 DSZ1 DS3 DSZ3
+				jjwd: WQ[0],
+				qt01:'',
+				qt02:'',
+				qt03:'',
+				qt04:'',
+				qt05:''
 			};
 			const rawTemplate = {
 				qjmcbm: this.o.qjmcbm,
 				qjmc: this.o.qjmc,
 				mbmc: this.MBMC //'M01'
-			};			
+			};
 			const CertDto = {
 				jdjlfm: jdjlfm,
 				rawTemplate: rawTemplate

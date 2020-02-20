@@ -102,7 +102,9 @@ const utils = {
 	async compressImage(url, filename) { // 异步操作，不能用
 		var path = '_doc/logo/' + filename; //_doc/upload/F_SMP-1467602809090.jpg
 		var dest = '';
-		// var path = "_www/img/" + filename; //_doc/upload/F_SMP-1467602809090.jpg //打包后 _www 只读
+		// var path = "_www/img/" + filename; 
+		//_doc/upload/F_SMP-1467602809090.jpg 
+		//打包后 _www 只读,_doc目录可读写
 		// console.log(url); //file:///storage/emulated/0/Pictures/Screenshots/S70915-001739.jpg
 		// console.log(filename);
 		// console.log(path);
@@ -156,7 +158,7 @@ const utils = {
 				break;
 			case '200':
 				return '在检';
-				break;	
+				break;
 			case '222':
 				return '检完';
 				break;
@@ -172,6 +174,7 @@ const utils = {
 			url: docUrl,
 			success: function(res) {
 				var filePath = res.tempFilePath;
+				//console.log(filePath);
 				uni.openDocument({
 					filePath: filePath,
 					success: function(res) {
@@ -196,6 +199,49 @@ const utils = {
 			}
 		});
 	},
+	getUpdate(){
+		let url = config.apiDomain + '/update'; //检查更新的服务器地址
+		url = 'https://uniapp.dcloud.io/update';
+	    return new Promise((resolve, reject) => {
+	        uni.request({
+	            url: url,
+				data: {
+					appid: plus.runtime.appid,
+					version: plus.runtime.version,
+					imei: plus.device.imei
+				},
+	            success: (res) => {
+	                //console.log('success', res);
+	                if (res.statusCode == 200 && res.data.isUpdate) {
+	                	let openUrl = plus.os.name === 'iOS' ? res.data.iOS : res.data.Android;
+	                	// 提醒用户更新
+	                	uni.showModal({
+	                		title: '更新提示',
+	                		content: res.data.note ? res.data.note : '是否选择更新',
+	                		success: (showResult) => {
+	                			if (showResult.confirm) {
+	                				plus.runtime.openURL(openUrl);
+	                			}
+	                		}
+	                	})
+	                }
+	                if (res.statusCode == 200 && !res.data.isUpdate) {
+	                	console.log('当前版本已是最新版本。');
+						resolve('none');
+	                }	                
+	            },
+	            fail: (err) => {
+	                reject('err')
+	            }
+	        });
+	    })
+	},
+	async checkUpdate() {
+		console.log('升级包检测...');
+		let rep = await this.getUpdate();		
+		//console.log(JSON.stringify(rep)); // 是 "none" 不是 none ,length=6
+		return JSON.stringify(rep);
+	}
 }
 
 export default utils;

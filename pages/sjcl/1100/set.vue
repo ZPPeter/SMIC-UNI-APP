@@ -11,9 +11,14 @@
 			<text class="cell-tit">出厂编号：{{ o.ccbh }}</text>
 			<text class="cell-more yticon icon-you"></text>
 		</view>
-		<view style="padding-top: 20upx;padding-left: 40upx;padding-right: 40upx;color:#EE9900;">
-			<p>提示：出厂编号可以修改。</p>			
+		<view class="list-cell b-b"><text class="cell-tit" style="white-space: nowrap;">测角精度：</text>		
+		<radio-group @change="radioChange">
+			<label  style="display:inline-block;" v-for="(item, index) in items" :key="item.value">
+				<view><radio :value="item.value" :checked="item.value=== current" />{{ item.name }}</view>
+			</label>
+		</radio-group>
 		</view>
+		<view style="padding-top: 20upx;padding-left: 40upx;padding-right: 40upx;color:#EE9900;"><p>提示：出厂编号可以修改。</p></view>
 	</view>
 </template>
 
@@ -26,13 +31,26 @@ export default {
 	},
 	data() {
 		return {
-			o: ''
+			o: '',
+			items: [
+				{
+					value: '2',
+					name: '2″',
+					checked: 'true'
+				},
+				{
+					value: '5',
+					name: '5″'
+				}
+			],
+			current: '2'
 		};
 	},
 	computed: mapState(['hasLogin', 'userInfo']),
 	onLoad(option) {
 		if (option) {
 			this.o = JSON.parse(option.o);
+			this.current = this.o.jdzb;
 		}
 	},
 	onShow: function(e) {
@@ -42,9 +60,25 @@ export default {
 		// setData 传参数
 		if (currPage.data.ccbh) {
 			this.o.ccbh = currPage.data.ccbh;
-		}		
+		}
 	},
 	methods: {
+		radioChange: function(evt) {
+			for (let i = 0; i < this.items.length; i++) {
+				if (this.items[i].value === evt.target.value) {
+					this.current = this.items[i].value;
+					break;
+				}
+			}
+			this.setJDZB(this.current);
+			//console.log(this.items[this.current].value);
+		},
+		setJDZB(item){
+			var pages = getCurrentPages();
+			var currPage = pages[pages.length - 1];   //当前页面
+			var prevPage = pages[pages.length - 2];  //上一个页面
+			prevPage.setData({jdzb:item});
+		},
 		navTo(url) {
 			const data = {
 				id: this.o.id,

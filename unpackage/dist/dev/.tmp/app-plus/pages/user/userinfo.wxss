@@ -34,6 +34,41 @@
 page {
   background: #f8f8f8;
 }
+canvas {
+  background-color: #dddddd;
+  width: 500rpx;
+  margin: 0 25rpx;
+  height: 455rpx;
+}
+.signcanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+#signatureImg {
+  background-color: #eeeeee;
+}
+.caozuo view {
+  width: 375rpx;
+  text-align: center;
+  height: 100rpx;
+  line-height: 100rpx;
+  color: #ffffff;
+}
+.caozuo view:active {
+  background-color: #cccccc;
+  color: #333333;
+}
+.chongqian {
+  background-color: #ff8f58;
+}
+.over {
+  background-color: #0599d7;
+}
+.sign {
+  width: 90px;
+  height: 30px;
+}
 .box {
   display: -webkit-box;
   display: -webkit-flex;
@@ -67,6 +102,11 @@ page {
 .content .info {
     font-size: 32rpx;
     color: #8f8f94;
-    padding-left: 15rpx;
+    padding-left: 8rpx;
+}
+.userinfo {
+  font-size: 34rpx;
+  color: #303133;
+  font-weight: bold;
 }
 

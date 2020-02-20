@@ -91,7 +91,7 @@
 }
 .tj-item {
   color: #75787d;
-  font-size: 30rpx;
+  font-size: 32rpx;
   margin-left: 4px;
 }
 .list_items {

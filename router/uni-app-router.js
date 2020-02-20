@@ -146,8 +146,27 @@ const router = new Router({
 			}
 		},
 		{
+			path: "/pages/czrz/czrz",
+			name: 'czrz'
+		},
+		{
+			path: "/pages/czrz/czrz",
+			name: 'czrz'
+		},
+		{
+			path: "/pages/sjcl/getalltasks",
+			name: 'getalltasks'
+		},		
+		{
 			path: "/pages/sjcl/sorry",
 			name: 'sorry',
+			meta: {
+				login: false // tabBar
+			}
+		},
+		{
+			path: "/pages/sjcl/update_ccbh", 
+			name: 'update_ccbh',
 			meta: {
 				login: false // tabBar
 			}
@@ -160,19 +179,36 @@ const router = new Router({
 			}
 		},
 		{
-			path: "/pages/sjcl/1000/set", 
-			name: '1000set',
+			path: "/pages/sjcl/1010/1010", 
+			name: '1010',
+			meta: {
+				login: false // tabBar
+			}
+		},{
+			path: "/pages/sjcl/1020/1020", 
+			name: '1020',
+			meta: {
+				login: false // tabBar
+			}
+		},{
+			path: "/pages/sjcl/1030/1030", 
+			name: '1030',
+			meta: {
+				login: false // tabBar
+			}
+		},{
+			path: "/pages/sjcl/1040/1040", 
+			name: '1040',
+			meta: {
+				login: false // tabBar
+			}
+		},{
+			path: "/pages/sjcl/1100/1100", 
+			name: '1100',
 			meta: {
 				login: false // tabBar
 			}
 		},
-		{
-			path: "/pages/sjcl/update_ccbh", 
-			name: 'update_ccbh',
-			meta: {
-				login: false // tabBar
-			}
-		}
 	]
 });
 

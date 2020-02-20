@@ -15,7 +15,7 @@
 					<p class="wtdw">制造厂家：{{ o.zzc }}</p>
 				</view>
 			</view>
-			<result-data :res="res"></result-data>
+			<result-data v-if="res" :res="res"></result-data>
 		</view>
 		<view class="fab-box fab" @click="Reset()">
 			<view class="fab-circle">

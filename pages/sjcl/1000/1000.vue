@@ -15,7 +15,7 @@
 					<p class="wtdw">制造厂家：{{ o.zzc }}</p>
 					<p class="wtdw" v-show="o.jbcs">精度指标：{{ o.jbcs.cjjd }}″，{{ dsz }}，{{ o.jbcs.bcjda }}+{{ o.jbcs.bcjdb }}</p>
 					<p class="notice" v-show="!o.jbcs">请设置精度指标!!!</p>
-					<p v-if="o.jdzt == 111" class="wtdw2">检定员:{{ o.surname }}</p>
+					<p v-if="o.jdzt == 111" class="wtdw2">检定员：<text style="font-weight:bold;">{{ o.surname }}</text></p>
 				</view>
 			</view>
 			<view style="padding-left: 20upx;" v-show="res">

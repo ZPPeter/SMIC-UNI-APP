@@ -3,7 +3,7 @@
 import store from '@/store';
 const Show = (function() {
 	return {
-		showData: async function() {
+		showData: async function() {// 首页数字刷新
 			// 数据刷新
 			//setTimeout(async () => {
 			// notice - 首页第一条和未读消息

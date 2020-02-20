@@ -1,11 +1,14 @@
 const isDebugRequest = false; //false 不显示request信息
 const isDevelopment = process.env.NODE_ENV === 'development'; //是否发布到正式环境 production
-const serverIP = '10.168.1.146:21021';
+const serverIP = '192.168.3.37:21021';
 const apiDomain = 'http://'+serverIP;
 const SignalR = 'ws://'+serverIP+'/signalr-myChatHub';
 
 const avatarImgPath = apiDomain + '/images/logo_'; //.png
+const signImgPath = apiDomain + '/SignImages/sign_'; //.png
+
 const uploadAvatar = apiDomain + '/api/services/app/UploadAvatar/UploadFile';
+const uploadSign   = apiDomain + '/api/services/app/UploadAvatar/uploadSign';
 
 const Authenticate = '/api/TokenAuth/Authenticate';
 const GetCurrentLoginInformations = '/api/services/app/Session/GetCurrentLoginInformations';
@@ -153,8 +156,10 @@ export default {
 	GetUsers,
 	GetQzyStatsData,
 	avatarImgPath,
+	signImgPath,
 	ChangePwd,
 	uploadAvatar,
+	uploadSign,
 	GetHomeInfos,
 	GetNotices,
 	Settings,

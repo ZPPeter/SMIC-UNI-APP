@@ -12,8 +12,9 @@
 						出厂编号：
 						<view style="font-weight:bold;">{{ o.ccbh }}</view>
 					</view>
+					<p class="wtdw">精度指标：{{ o.jdzb }}″</p>
 					<p class="wtdw">制造厂家：{{ o.zzc }}</p>					
-					<p class="wtdw2">检定员:{{ o.surname }}</p>
+					<p class="wtdw2">检定员：<text style="font-weight:bold;">{{ o.surname }}</text></p>
 				</view>
 			</view>
 			<result-data :res="res"></result-data>
@@ -22,7 +23,7 @@
 			<view class="doc" @click="OpenDoc(o.qjmcbm,o.id)"><text class="iconfont icon-Word fontsize2"></text></view>			
 			<view class="xls" @click="OpenXls(o.qjmcbm,o.id)"><text class="iconfont icon-Excel1 fontsize2"></text></view>
 		</view>	
-		<button v-show="res" class="bottom-btn" @click="Hywb()">核验通过</button>
+		<button v-show="res" :disabled="o.surname == userInfo.realname" class="bottom-btn" @click="Hywb()">核验通过</button>
 	</view>
 </template>
 
@@ -118,6 +119,7 @@ export default {
 			//console.log(JSON.parse(res));
 			if (res) {
 				this.res = JSON.parse(res);
+				this.o.jdzb = this.res[14];
 			}
 		},		
 		format(item) {

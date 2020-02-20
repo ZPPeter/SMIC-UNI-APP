@@ -550,15 +550,7 @@
 			"style": {
 				"navigationBarTitleText": "GPS接收机检定",
 				"app-plus": {
-					"bounce": "none",
-					"titleNView": {
-						"buttons": [{
-							"fontSrc": "/static/iconfont.ttf",
-							"text": "\ue61d",
-							"fontSize": "21",
-							"color": "White"
-						}]
-					}
+					"bounce": "none"
 				}
 			}
 		},

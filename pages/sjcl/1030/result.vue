@@ -1,5 +1,5 @@
 <template>
-	<view style="padding-left: 20upx;" v-show="res">
+	<view style="padding-left: 20upx;">
 		<view style="display: flex; width:90%;text-align: left;margin-left: 0px;align-items: center;" class="wtdw2">
 			<div style="background-color: skyblue;width:4px;height:12px;vertical-align: bottom;margin-right: 2px;padding-right: 2px;"></div>
 			检定结果

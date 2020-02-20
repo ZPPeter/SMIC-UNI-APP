@@ -2,13 +2,10 @@
 	<view>
 		<view style="display: flex; width:90%;text-align: left; margin-left: 12px;align-items: center;">
 			<div style="background-color: red;width:4px;height:12px;vertical-align: bottom;"></div>
-			<view class="tj-item">您有{{ lstlength }}台仪器待核验。</view>
+			<view class="tj-item">查询到{{ lstlength }}台仪器待核验。</view>
 		</view>
-		<view v-if="qjmcNames.length>0">
-		<view style="display: flex; width:90%;text-align: left; margin-left: 6px;align-items: center;overflow:hidden;">
-			<view class="tj-item">器具名称:【{{ qjmcnames }}】</view>
-		</view>
-		<mescroll-uni @down="downCallback" @up="upCallback"><pd-list :list="pdList"></pd-list></mescroll-uni>		
+		<view v-if="qjmcNames.length>0">		
+		<mescroll-uni @down="downCallback" @up="upCallback"><pd-list :qjmcnames=qjmcnames :list="pdList"></pd-list></mescroll-uni>		
 		<view class="fab-box fab">
 			<view class="fab-circle" @tap="showModal" data-target="RadioModal"><text class="iconfont icon-icon-test2 fontsize"></text></view>
 		</view>
@@ -341,7 +338,7 @@ export default {
 
 .tj-item {
 	color: #75787d;
-	font-size: $font-sm + 2upx;
+	font-size: $font-sm + 4upx;
 	margin-left: 4px;
 }
 .list_items {

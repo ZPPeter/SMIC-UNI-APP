@@ -47,7 +47,7 @@ class SjmxModule {
 			},
 			async ListWtds(state, payload) {
 				//console.log(payload.data);
-				let rep = await fly.get(config.ListWtds, {params:payload.data}).then(function(res) {
+				let rep = await fly.get(config.ListWtds, {params:payload.data},{ShowLoading:false}).then(function(res) {
 					return res.result;
 				})
 				//console.log(JSON.stringify(rep));
@@ -55,7 +55,7 @@ class SjmxModule {
 			},
 			async ListSjmxs(state, payload) { // 综合查询
 				//console.log(payload.data);
-				let rep = await fly.get(config.ListSjmxs, {params:payload.data}).then(function(res) {
+				let rep = await fly.get(config.ListSjmxs, {params:payload.data},{ShowLoading:false}).then(function(res) {
 					return res.result;
 				})
 				//console.log(rep);
@@ -64,7 +64,7 @@ class SjmxModule {
 			async ListDjmxs(state, payload) { //待检列表
 				//console.log(payload.data);
 				//console.log(config.ListDjmxs);
-				let rep = await fly.get(config.ListDjmxs, {params:payload.data}).then(function(res) {
+				let rep = await fly.get(config.ListDjmxs,{params:payload.data},{ShowLoading:false}).then(function(res) {
 					//console.log(JSON.stringify(res));
 					return res.result;
 				})
@@ -74,7 +74,7 @@ class SjmxModule {
 			async ListDhymxs(state, payload) { //待检列表
 				//console.log(payload.data);
 				//console.log(config.ListDhymxs);
-				let rep = await fly.get(config.ListDhymxs, {params:payload.data}).then(function(res) {
+				let rep = await fly.get(config.ListDhymxs, {params:payload.data},{ShowLoading:false}).then(function(res) {
 					//console.log(JSON.stringify(res));
 					return res.result;
 				})
@@ -84,7 +84,7 @@ class SjmxModule {
 			async ListDpzmxs(state, payload) { //待批准列表
 				//console.log(payload.data);
 				//console.log(config.ListDhymxs);
-				let rep = await fly.get(config.ListDpzmxs, {params:payload.data}).then(function(res) {
+				let rep = await fly.get(config.ListDpzmxs, {params:payload.data},{ShowLoading:false}).then(function(res) {
 					//console.log(JSON.stringify(res));
 					return res.result;
 				})

@@ -32,7 +32,7 @@
 /* 图片加载中颜色 */
 /* 行为相关颜色 */
 .list {
-  padding-top: 100rpx;
+  padding-top: 65rpx;
 }
 .list_items {
   margin: 21rpx;
@@ -134,9 +134,24 @@
   border-top: 44px solid #56cf87;
 }
 .triangle-topright.working_wtd {
-  border-top: 44px solid #0099FF;
+  border-top: 44px solid #0099ff;
 }
 .triangle-topright.over_wtd {
   border-top-color: #cccccc;
+}
+.tj-item {
+  color: #75787d;
+  font-size: 30rpx;
+  margin-left: 4px;
+}
+.jdy {
+  position: absolute;
+  right: 15px;
+  bottom: 20rpx;
+  font-size: 14px;
+  font-weight: bold;
+}
+.isme {
+  color: #c5c5c5;
 }
 
