@@ -1,0 +1,13 @@
+多字符同时修改
+
+CTRL+SHIFT+e
+*.vue 文件中，关机字不可以同时修改，比如下面的 script,style
+hello 可以 CTRL+SHIFT+e
+<hello>
+</hello>
+
+<script>
+</script>
+
+<style>
+</style>

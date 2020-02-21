@@ -3,6 +3,7 @@ const isDevelopment = process.env.NODE_ENV === 'development'; //是否发布到�
 const serverIP = '192.168.3.37:21021';
 const apiDomain = 'http://'+serverIP;
 const SignalR = 'ws://'+serverIP+'/signalr-myChatHub';
+const taskInfo = 'http://192.168.3.37:8080/ShowDetail?id=';
 
 const avatarImgPath = apiDomain + '/images/logo_'; //.png
 const signImgPath = apiDomain + '/SignImages/sign_'; //.png
@@ -152,6 +153,7 @@ export default {
 	isDebugRequest,
 	isDevelopment,
 	apiDomain,
+	taskInfo,
 	Authenticate,
 	GetUsers,
 	GetQzyStatsData,

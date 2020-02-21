@@ -22,12 +22,25 @@
 			<view class="fab-circle" @click="doSetting(o)"><text class="iconfont icon-Setting fontsize"></text></view>
 		</view>
 		<view v-show="res" class="bottom-icon">
-			<view class="doc" @click="OpenDoc(o.qjmcbm, o.id)"><text class="iconfont icon-Word fontsize2"></text></view>
-			<view class="xls" @click="OpenXls(o.qjmcbm, o.id)"><text class="iconfont icon-Excel1 fontsize2"></text></view>
-		</view>
-		<button v-show="res" :disabled="o.surname != userInfo.realname" class="bottom-btn" @click="Jdwb()">{{ btnJDWB }}</button>
-	</view>
-</template>
+					<view class="doc" @click="OpenDoc(o.qjmcbm, o.id)"><text class="iconfont icon-Word fontsize2"></text></view>
+					<view class="xls" @click="OpenXls(o.qjmcbm, o.id)"><text class="iconfont icon-Excel1 fontsize2"></text></view>
+				</view>
+				<view v-show="res" class="bottom-view">
+					<view>
+						<checkbox-group @change="checkboxChange">
+							<label>
+								<checkbox value="urgent" :checked="urgent" color="#FFCC33" style="transform:scale(0.9)" />
+								加急
+							</label>
+						</checkbox-group>
+					</view>
+					<view>
+						<button :disabled="o.surname != userInfo.realname" class="bottom-btn" @click="Jdwb()">{{ btnJDWB }}</button>
+					</view>
+				</view>
+				<vus-layer></vus-layer>
+			</view>
+		</template>
 
 <script>
 import { mapState } from 'vuex';
@@ -47,10 +60,10 @@ export default {
 			WEATHER:config.WeatherType.Out,
 			o: new JDJLFM(),
 			btnJDWB: '检完确认',
-			res: ''
+			res: '',
+			urgent: false
 		};
 	},
-	computed: mapState(['hasLogin', 'userInfo']),
 	onNavigationBarButtonTap(e) {
 		const index = e.index;
 		if (index === 0) {
@@ -94,6 +107,12 @@ export default {
 		}
 	},
 	methods: {
+		checkboxChange: function(e) {
+			var val = e.detail.value;
+			if (val == 'urgent') this.urgent = true;
+			else this.urgent = false;
+			//console.log(this.urgent);
+		},
 		OpenDoc(bm, id) {
 			utils.OpenDoc(bm, id);
 		},
@@ -102,17 +121,15 @@ export default {
 		},
 		Jdwb() {
 			var _this = this;
-			uni.showModal({
-				title: '提示',
-				content: '确认该仪器已经检定完毕？',
-				success: function(res) {
-					if (res.confirm) {
-						_this.SetJdwb();
-					} else if (res.cancel) {
-						//console.log('用户点击取消');
-					}
+			this.vusui.confirm(
+				'确认该仪器已经检定完毕？',
+				function() {
+					_this.SetJdwb();
+				},
+				function() {
+					//console.log('取消操作');
 				}
-			});
+			);
 		},
 		async SetJdwb() {
 			const res = await this.$store.dispatch({
@@ -128,6 +145,12 @@ export default {
 					messageBody: ''
 				};
 				this.$signalR.sendMessage(JSON.stringify(msg));
+				
+				// 微信通知
+				if (this.urgent) {
+					utils.shareMessage(this.o);
+				}
+				
 				// 刷新待检列表记录，显示全部记录
 				uni.reLaunch({
 					url: '/pages/verification/verification'

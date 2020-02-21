@@ -1,0 +1,150 @@
+.wtdw2 {
+	font-size: 32upx;
+	color: #0088cc;
+}
+.fab-box {
+	position: absolute;
+	right: 50upx;
+	top: 50upx;
+	width: 90upx;
+	height: 90upx;
+	//position: fixed;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 2;
+}
+
+.fab-box.fab {
+	z-index: 10;
+}
+
+.fab-circle {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	width: 100upx;
+	height: 100upx;
+	background: whitesmoke;
+	//background: #3c3e49;
+	/* background: #5989b9; */
+	border-radius: 10%;
+	box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.2);
+	z-index: 11;
+}
+
+.fab-circle.left {
+	left: 0;
+}
+
+.fab-circle.right {
+	right: 0;
+}
+
+.fab-circle.top {
+	top: 0;
+}
+
+.fab-circle.bottom {
+	bottom: 0;
+}
+
+.fontsize {
+	color: dodgerblue;
+	font-size: 65upx;
+	transition: all 0.3s;
+	font-weight: bold;
+}
+.tj-item {
+	color: #75787d;
+	font-size: $font-sm + 2upx;
+	margin-left: 4px;
+}
+.list_items {
+	margin: 21upx;
+	background-color: #f8f8f8;
+	//margin-top:21upx;
+	border: 1px #dcdcdc solid;
+}
+.list-info {
+	//height: 210upx;
+	padding: 12upx 15upx;
+	//box-sizing: border-box;
+	display: flex;
+	width: 100%;
+	flex-direction: row;
+	align-items: center;
+	position: relative;
+	z-index: 1;
+	.portrait {
+		//margin-left: 21upx;
+		width: 108upx;
+		height: 108upx;
+		//border: 2upx solid lightgrey;
+		//border-radius: 30%;
+		//background-color: #8f8f94;
+	}
+	.content {
+		font-size: $font-base;
+		color: $font-color-dark;
+		margin-left: 20upx;
+		.xhgg {
+			font-size: 32upx;
+		}
+		.wtdw {
+			font-size: 26upx;
+			color: #8f8f94;
+		}
+		.wtdw2 {
+			font-weight: 400;
+			font-size: 26upx;
+			color: #8f8f94;
+		}
+		.notice {
+			font-size: 32upx;
+			color: #ff0000;
+		}
+	}
+}
+.fontsize2 {
+	color: #4c99e6;
+	font-size: 60upx;
+}
+.bottom-view {
+	position: fixed;
+	left: 30upx;
+	right: 30upx;
+	bottom: 16upx;
+	z-index: 95;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.bottom-btn {
+	width: 500upx;
+	height: 80upx;
+	font-size: 32upx;
+	color: #fff;
+	background-color: $base-color;
+	border-radius: 10upx;
+	box-shadow: 1px 2px 5px rgba(219, 63, 96, 0.4);
+}
+.doc {
+	position: fixed;
+	right: 180upx;
+}
+.xls {
+	position: fixed;
+	right: 70upx;
+}
+.bottom-icon {
+	position: fixed;
+	left: 30upx;
+	right: 30upx;
+	bottom: 76upx;
+	z-index: 95;
+	display: flex;
+	width: 690upx;
+	height: 120upx;
+}

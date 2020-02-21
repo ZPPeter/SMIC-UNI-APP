@@ -52,7 +52,6 @@ export default {
 			res: ''
 		};
 	},
-	computed: mapState(['hasLogin', 'userInfo']),
 	onNavigationBarButtonTap(e) {
 		const index = e.index;
 		if (index === 0) {

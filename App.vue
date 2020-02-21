@@ -14,7 +14,8 @@ export default {
 	    如果需要把globalData的数据绑定到页面上，可在页面的onshow声明周期里进行变量重赋值。
 	* */
 	globalData: {
-		userInfoid: ''
+		userInfoid: '',
+		providerList:''
 	},
 	computed: mapState(['hasLogin', 'userInfo']),
 	data() {
@@ -37,7 +38,7 @@ export default {
 					}
 				}
 			});
-		}
+		}		
 	},
 	onLaunch: async function() {
 		//console.log(config.Settings.useMockData());
@@ -50,6 +51,7 @@ export default {
 				//console.log(this.$store.state.userInfo.realname);
 			}
 		});
+	
 		let rep = await this.$store.dispatch({
 			type: 'app/init'
 		});
@@ -83,6 +85,7 @@ export default {
 		plus.screen.lockOrientation('portrait-primary'); //锁定
 		// 检测升级
 		utils.checkUpdate();
+		utils.getProvider();
 		// #endif
 	},
 	onShow: function() {

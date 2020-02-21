@@ -15,48 +15,45 @@
 					<p class="wtdw">制造厂家：{{ o.zzc }}</p>
 					<p class="wtdw" v-show="o.jbcs">精度指标：{{ o.jbcs.cjjd }}″，{{ dsz }}，{{ o.jbcs.bcjda }}+{{ o.jbcs.bcjdb }}</p>
 					<p class="notice" v-show="!o.jbcs">请设置精度指标!!!</p>
-					<p v-if="o.jdzt == 111" class="wtdw2">检定员：<text style="font-weight:bold;">{{ o.surname }}</text></p>
+					<p v-if="o.jdzt == 111" class="wtdw2">
+						检定员：
+						<text style="font-weight:bold;">{{ o.surname }}</text>
+					</p>
 				</view>
 			</view>
-			<view style="padding-left: 20upx;" v-show="res">
-				<view style="display: flex; width:90%;text-align: left;margin-left: 0px;align-items: center;" class="wtdw2">
-					<div style="background-color: skyblue;width:4px;height:12px;vertical-align: bottom;margin-right: 2px;padding-right: 2px;"></div>
-					检定结果
-				</view>
-				<view style="display: flex;"><div style="background-color: skyblue;width:98%;height:1px;vertical-align:top;"></div></view>
-				<view style="display: flex;" class="wtdw">证书编号：{{ res[1] }}</view>
-				<view style="display: flex;" class="wtdw">
-					温度：({{ res[2] }})℃
-					<view style="padding-left: 30upx;">气压：{{ res[3] }}hPa</view>
-				</view>
-				<view style="display: flex;" class="wtdw">1、照准误差:C={{ res[13] }}″</view>
-				<view style="display: flex;" class="wtdw">2、指标差:I={{ res[6] }}″</view>
-				<view style="display: flex;" class="wtdw">3、横轴误差:i={{ res[4] }}″</view>
-				<view style="display: flex;" class="wtdw">4、一测回水平方向标准偏差：μH={{ res[7] }}″</view>
-				<view style="display: flex;" class="wtdw">5、测量重复性：{{ res[14] }}mm</view>
-				<view style="display: flex;" class="wtdw">6、加 常 数：K= {{ res[15] }}mm</view>
-				<view style="display: flex;" class="wtdw">7、乘 常 数：R= {{ res[16] }}mm/km</view>
-				<view style="display: flex;" class="wtdw">8、测距综合标准差：a={{ res[17] }}mm;b={{ res[18] }}mm/km</view>
-			</view>
+			<result-data v-if="res" :res="res"></result-data>
 		</view>
 		<view class="fab-box fab">
 			<view class="fab-circle" @click="doSetting(o)"><text class="iconfont icon-Setting fontsize"></text></view>
-		</view>		
+		</view>
 		<view v-show="res" class="bottom-icon">
-			<view class="doc" @click="OpenDoc(o.qjmcbm,o.id)"><text class="iconfont icon-Word fontsize2"></text></view>			
-			<view class="xls" @click="OpenXls(o.qjmcbm,o.id)"><text class="iconfont icon-Excel1 fontsize2"></text></view>
-		</view>		
-		<button v-show="res" :disabled="o.surname != userInfo.realname" class="bottom-btn" @click="Jdwb()">{{ btnJDWB }}</button>
+			<view class="doc" @click="OpenDoc(o.qjmcbm, o.id)"><text class="iconfont icon-Word fontsize2"></text></view>
+			<view class="xls" @click="OpenXls(o.qjmcbm, o.id)"><text class="iconfont icon-Excel1 fontsize2"></text></view>
+		</view>
+		<view v-show="res" class="bottom-view">
+			<view>
+				<checkbox-group @change="checkboxChange">
+					<label>
+						<checkbox value="urgent" :checked="urgent" color="#FFCC33" style="transform:scale(0.9)" />
+						加急
+					</label>
+				</checkbox-group>
+			</view>
+			<view>
+				<button :disabled="o.surname != userInfo.realname" class="bottom-btn" @click="Jdwb()">{{ btnJDWB }}</button>
+			</view>
+		</view>
+		<vus-layer></vus-layer>
 	</view>
 </template>
-
 <script>
 import { mapState } from 'vuex';
 import store from '@/store';
 import JDJLFM from '@/store/entities/jdjlfm';
 import JBCS from '@/store/entities/jbcs';
-//import RESULT from './result';
 import utils from '@/libs/common/utils.js';
+import config from '@/libs/common/config.js';
+import ResultData from './result.vue';
 export default {
 	/*
 			id: 0
@@ -78,27 +75,29 @@ export default {
 			//jdrq: "0001-01-01T00:00:00"
 		*/
 	computed: mapState(['userInfo']),
+	components: {
+		ResultData
+	},
 	data() {
 		return {
 			dsz: '-',
 			o: new JDJLFM(),
 			btnJDWB: '检完确认',
-			res: ''
+			res: '',
+			urgent: false
 		};
 	},
-	computed: mapState(['hasLogin', 'userInfo']),
 	onNavigationBarButtonTap(e) {
 		const index = e.index;
 		if (index === 0) {
 			uni.switchTab({
 				url: '/pages/main/main'
 			});
-		} else if (index === 1) {
 		}
 	},
 	async onLoad(option) {
 		var o = JSON.parse(option.o);
-		//console.log(o);		
+		//console.log(o);
 		this.o.id = o.id;
 		this.o.ccbh = o.ccbh;
 		this.o.djrq = o.djrq;
@@ -139,14 +138,21 @@ export default {
 		}
 	},
 	methods: {
-		OpenDoc(bm,id){
-			utils.OpenDoc(bm,id);
+		checkboxChange: function(e) {
+			var val = e.detail.value;
+			if (val == 'urgent') this.urgent = true;
+			else this.urgent = false;
+			//console.log(this.urgent);
 		},
-		OpenXls(bm,id){
-			utils.OpenXls(bm,id);
+		OpenDoc(bm, id) {
+			utils.OpenDoc(bm, id);
+		},
+		OpenXls(bm, id) {
+			utils.OpenXls(bm, id);
 		},
 		Jdwb() {
 			var _this = this;
+			/*
 			uni.showModal({
 				title: '提示',
 				content: '确认该仪器已经检定完毕？',
@@ -157,7 +163,16 @@ export default {
 						//console.log('用户点击取消');
 					}
 				}
-			});
+			});*/
+			this.vusui.confirm(
+				'确认该仪器已经检定完毕？',
+				function() {
+					_this.SetJdwb();
+				},
+				function() {
+					//console.log('取消操作');
+				}
+			);
 		},
 		async SetJdwb() {
 			const res = await this.$store.dispatch({
@@ -173,10 +188,16 @@ export default {
 					messageBody: ''
 				};
 				this.$signalR.sendMessage(JSON.stringify(msg));
+
+				// 微信通知
+				if (this.urgent) {
+					utils.shareMessage(this.o);
+				}
+
 				// 刷新待检列表记录，显示全部记录
 				uni.reLaunch({
-					url:'/pages/verification/verification'
-				})
+					url: '/pages/verification/verification'
+				});
 				/*
 				var pages = getCurrentPages();
 				var currPage = pages[pages.length - 1]; //当前页面
@@ -198,7 +219,8 @@ export default {
 				this.res = JSON.parse(res);
 			}
 		},
-		async getRawData() { // 读取 xls
+		async getRawData() {
+			// 读取 xls
 			//console.log((this.o.jdzt==111 && this.o.surname!=this.userInfo.realname));
 			if (this.o.jdzt == 111 && this.o.surname != this.userInfo.realname) {
 				this.btnJDWB = '检定员: ' + this.o.surname;
@@ -302,157 +324,11 @@ export default {
 				url: '/pages/sjcl/1000/set?o=' + JSON.stringify(o)
 			});
 		}
-	}
+}
 };
 </script>
 
 <style lang="scss">
-.wtdw2 {
-	font-size: 32upx;
-	color: #0088cc;
-}
-.fab-box {
-	position: absolute;
-	right: 50upx;
-	top: 50upx;
-	width: 90upx;
-	height: 90upx;
-	//position: fixed;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	z-index: 2;
-}
-
-.fab-box.fab {
-	z-index: 10;
-}
-
-.fab-circle {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	position: absolute;
-	width: 100upx;
-	height: 100upx;
-	background: whitesmoke;
-	//background: #3c3e49;
-	/* background: #5989b9; */
-	border-radius: 10%;
-	box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.2);
-	z-index: 11;
-}
-
-.fab-circle.left {
-	left: 0;
-}
-
-.fab-circle.right {
-	right: 0;
-}
-
-.fab-circle.top {
-	top: 0;
-}
-
-.fab-circle.bottom {
-	bottom: 0;
-}
-
-.fontsize {
-	color: dodgerblue;
-	font-size: 65upx;
-	transition: all 0.3s;
-	font-weight: bold;
-}
-.tj-item {
-	color: #75787d;
-	font-size: $font-sm + 2upx;
-	margin-left: 4px;
-}
-.list_items {
-	margin: 21upx;
-	background-color: #f8f8f8;
-	//margin-top:21upx;
-	border: 1px #dcdcdc solid;
-}
-.list-info {
-	//height: 210upx;
-	padding: 12upx 15upx;
-	//box-sizing: border-box;
-	display: flex;
-	width: 100%;
-	flex-direction: row;
-	align-items: center;
-	position: relative;
-	z-index: 1;
-	.portrait {
-		//margin-left: 21upx;
-		width: 108upx;
-		height: 108upx;
-		//border: 2upx solid lightgrey;
-		//border-radius: 30%;
-		//background-color: #8f8f94;
-	}
-	.content {
-		font-size: $font-base;
-		color: $font-color-dark;
-		margin-left: 20upx;
-		.xhgg {
-			font-size: 32upx;
-		}
-		.wtdw {
-			font-size: 26upx;
-			color: #8f8f94;
-		}
-		.wtdw2 {
-			font-weight: 400;
-			font-size: 26upx;
-			color: #8f8f94;
-		}
-		.notice {
-			font-size: 32upx;
-			color: #ff0000;
-		}
-	}
-}
-.bottom-btn {
-	position: fixed;
-	left: 30upx;
-	right: 30upx;
-	bottom: 16upx;
-	z-index: 95;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	width: 690upx;
-	height: 80upx;
-	font-size: 32upx;
-	color: #fff;
-	background-color: $base-color;
-	border-radius: 10upx;
-	box-shadow: 1px 2px 5px rgba(219, 63, 96, 0.4);
-}
-.fontsize2{
-	color: #4c99e6;
-	font-size: 60upx;
-}
-.doc {
-	position: fixed;
-	left: 180upx;
-}
-.xls {
-	position: fixed;
-	right: 180upx;
-}
-.bottom-icon {
-	position: fixed;
-	left: 30upx;
-	right: 30upx;
-	bottom: 76upx;
-	z-index: 95;
-	display: flex;
-	width: 690upx;
-	height: 120upx;
-}
+@import './../sjcl.scss';
 </style>
+<style lang="scss"></style>

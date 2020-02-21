@@ -108,6 +108,7 @@
   "appname": "测绘仪器检定",
   "compilerVersion": "2.5.1",
   "usingComponents": {
-    "router-link": "/node-modules/uni-simple-router/component/router-link"
+    "router-link": "/node-modules/uni-simple-router/component/router-link",
+    "vus-layer": "/components/vusui-app-layer/vusui-layer"
   }
 }

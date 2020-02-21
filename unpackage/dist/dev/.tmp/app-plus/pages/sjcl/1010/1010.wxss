@@ -144,7 +144,11 @@
       font-size: 32rpx;
       color: #ff0000;
 }
-.bottom-btn {
+.fontsize2 {
+  color: #4c99e6;
+  font-size: 60rpx;
+}
+.bottom-view {
   position: fixed;
   left: 30rpx;
   right: 30rpx;
@@ -159,7 +163,9 @@
   -webkit-box-pack: center;
   -webkit-justify-content: center;
           justify-content: center;
-  width: 690rpx;
+}
+.bottom-btn {
+  width: 500rpx;
   height: 80rpx;
   font-size: 32rpx;
   color: #fff;
@@ -167,17 +173,13 @@
   border-radius: 10rpx;
   box-shadow: 1px 2px 5px rgba(219, 63, 96, 0.4);
 }
-.fontsize2 {
-  color: #4c99e6;
-  font-size: 60rpx;
-}
 .doc {
   position: fixed;
-  left: 180rpx;
+  right: 180rpx;
 }
 .xls {
   position: fixed;
-  right: 180rpx;
+  right: 70rpx;
 }
 .bottom-icon {
   position: fixed;

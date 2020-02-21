@@ -34,40 +34,18 @@
 page {
   background: #f8f8f8;
 }
-canvas {
-  background-color: #dddddd;
-  width: 500rpx;
-  margin: 0 25rpx;
-  height: 455rpx;
-}
-.signcanvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-}
 #signatureImg {
-  background-color: #eeeeee;
+  background-color: white;
 }
-.caozuo view {
-  width: 375rpx;
-  text-align: center;
-  height: 100rpx;
-  line-height: 100rpx;
-  color: #ffffff;
-}
-.caozuo view:active {
-  background-color: #cccccc;
-  color: #333333;
-}
-.chongqian {
-  background-color: #ff8f58;
-}
-.over {
-  background-color: #0599d7;
+canvas {
+  background-color: white;
+  width: calc((100vh - 70rpx) / 2.5);
+  margin: 25rpx;
+  height: calc(100vh - 110rpx);
 }
 .sign {
-  width: 90px;
-  height: 30px;
+  width: 150px;
+  height: 50px;
 }
 .box {
   display: -webkit-box;
@@ -108,5 +86,63 @@ canvas {
   font-size: 34rpx;
   color: #303133;
   font-weight: bold;
+}
+.caozuo {
+  width: calc(100vh - 140rpx);
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  position: absolute;
+  bottom: calc((100vh - 140rpx) / 2);
+  left: -30rpx;
+  -webkit-transform: rotate(270deg);
+          transform: rotate(270deg);
+  background-color: red;
+}
+.caozuo .button {
+    width: 210rpx;
+    height: 96rpx;
+    line-height: 96rpx;
+    border-radius: 20px;
+    font-size: 32rpx;
+}
+.caozuo .button:after {
+      border-radius: 10px;
+}
+.caozuo .over {
+    position: absolute;
+    right: -20px;
+    background-color: #0599d7;
+}
+.caozuo .chongqian {
+    position: absolute;
+    right: 120px;
+    background-color: #ff8f58;
+}
+.caozuo .cancel {
+    position: absolute;
+    left: 30px;
+    background-color: #d5d5d5;
+}
+.signcanvas {
+  position: fixed;
+  top: 30rpx;
+  left: 30rpx;
+  right: 30rpx;
+  bottom: 30rpx;
+  border-radius: 10px;
+  background-color: #eeeeee;
+}
+.signcanvas .info {
+    white-space: nowrap;
+    font-size: 156rpx;
+    color: #eeeeee;
+    position: absolute;
+    top: 0;
+    left: -90rpx;
+    -webkit-transform: rotate(270deg) translate(-50%, -50%);
+            transform: rotate(270deg) translate(-50%, -50%);
+    color: transparent;
+    -webkit-text-stroke: 2px #dfdfdf;
 }
 

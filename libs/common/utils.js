@@ -199,46 +199,101 @@ const utils = {
 			}
 		});
 	},
-	getUpdate(){
+	getProvider() {
+		uni.getProvider({
+			service: 'share',
+			success: result => {
+				const data = [];
+				for (let i = 0; i < result.provider.length; i++) {
+					switch (result.provider[i]) {
+						case 'weixin':
+							data.push({
+								name: '分享到微信好友',
+								id: 'weixin'
+							});
+							break;
+						default:
+							break;
+					}
+				}
+				getApp().globalData.providerList = data;
+			},
+			fail: error => {
+				console.log('获取分享通道失败' + JSON.stringify(error));
+			}
+		});
+	},
+	shareMessage(o) {
+		var providerList = getApp().globalData.providerList;
+		if (providerList.length === 0) {
+			uni.showModal({
+				title: '当前环境无分享渠道!',
+				showCancel: false
+			});
+			return;
+		}
+		let info = '委托单位:' + o.dwmc + ',型号规格:' + o.xhggmc + ',出厂编号:' + o.ccbh;
+		let provider = providerList[0].id;
+		uni.share({
+			provider: provider,
+			scene: providerList[0].type && providerList[0].type === 'WXSenceTimeline' ? 'WXSenceTimeline' : 'WXSceneSession',
+			type: provider === 'qq' ? 1 : 0,
+			title: '加急任务提示',
+			summary: info,
+			imageUrl: config.apiDomain + '/logo.png',
+			href: config.taskInfo + o.id,
+			success: res => {
+				//console.log('success:' + JSON.stringify(res));
+			},
+			fail: e => {
+				console.log('error:' + JSON.stringify(e.errMsg));
+				//uni.showModal({
+				//	content: e.errMsg,
+				//	showCancel: false
+				//});
+			}
+		});
+	},
+	getUpdate() {
 		let url = config.apiDomain + '/update'; //检查更新的服务器地址
 		url = 'https://uniapp.dcloud.io/update';
-	    return new Promise((resolve, reject) => {
-	        uni.request({
-	            url: url,
+		return new Promise((resolve, reject) => {
+			uni.request({
+				url: url,
 				data: {
 					appid: plus.runtime.appid,
 					version: plus.runtime.version,
 					imei: plus.device.imei
 				},
-	            success: (res) => {
-	                //console.log('success', res);
-	                if (res.statusCode == 200 && res.data.isUpdate) {
-	                	let openUrl = plus.os.name === 'iOS' ? res.data.iOS : res.data.Android;
-	                	// 提醒用户更新
-	                	uni.showModal({
-	                		title: '更新提示',
-	                		content: res.data.note ? res.data.note : '是否选择更新',
-	                		success: (showResult) => {
-	                			if (showResult.confirm) {
-	                				plus.runtime.openURL(openUrl);
-	                			}
-	                		}
-	                	})
-	                }
-	                if (res.statusCode == 200 && !res.data.isUpdate) {
-	                	console.log('当前版本已是最新版本。');
+				success: (res) => {
+					//console.log('success', res);
+					if (res.statusCode == 200 && res.data.isUpdate) {
+						let openUrl = plus.os.name === 'iOS' ? res.data.iOS : res.data.Android;
+						// 提醒用户更新
+						uni.showModal({
+							title: '更新提示',
+							content: res.data.note ? res.data.note : '是否选择更新',
+							success: (showResult) => {
+								if (showResult.confirm) {
+									plus.runtime.openURL(openUrl);
+								}
+							}
+						})
+					}
+					if (res.statusCode == 200 && !res.data.isUpdate) {
+						console.log('当前版本已是最新版本。');
 						resolve('none');
-	                }	                
-	            },
-	            fail: (err) => {
-	                reject('err')
-	            }
-	        });
-	    })
+					}
+				},
+				fail: (err) => {
+					reject('err')
+				}
+			});
+		})
 	},
 	async checkUpdate() {
 		console.log('升级包检测...');
-		let rep = await this.getUpdate();		
+		let rep = await this.getUpdate();
 		//console.log(JSON.stringify(rep)); // 是 "none" 不是 none ,length=6
 		return JSON.stringify(rep);
 	}

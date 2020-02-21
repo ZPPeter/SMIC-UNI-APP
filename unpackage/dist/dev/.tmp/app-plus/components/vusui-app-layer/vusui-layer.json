@@ -1,0 +1,13 @@
+{
+  "component": true,
+  "usingComponents": {
+    "vus-mask": "/components/vusui-app-layer/components/vus-mask",
+    "vus-dialog": "/components/vusui-app-layer/components/vus-dialog",
+    "vus-msg": "/components/vusui-app-layer/components/vus-msg",
+    "vus-load": "/components/vusui-app-layer/components/vus-load",
+    "vus-prompt": "/components/vusui-app-layer/components/vus-prompt",
+    "vus-drawer": "/components/vusui-app-layer/components/vus-drawer",
+    "vus-page": "/components/vusui-app-layer/components/vus-page",
+    "vus-photos": "/components/vusui-app-layer/components/vus-photos"
+  }
+}

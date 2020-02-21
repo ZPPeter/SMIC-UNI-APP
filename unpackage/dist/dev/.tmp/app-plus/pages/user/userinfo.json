@@ -2,6 +2,7 @@
   "navigationBarTitleText": "用户信息",
   "bounce": "none",
   "usingComponents": {
+    "vus-layer": "/components/vusui-app-layer/vusui-layer",
     "uni-notice-bar": "/components/uni-notice-bar/uni-notice-bar"
   }
 }

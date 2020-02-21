@@ -11,5 +11,7 @@
       }
     ]
   },
-  "usingComponents": {}
+  "usingComponents": {
+    "vus-layer": "/components/vusui-app-layer/vusui-layer"
+  }
 }

@@ -17,7 +17,7 @@
 				</view>
 			</view>
 		</view>
-		<view class="cu-modal" :class="modalName == 'signModal' ? 'show' : ''" @tap="hideModal">
+		<view class="cu-modal" :class="modalName == 'signModal' ? 'show' : ''">
 			<view class="signcanvas">
 				<canvas
 					class="firstCanvas"
@@ -30,12 +30,15 @@
 					disable-scroll="true"
 					@error="error"
 				></canvas>
+				<view v-show="!startsign" class="info">请在空白处签字</view>
 				<view class="caozuo">
-					<view class="chongqian" @tap="clearClick">重签</view>
-					<view class="over" @tap="overSign">完成签名</view>
+					<view class="button cancel" @tap="hideModal">取消</view>
+					<view class="button chongqian" @tap="clearClick">重签</view>
+					<view class="button over" @tap="overSign">完成签名</view>
 				</view>
 			</view>
 		</view>
+		<vus-layer></vus-layer>
 	</view>
 </template>
 
@@ -51,8 +54,8 @@ var _this;
 //获取系统信息
 uni.getSystemInfo({
 	success: function(res) {
-		canvash = res.windowWidth;
-		canvasw = res.windowHeight;
+		canvasw = res.windowWidth;
+		canvash = res.windowHeight;
 	}
 });
 export default {
@@ -64,37 +67,44 @@ export default {
 			userSign: '',
 			modalName: null,
 			signImage: '',
-			isEnd: false // 是否签名
+			isEnd: false, // 是否签名
+			startsign: false
 		};
 	},
 	computed: {
 		...mapState(['userInfo'])
 	},
 	onLoad() {
-		//console.log(canvasw); //797
-		this.CheckUserSign();
-		_this = this;
+		this.CheckUserSign();		
 		//获得Canvas的上下文
-		content = wx.createCanvasContext('firstCanvas');
-		//设置线的颜色
-		content.setStrokeStyle('#000');
-		//设置线的宽度
-		content.setLineWidth(6);
-		//设置线两端端点样式更加圆润
-		content.setLineCap('round');
-		//设置两条线连接处更加圆润
-		content.setLineJoin('round');
+		//thi.SetCanvascontent();
+		_this = this;
 	},
 	onShow() {
 		//console.log(this.userInfo.portrait);
 	},
 	methods: {
+		SetCanvascontent(){
+			content = wx.createCanvasContext('firstCanvas');
+			//设置线的颜色
+			content.setStrokeStyle('#000');
+			//设置线的宽度
+			content.setLineWidth(7);
+			//设置线两端端点样式更加圆润
+			content.setLineCap('round');
+			//设置两条线连接处更加圆润
+			content.setLineJoin('round');
+		},
 		showModal(e) {
 			//console.log(e);
+			this.userSign = '';
 			this.modalName = e.currentTarget.dataset.target;
+			this.SetCanvascontent();
 		},
 		hideModal(e) {
+			this.startsign = false;
 			this.modalName = null;
+			this.userSign = '_doc/logo/sign.png';
 		},
 		CheckUserSign() {
 			var relativePath = '_doc/logo/sign.png';
@@ -116,6 +126,9 @@ export default {
 		},*/
 		uploadFile(tempFilePath) {
 			// 上传到服务器
+			uni.showLoading({
+				title:'正在上传...'
+			})
 			const uploadTask = uni.uploadFile({
 				url: config.uploadSign,
 				filePath: tempFilePath,
@@ -128,18 +141,28 @@ export default {
 				},
 				success: function(res) {
 					// compressImage() 已经获取固定文件路径 uni.saveFile 不能指定文件名
+					_this.hideModal(); //_this.userSign = '_doc/logo/sign.png';
+					uni.hideLoading();
+					_this.vusui.msg('签名设置完毕!', {
+					                icon: 0, //0-5
+					})
+					/*
 					uni.showToast({
-						icon: 'none',
-						title: '签名设置完毕！'
-					});
+						icon: 'success',
+						title: '签名设置完毕!'
+					});*/
 				},
 				fail(err) {
 					//console.log(err);
-					uni.showToast({
+					uni.hideLoading();
+					_this.vusui.msg('签名上传失败！', {
+					                icon: 3, //0-5
+					})
+					/*uni.showToast({
 						icon: 'none',
-						title: err.errMsg
-					});
-					reject(err);
+						title: '签名上传失败！'//err.errMsg
+					});*/
+					// reject(err); // ? Can't find variable: reject;at api uploadFile fail callback function
 				}
 			});
 			uploadTask.onProgressUpdate(function(res) {});
@@ -150,11 +173,11 @@ export default {
 				{
 					src: url, //src: (String 类型 )压缩转换原始图片的路径
 					dst: path, //压缩转换目标图片的路径
-					width: '180px', //将图片压缩为大小
-					height: '60px',
-					quality: 50, //quality: (Number 类型 )压缩图片的质量.取值范围为1-100
+					width: '80px', //将图片压缩为大小
+					height: '240px',
+					quality: 100, //quality: (Number 类型 )压缩图片的质量.取值范围为1-100
 					//如同时设置了多个转换操作，则按缩放、旋转、裁剪顺序进行操作。
-					//rotate:90,  // 旋转90度
+					rotate: 90, // 旋转90度
 					//clip:{top:"25%",left:"25%",width:"50%",height:"50%"}		// 裁剪图片中心区域
 					//format:"png"		// 将jpg转换成png格式
 					overwrite: true //overwrite: (Boolean 类型 )覆盖生成新文件
@@ -202,9 +225,7 @@ export default {
 						//console.log(res.tempFilePath);
 						//console.log('完成签名');
 						//设置图片
-						_this.signImage = res.tempFilePath;
-						//console.log(_this.signImage);
-						_this.compressImage(_this.signImage, 'sign.png');
+						_this.compressImage(res.tempFilePath, 'sign.png');
 					}
 				});
 			} else {
@@ -216,9 +237,9 @@ export default {
 				});
 			}
 		},
-
 		// 画布的触摸移动开始手势响应
 		start: function(event) {
+			this.startsign = true;
 			// console.log(event)
 			//console.log("触摸开始" + event.changedTouches[0].x)
 			//console.log("触摸开始" + event.changedTouches[0].y)
@@ -283,6 +304,7 @@ export default {
 		clearClick: function() {
 			// 设置为未签名
 			this.isEnd = false;
+			this.startsign = false;
 			//清除画布
 			content.clearRect(0, 0, canvasw, canvash);
 			content.draw(true);
@@ -301,49 +323,19 @@ page {
 @mixin calc-height($h) {
 	height: $h / 750 * 100;
 }
-canvas {
-	background-color: #dddddd;
-	width: 500upx;
-	margin: 0 25upx;
-	//height: calc(100vh - 140upx); 动态会第一笔没有
-	height: 455upx;
-}
-
-.signcanvas {
-	position: fixed;
-	top: 0;
-	left: 0;
-}
 #signatureImg {
-	background-color: #eeeeee;
+	background-color: white; //#eeeeee;
 }
-
-.caozuo {
-}
-
-.caozuo view {
-	width: 375upx;
-	text-align: center;
-	height: 100upx;
-	line-height: 100upx;
-	color: #ffffff;
-}
-
-.caozuo view:active {
-	background-color: #cccccc;
-	color: #333333;
-}
-
-.chongqian {
-	background-color: #ff8f58;
-}
-
-.over {
-	background-color: #0599d7;
+canvas {
+	background-color: white; //#dddddd;
+	width: calc((100vh - 70upx) / 2.5);
+	margin: 25upx;
+	height: calc(100vh - 110upx);
+	//height: 655upx;
 }
 .sign {
-	width: 90px;
-	height: 30px;
+	width: 150px;
+	height: 50px;
 	//background-color: #F0AD4E;
 }
 .box {
@@ -376,5 +368,61 @@ canvas {
 	font-size: $font-base + 2;
 	color: $font-color-dark;
 	font-weight: bold;
+}
+.caozuo {
+	width: calc(100vh - 140upx);
+	display: flex;
+	position: absolute;
+	bottom: calc((100vh - 140upx) / 2);
+	left: -30upx;
+	transform: rotate(270deg);
+	background-color: red;
+	.button {
+		width: 210upx;
+		height: 96upx;
+		line-height: 96upx;
+		border-radius: 20px;
+		//margin-top: 0upx;
+		font-size: $font-base;
+		&:after {
+			border-radius: 10px;
+		}
+	}
+	.over {
+		position: absolute;
+		right: -20px;
+		background-color: #0599d7;
+	}
+	.chongqian {
+		position: absolute;
+		right: 120px;
+		background-color: #ff8f58;
+	}
+	.cancel {
+		position: absolute;
+		left: 30px;
+		background-color: #d5d5d5;
+	}
+}
+.signcanvas {
+	position: fixed;
+	top: 30upx;
+	left: 30upx;
+	right: 30upx;
+	bottom: 30upx;
+	border-radius: 10px;
+	background-color: #eeeeee;
+	.info {
+		white-space: nowrap;
+		font-size: 156upx;
+		color: #eeeeee;
+		//background-color: green;
+		position: absolute;
+		top: 0;
+		left: -90upx;
+		transform: rotate(270deg) translate(-50%, -50%);
+		color: transparent;
+		-webkit-text-stroke: 2px #dfdfdf;
+	}
 }
 </style>

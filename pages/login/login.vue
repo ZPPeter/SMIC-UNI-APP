@@ -125,6 +125,7 @@ export default {
 				if (status == 200) {
 					//console.log('Download success: ' + d.filename);					
 				} else {
+					// 未设置签名
 					console.log('Download failed: ' + status);
 				}
 			});

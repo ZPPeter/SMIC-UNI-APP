@@ -84,6 +84,13 @@ import routerLink from './node_modules/uni-simple-router/component/router-link.v
 //Vue.component('cu-custom',cuCustom);
 Vue.component('router-link', routerLink);
 
+// 引入 Vusui-app-layer 弹层
+// https://vusui.github.io/#/app/layer
+import vusLayerInit from './components/vusui-app-layer/vusui-layer.js';
+import vusLayer from './components/vusui-app-layer/vusui-layer.vue';
+Vue.use(vusLayerInit);
+Vue.component('vus-layer', vusLayer); //设置组件名称
+
 // 此处重写 receive，connection 则 signalR.js 对应函数不再执行
 // MessageType 消息类型 1.发送连接消息 2.新消息通知 3.未定义 90.首页数字刷新 98.连接回执消息
 _signalR.on('ReceiveMessage', async function(message) {

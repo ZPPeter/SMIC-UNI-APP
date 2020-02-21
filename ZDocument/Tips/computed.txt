@@ -1,0 +1,19 @@
+<template>     
+<view>         
+    <view class="half-width" :style="{width: halfWidth}"> 半屏宽度 </view>     
+</view> 
+</template>  
+<script>     
+export default {         
+  computed: {             
+     halfWidth() {                 
+        return uni.upx2px(750 / 2) + 'px';             
+     }         
+  }
+} 
+</script> 
+<style>
+    .half-width {
+	    background-color: #FF3333;
+    }
+</style> 
