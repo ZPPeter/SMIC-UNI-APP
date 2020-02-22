@@ -12,6 +12,7 @@
     ]
   },
   "usingComponents": {
+    "vus-layer": "/components/vusui-app-layer/vusui-layer",
     "result-data": "/pages/sjcl/1020/result"
   }
 }

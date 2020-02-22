@@ -13,8 +13,19 @@
 						<view style="font-weight:bold;">{{ o.ccbh }}</view>
 					</view>
 					<p class="wtdw">精度指标：{{ jdzb2 }}″</p>
-					<p class="wtdw">制造厂家：{{ o.zzc }}</p>
-					<p v-if="o.jdzt == 111" class="wtdw2">检定员：<text style="font-weight:bold;">{{ o.surname }}</text></p>
+					<p class="wtdw">制造厂家：{{ o.zzc | formatZzcTextLength }}</p>
+					<p v-if="o.jdzt == 111" class="wtdw2">
+						检定员：
+						<text style="font-weight:bold;">{{ o.surname }}</text>
+						<text style="padding-left: 35upx;">核验员：</text>
+						<text style="font-weight:bold;">{{ o.hyy }}</text>
+					</p>
+					<p v-if="o.jdzt == 111 && o.hyyj.length > 0" class="wtdw2">
+						<text style="color: #DD514C,font-weight:bold;">{{ o.hyyj }}</text>
+					</p>
+					<p v-if="o.jdzt == 111 && o.pzyj.length > 0" class="wtdw2">
+						<text style="color: #DD514C,font-weight:bold;">{{ o.pzyj }}</text>
+					</p>
 				</view>
 			</view>
 			<result-data v-if="res" :res="res"></result-data>
@@ -23,25 +34,25 @@
 			<view class="fab-circle" @click="doSetting(o)"><text class="iconfont icon-Setting fontsize"></text></view>
 		</view>
 		<view v-show="res" class="bottom-icon">
-					<view class="doc" @click="OpenDoc(o.qjmcbm, o.id)"><text class="iconfont icon-Word fontsize2"></text></view>
-					<view class="xls" @click="OpenXls(o.qjmcbm, o.id)"><text class="iconfont icon-Excel1 fontsize2"></text></view>
-				</view>
-				<view v-show="res" class="bottom-view">
-					<view>
-						<checkbox-group @change="checkboxChange">
-							<label>
-								<checkbox value="urgent" :checked="urgent" color="#FFCC33" style="transform:scale(0.9)" />
-								加急
-							</label>
-						</checkbox-group>
-					</view>
-					<view>
-						<button :disabled="o.surname != userInfo.realname" class="bottom-btn" @click="Jdwb()">{{ btnJDWB }}</button>
-					</view>
-				</view>
-				<vus-layer></vus-layer>
+			<view class="doc" @click="OpenDoc(o.qjmcbm, o.id)"><text class="iconfont icon-Word fontsize2"></text></view>
+			<view class="xls" @click="OpenXls(o.qjmcbm, o.id)"><text class="iconfont icon-Excel1 fontsize2"></text></view>
+		</view>
+		<view v-show="res" class="bottom-view">
+			<view>
+				<checkbox-group @change="checkboxChange">
+					<label>
+						<checkbox value="urgent" :checked="urgent" color="#FFCC33" style="transform:scale(0.9)" />
+						加急
+					</label>
+				</checkbox-group>
 			</view>
-		</template>
+			<view>
+				<button :disabled="o.surname != userInfo.realname" class="bottom-btn" @click="Jdwb()">{{ btnJDWB }}</button>
+			</view>
+		</view>
+		<vus-layer></vus-layer>
+	</view>
+</template>
 
 <script>
 import { mapState } from 'vuex';
@@ -56,13 +67,13 @@ export default {
 		ResultData
 	},
 	data() {
-		return {			
-			MBMC:config.TemplateType.MB1100,
-			WEATHER:config.WeatherType.In,
+		return {
+			MBMC: config.TemplateType.MB1100,
+			WEATHER: config.WeatherType.In,
 			o: new JDJLFM(),
 			btnJDWB: '检完确认',
 			res: '',
-			jdzb2:'',
+			jdzb2: '',
 			urgent: false
 		};
 	},
@@ -87,12 +98,15 @@ export default {
 		this.o.xhggbm = o.xhggbm;
 		this.o.xhggmc = o.xhggmc;
 
-		this.o.zzc = o.zzcnr;
+		this.o.zzc = o.zzc;
 		this.o.jdzt = o.jdzt;
 
 		this.o.surname = o.surname;
-		
-		this.jdzb2 = "2"; // 2 5
+		this.o.hyy = o.hyy;
+		this.o.hyyj = o.hyyj;
+		this.o.pzyj = o.pzyj;
+
+		this.jdzb2 = '2'; // 2 5
 		this.o.jdzb = this.jdzb2;
 
 		if (this.o.jdzt == 111 || this.o.jdzt == 122) {
@@ -130,6 +144,7 @@ export default {
 			utils.OpenXls(bm, id);
 		},
 		Jdwb() {
+			var _this = this;
 			this.vusui.confirm(
 				'确认该仪器已经检定完毕？',
 				function() {
@@ -154,12 +169,12 @@ export default {
 					messageBody: ''
 				};
 				this.$signalR.sendMessage(JSON.stringify(msg));
-				
+
 				// 微信通知
 				if (this.urgent) {
 					utils.shareMessage(this.o);
 				}
-				
+
 				// 刷新待检列表记录，显示全部记录
 				uni.reLaunch({
 					url: '/pages/verification/verification'
@@ -195,7 +210,7 @@ export default {
 
 			var WQ = this.$abp.utils.getWQ(this.WEATHER); // 0InOut 1In 2Out
 			//console.log(WQ);
-			const jdjlfm = { 
+			const jdjlfm = {
 				id: this.o.id,
 				dwmc: this.o.dwmc,
 				jdrq: this.o.djrq,
@@ -206,17 +221,17 @@ export default {
 				ccbh: this.o.ccbh,
 				cjjd: this.jdzb2, //电子经纬仪 2 5
 				jjwd: WQ[0],
-				qt01:'',
-				qt02:'',
-				qt03:'',
-				qt04:'',
-				qt05:''
+				qt01: '',
+				qt02: '',
+				qt03: '',
+				qt04: '',
+				qt05: ''
 			};
 			const rawTemplate = {
 				qjmcbm: this.o.qjmcbm,
 				qjmc: this.o.qjmc,
 				mbmc: this.MBMC //'M01'
-			};			
+			};
 			const CertDto = {
 				jdjlfm: jdjlfm,
 				rawTemplate: rawTemplate
@@ -243,165 +258,18 @@ export default {
 			return this.$moment(item).format('YYYY.MM.DD HH:mm:ss');
 		},
 		getImg(zzc) {
-			return '/static/ins/'+this.o.qjmcbm+'/default.jpg';
+			return '/static/ins/' + this.o.qjmcbm + '/default.jpg';
 		},
 		doSetting(o) {
 			//console.log(JSON.stringify(o));
 			uni.navigateTo({
-				url: '/pages/sjcl/'+o.qjmcbm+'/set?o=' + JSON.stringify(o)
+				url: '/pages/sjcl/' + o.qjmcbm + '/set?o=' + JSON.stringify(o)
 			});
 		}
 	}
 };
 </script>
-
 <style lang="scss">
-.wtdw2 {
-	font-size: 32upx;
-	color: #0088cc;
-}
-.fab-box {
-	position: absolute;
-	right: 50upx;
-	top: 50upx;
-	width: 90upx;
-	height: 90upx;
-	//position: fixed;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	z-index: 2;
-}
-
-.fab-box.fab {
-	z-index: 10;
-}
-
-.fab-circle {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	position: absolute;
-	width: 100upx;
-	height: 100upx;
-	background: whitesmoke;
-	//background: #3c3e49;
-	/* background: #5989b9; */
-	border-radius: 10%;
-	box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.2);
-	z-index: 11;
-}
-
-.fab-circle.left {
-	left: 0;
-}
-
-.fab-circle.right {
-	right: 0;
-}
-
-.fab-circle.top {
-	top: 0;
-}
-
-.fab-circle.bottom {
-	bottom: 0;
-}
-
-.fontsize {
-	color: dodgerblue;
-	font-size: 65upx;
-	transition: all 0.3s;
-	font-weight: bold;
-}
-.tj-item {
-	color: #75787d;
-	font-size: $font-sm + 2upx;
-	margin-left: 4px;
-}
-.list_items {
-	margin: 21upx;
-	background-color: #f8f8f8;
-	//margin-top:21upx;
-	border: 1px #dcdcdc solid;
-}
-.list-info {
-	//height: 210upx;
-	padding: 12upx 15upx;
-	//box-sizing: border-box;
-	display: flex;
-	width: 100%;
-	flex-direction: row;
-	align-items: center;
-	position: relative;
-	z-index: 1;
-	.portrait {
-		//margin-left: 21upx;
-		width: 108upx;
-		height: 108upx;
-		//border: 2upx solid lightgrey;
-		//border-radius: 30%;
-		//background-color: #8f8f94;
-	}
-	.content {
-		font-size: $font-base;
-		color: $font-color-dark;
-		margin-left: 20upx;
-		.xhgg {
-			font-size: 32upx;
-		}
-		.wtdw {
-			font-size: 26upx;
-			color: #8f8f94;
-		}
-		.wtdw2 {
-			font-weight: 400;
-			font-size: 26upx;
-			color: #8f8f94;
-		}
-		.notice {
-			font-size: 32upx;
-			color: #ff0000;
-		}
-	}
-}
-.bottom-btn {
-	position: fixed;
-	left: 30upx;
-	right: 30upx;
-	bottom: 16upx;
-	z-index: 95;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	width: 690upx;
-	height: 80upx;
-	font-size: 32upx;
-	color: #fff;
-	background-color: $base-color;
-	border-radius: 10upx;
-	box-shadow: 1px 2px 5px rgba(219, 63, 96, 0.4);
-}
-.fontsize2 {
-	color: #4c99e6;
-	font-size: 60upx;
-}
-.doc {
-	position: fixed;
-	left: 180upx;
-}
-.xls {
-	position: fixed;
-	right: 180upx;
-}
-.bottom-icon {
-	position: fixed;
-	left: 30upx;
-	right: 30upx;
-	bottom: 76upx;
-	z-index: 95;
-	display: flex;
-	width: 690upx;
-	height: 120upx;
-}
+@import './../sjcl.scss';
 </style>
+<style lang="scss"></style>

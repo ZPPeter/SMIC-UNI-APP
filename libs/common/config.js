@@ -35,10 +35,11 @@ const ListDpzmxs = '/api/services/app/SJCLAppServices/GetPagedDpzmxs'; //待批�
 const UpdateCcbh = '/api/services/app/SJMXAppServices/UpdateCcbh'; //修改出厂编号
 const GetQzyJbcs = '/api/services/app/JBCSAppServices/GetJbcs'; //获取全站仪基本参数
 const AddQzyJbcs = '/api/services/app/JBCSAppServices/AddJbcs'; //新增全站仪基本参数
-
+const SetReject = '/api/services/app/CertAppServices/SetReject'; //驳回
+const SetApproveReject = '/api/services/app/CertAppServices/SetApproveReject'; //驳回
 const MakeCert = '/api/services/app/CertAppServices/MakeCert'; //MakeCert
 const MakeXlsCert = '/api/services/app/CertAppServices/MakeXlsCert'; //MakeXlsCert
-const SignerCert = '/api/services/app/CertAppServices/SignerCert'; //MakeXlsCert
+const SignerCert = '/api/services/app/CertAppServices/SignerCert'; //SignCert
 
 const ShowZshData = '/api/services/app/CertAppServices/ShowResults'; //显示检定结果
 const SetJDWB = '/api/services/app/CertAppServices/SetJDWB'; //检定完毕
@@ -48,7 +49,7 @@ const SetQBWB = '/api/services/app/CertAppServices/SetQBWB'; //全部批准
 const ListWtd   = '/api/services/app/SJMXAppServices/GetSjmxBySjdid'; // sjdid
 const ListWtds  = '/api/services/app/WTDAppServices/GetPagedWtds';
 
-const ResetJdzt = '/api/services/app/SJMXAppServices/ResetJdzt';
+const ResetJdzt = '/api/services/app/SJMXAppServices/ResetJdzt';// 重新检定
 const getStatsData = '/api/services/app/StatsAppServices/getStatsData';
 
 /** 
@@ -192,5 +193,7 @@ export default {
 	ListCzrzs,
 	getStatsData,
 	GetAllTasks,
-	AddtoCZRZ
+	AddtoCZRZ,
+	SetReject,
+	SetApproveReject
 }

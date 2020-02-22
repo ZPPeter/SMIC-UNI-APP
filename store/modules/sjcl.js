@@ -6,7 +6,25 @@ class SjclModule {
 	constructor() {
 		this.namespaced = true;
 		this.state = {};
-		this.actions = {
+		this.actions = {			
+			async SetApproveReject(state, payload) {
+				let rep = await fly.post(config.SetApproveReject,payload.data).then(function(res) {
+					if (res.success) {
+						return res.result;
+					}
+					return '';
+				})
+				return rep;
+			},
+			async SetReject(state, payload) {
+				let rep = await fly.post(config.SetReject,payload.data).then(function(res) {
+					if (res.success) {
+						return res.result;
+					}
+					return '';
+				})
+				return rep;
+			},
 			async MakeCert(state, payload) {
 				//console.log(payload.data);
 				//let rep = await fly.post(config.MakeCert,{params:payload.data}).then(function(res) { 这种写法错误

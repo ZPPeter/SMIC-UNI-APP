@@ -78,6 +78,8 @@ Vue.prototype.$moment = moment;
 
 //Vue.prototype.$eventHub = new Vue(); 
 App.mpType = 'app';
+
+//http://hhyang.cn/src/router/tutorial/rgRoutes.html
 import router from './router/uni-app-router.js';
 import routerLink from './node_modules/uni-simple-router/component/router-link.vue';
 //import cuCustom from './colorui/components/cu-custom.vue'
@@ -86,10 +88,21 @@ Vue.component('router-link', routerLink);
 
 // 引入 Vusui-app-layer 弹层
 // https://vusui.github.io/#/app/layer
+/*
+icon 默认4, 0:Ok 1:Info(Yellow) 2:Error 3:Info(Blue) 4:Question 5:/
+*/
 import vusLayerInit from './components/vusui-app-layer/vusui-layer.js';
 import vusLayer from './components/vusui-app-layer/vusui-layer.vue';
 Vue.use(vusLayerInit);
 Vue.component('vus-layer', vusLayer); //设置组件名称
+
+// 在main.js注册全局组件
+// http://www.mescroll.com/
+//import MescrollBody from "@/components/mescroll-uni/mescroll-body.vue"
+//import MescrollUni from "@/components/mescroll-uni/mescroll-uni.vue"
+//Vue.component('mescroll-body', MescrollBody)
+//Vue.component('mescroll-uni', MescrollUni)
+	
 
 // 此处重写 receive，connection 则 signalR.js 对应函数不再执行
 // MessageType 消息类型 1.发送连接消息 2.新消息通知 3.未定义 90.首页数字刷新 98.连接回执消息

@@ -163,7 +163,7 @@ const utils = {
 				return '检完';
 				break;
 			default:
-				return '登记';
+				return '检完';
 				break;
 		}
 	},

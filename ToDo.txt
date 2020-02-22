@@ -1,32 +1,3 @@
-uni-simple-router
-pushTab api在跳转到tab时，H5端使用 $Route 无法访问到传递的参数,App 可以
-
-1. push
-跳转到普通页面，新开保留历史记录
-2. replace
-动态的导航到一个新 URL 关闭当前页面，跳转到的某个页面。
-3. replaceAll
-动态的导航到一个新 URL 关闭所有页面，打开到应用内的某个页面
-4. pushTab
-动态的导航到一个新 url 关闭所有页面，打开到应用内的某个tab,页面会刷新不会缓存
-
-// 假如你是通过name 来进行跳转。
-this.$Router.push({ name: 'router1', params: { userId: '123' }})
-// 获取方式
-this.$Route.query.userId;
-// 同样 等同于
-this.$Router.push({ path: '/pages/router/router1/router1', query: { userId: '123' }})
-// 获取方式
-this.$Route.query.userId;
-
-router.push(location, onComplete?, onAbort?) 等同于 uni.navigateTo()
-router.replace(location, onComplete?, onAbort?) 等同于 uni.redirectTo()
-跟 router.push 很像，唯一的不同就是，它不会向 history 添加新记录，而是跟它的方法名一样 —— 替换掉当前的 history 记录
-router.replaceAll(location, onComplete?, onAbort?) 等同于 uni.reLaunch()
-跟 router.replace 很像，唯一的不同就是，它不会向 history 添加新记录，而是将所有的页面都关掉，打开一个新的页面。
-router.pushTab(location, onComplete?, onAbort?) 等同于??? uni.switchTab()  两者在 缓存页面 方面还是有区别的!
-router.back(n) 等同于 uni.navigateBack()
-
 AJAX
 Flyio Github: https://github.com/wendux/fly
 
@@ -90,6 +61,10 @@ jdzt
 122 检完待核验
 200 核完待批准
 222 检完
+其它字段
+打印证书
+证书打印次数
+缴费日期
 ------------------------------------------------------------------------------------------------------
 蓝牙标记
 var view = new plus.nativeObj.View('LogoImg', { top: '30px', left: '7px', height: '35px', width: '35px' }, [
@@ -106,6 +81,7 @@ https://www.cnblogs.com/adalovelacer/archive/2019/02/08/abp-big-project-2-read-a
 
 数据库处理:主键、外键、索引
 设计文档!!!从数据库开始
+Pdf 生成 / 电子签名
 
 ======================================================================================================
 .NET Core 3.1
@@ -116,18 +92,25 @@ https://www.cnblogs.com/adalovelacer/archive/2019/02/08/abp-big-project-2-read-a
 _cntDapperRepository.Execute(strSQL); 
 https://www.cnblogs.com/xiashengwang/p/8581104.html
 ------------------------------------------------------------------------------------------------------
-
+升级包测试 - mime 设置 .apk
 config.taskInfo
-Pdf 生成/签名
-------------------------------------------------------------------------------------------------------
 PC 证书签名在证书打印模块 - JDZT：222->300
-编辑权限参考 Ant / ele
+编辑权限参考 Ant / ele / VusUI
+logo 图标隐藏 观察
+--------------------------------------------
+https://www.cnblogs.com/lonelyxmas/p/9091867.html
+https://www.cnblogs.com/jearay/p/6248351.html
+https://www.cnblogs.com/bile/p/4966796.html
+https://blog.csdn.net/z971130192/article/details/89784493
+https://www.cnblogs.com/zspbolg/p/12068659.html
+https://q.cnblogs.com/q/124761/
+https://www.cnblogs.com/weapon/p/9121143.html
+https://bbs.csdn.net/topics/392772780
 
-升级包测试
+https://docs.microsoft.com/zh-cn/dotnet/core/diagnostics/index
+https://blog.csdn.net/qq_36051316/article/details/83054446
 
-批准不通过给 检定员 微信通知，修改检定状态 
+.net core 内存泄漏 调试
+死锁错误原因
 
-核验 退回 修改检定状态 - 按钮在上面，输入原因
-加急 给批准者微信通知
 
-1000 公用函数 优化

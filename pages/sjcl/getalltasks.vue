@@ -2,7 +2,7 @@
 	<view>
 		<view style="display: flex; width:90%;text-align: left; margin-left: 12px;align-items: center;">
 			<div style="background-color: skyblue;width:4px;height:12px;vertical-align: bottom;"></div>
-			<view class="tj-item">未完成任务：查询到{{ lstlength }}条记录。</view>
+			<view class="tj-item">全部未完成任务：查询到{{ lstlength }}条记录。</view>
 		</view>
 		<view style="display: flex; width:90%;text-align: left; margin-left: 12px;align-items: center;">
 			<view class="tj-item">关键字:{{ q }}</view>

@@ -14,7 +14,7 @@
 						出厂编号：
 						<view style="font-weight:bold;">{{ o.ccbh }}</view>
 					</view>
-					<p class="wtdw">制造厂家：{{ o.zzcnr }}</p>
+					<p class="wtdw">制造厂家：{{ o.zzc | formatZzcTextLength }}</p>
 					<p class="wtdw">送检单位：{{ o.dwmc }}</p>
 					<p class="wtdw">检定期限：{{ format(o.yqjchrq) }}</p>
 					<p v-if="o.jdzt == 111" class="wtdw">检定员:{{ o.surname }}</p>
@@ -40,7 +40,7 @@
 			yqjchrq: "2019-05-08T08:46:44"
 			dwmc: "中建筑港集团有限公司"
 			xhggmc: "TS09plus"
-			zzcnr: "瑞士徕卡"
+			zzc: "瑞士徕卡"
 			ccbh: "1401505"
 			jdzt: 100
 			bzsm: ""

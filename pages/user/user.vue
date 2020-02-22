@@ -93,17 +93,6 @@ export default {
 		//onReady 3
 	},
 	onShow() {
-		if (!this.hasLogin) {
-			this.$Router.push('/pages/login/login');
-		}
-		if (uni.getSystemInfoSync().platform === 'android') {
-			var icon = plus.nativeObj.View.getViewById('LogoImg');
-			if (icon) {
-				setTimeout(function() {
-					icon.show();
-				}, 100);
-			}
-		}
 		// #ifdef APP-PLUS
 		const pages = getCurrentPages();
 		const page = pages[pages.length - 1];
@@ -161,8 +150,7 @@ export default {
 			}
 		},
 		GotoLogo() {
-			if (this.hasLogin) this.$Router.push('/pages/user/userinfo');
-			else this.$Router.push('/pages/login/login');
+			this.$Router.push('/pages/user/userinfo');
 		},
 		navTo(url) {
 			// this.$Router.push({path:url, query: {}});

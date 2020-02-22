@@ -13,18 +13,19 @@
 						<h4 class="xhgg">{{ o.xhggmc }} / {{ o.ccbh }}</h4>
 					</view>
 					<p class="wtdw">证书编号：{{ o.zsbh }}</p>
-					<view class="wtdw" v-if="o.jdzt1 != '检完'">
+					<view class="wtdw" v-if="o.jdzt != '222'">
 						<p class="wtdw" :class="{ jdqx1: jdqx(o.yqjcrq, o.jwrq) }">要求检出日期：{{ format2(o.yqjcrq) }}</p>
 					</view>
 					<p class="wtdw" v-else>检完日期：{{ getJwrq(o.jwrq) }}</p>
 					<p class="wtdw">检定员：{{ getJdy(o.jdy) }}<text style="padding-left: 50upx;">核验员:</text>{{ getJdy(o.hyy) }}</p>
 					
-					<p class="font-seal0">{{ o.jdzt1 }}</p>
-					<p><view v-if="jdqx(o.yqjcrq) && o.jdzt1 != '检完'" class="font-seal">已超期</view></p>
+					<p class="font-seal0">{{ jdzt(o.jdzt) }}</p>
+					<p><view v-if="jdqx(o.yqjcrq) && o.jdzt != '222'" class="font-seal">已超期</view></p>
 					
-					<p v-if="o.jdzt1 == '登记' " class="triangle-topright add_wtd"></p>
-					<p v-else-if="o.jdzt1 == '检完'" class="triangle-topright over_wtd"></p>
+					<p v-if="o.jdzt == '100' " class="triangle-topright add_wtd"></p>
+					<p v-else-if="o.jdzt == '222'" class="triangle-topright over_wtd"></p>
 					<p v-else class="triangle-topright working_wtd"></p>
+					
 				</view>
 			</view>
 		</view>
@@ -90,7 +91,7 @@ export default {
 		showDetails(o){
 			//console.log(o);
 			let bm = o.qjmcbm;
-			if(o.jdzt2>100)
+			if(o.jdzt>100)
 			uni.navigateTo({
 				url: '/pages/sjcl/'+bm+'/cx?o=' +  JSON.stringify(o)
 			});

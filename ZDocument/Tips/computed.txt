@@ -17,3 +17,22 @@ export default {         
 	    background-color: #FF3333;
     }
 </style> 
+
+
+computed: mapState(['userInfo']),
+computed: mapState(['hasLogin', 'userInfo']),
+computed: {
+		...mapState(['userInfo']),
+		halfWidth() {
+		   return uni.upx2px(750 / 2) + 'px';             
+		},
+		zzcInfo: {
+			get() {
+				let zzc = this.o.zzc;
+				if(!zzc) return '';
+				else 
+				return zzc.substring(0,12)+'...';
+			},
+			set() {}
+		} 
+	},

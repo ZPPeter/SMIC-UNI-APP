@@ -34,6 +34,7 @@
 			<text class="cell-more yticon icon-you"></text>
 		</view>
 		<view class="list-cell log-out-btn" @click="toLogout"><text class="cell-tit">退出登录</text></view>
+		<vus-layer></vus-layer>
 	</view>
 </template>
 
@@ -53,9 +54,9 @@ export default {
 		};
 	},
 	onLoad() {
-		if (!this.hasLogin) {
-			this.$Router.push('/pages/login/login');
-		}
+		//if (!this.hasLogin) {
+		//	this.$Router.push('/pages/login/login');
+		//}
 		if (uni.getSystemInfoSync().platform === 'android') {
 			this.version = plus.runtime.version; // 打包后有效，打包前是基座的版本号
 		}
@@ -77,20 +78,21 @@ export default {
 		async checkUpdate() {
 			// 检测升级
 			uni.showToast({
-				icon:'loading',
+				icon: 'loading',
 				title: '检测升级...',
-				duration:2000
+				duration: 2000
 			});
-			let ret = await utils.checkUpdate(); 
+			let ret = await utils.checkUpdate();
 			uni.hideToast();
 			if (ret == '"none"')
 				uni.showToast({
-					icon:'none',
+					icon: 'none',
 					title: '当前版本已是最新版本。'
 				});
 		},
-		getTempSize() {// 使用plus.cache.calculate 获取应用的缓存大小			
-			// 没有计算 Doc 目录			
+		getTempSize() {
+			// 使用plus.cache.calculate 获取应用的缓存大小
+			// 没有计算 Doc 目录
 			//SaveFile会删除临时文件
 			//官方：临时文件问题已经优化，会自动清理，不用手动处理
 			//删除本地_doc/uniapp_save路径下面存储的文件
@@ -108,15 +110,18 @@ export default {
 			  }
 			});
 			*/
-			uni.getSavedFileList({
-				// _doc/uniapp_save
+
+			/*
+			uni.getSavedFileList({ // _doc/uniapp_save
 				success: function(res) {
-					//console.log(JSON.stringify(res.fileList));
+					console.log(JSON.stringify(res.fileList));
 				}
 			});
+			*/
 
 			var self = this;
-			plus.cache.calculate(function(size) {// _doc 路径之外的缓存文件
+			plus.cache.calculate(function(size) {
+				// _doc 路径之外的缓存文件
 				//size是多少个字节单位是b
 				//你可以做下面相应的处理
 				if (size < 1024) {
@@ -130,21 +135,16 @@ export default {
 		},
 		//退出登录
 		toLogout() {
-			uni.showModal({
-				title: '系统提示',
-				content: '确定要退出登录吗？',
-				success: e => {
-					if (e.confirm) {
-						this.logout();
-						setTimeout(() => {
-							//uni.navigateBack();
-							uni.switchTab({
-								url: '/pages/main/main'
-							});
-						}, 200);
-					}
+			var _this = this;
+			this.vusui.confirm(
+				'确定要注销登录吗？',
+				function() {
+					_this.logout();
+				},
+				function() {
+					//console.log('取消操作');
 				}
-			});
+			);
 		},
 		//switch
 		switchChange(e) {
@@ -160,26 +160,31 @@ export default {
 		clearStorage() {
 			// Cache 非 Storage
 			var _this = this;
-			uni.showModal({
-				title: '提示',
-				content: '确定清除缓存吗?',
-				success(res) {
-					// 用户确定要删除
-					if (res.confirm) {
-						//使用plus.cache.clear 清除应用中的缓存数据 这里清除后还要二十几KB没有清除，达不到全部清除
-						plus.cache.clear(function() {
-							uni.showToast({
-								title: '清除成功',
-								icon: 'none',
-								success() {
-									//成功后处理
-									_this.tempSize = '';
-								}
-							});
-						});
-					}
+			this.vusui.confirm(
+				'确定要清除缓存吗?',
+				function() {
+					//使用plus.cache.clear 清除应用中的缓存数据 
+					//Doc 目录里面的 uniapp_saved 目录不处理， 临时文件也不处理系统自动清除					
+					plus.cache.clear(function() {
+						_this.vusui.msg('清除成功!', {
+						                icon: 0, //0-5
+						})
+						_this.tempSize = '';
+						/*
+						uni.showToast({
+							title: '清除成功',
+							icon: 'none',
+							success() {
+								//成功后处理
+								_this.tempSize = '';
+							}
+						});*/
+					});
+				},
+				function() {
+					//console.log('取消操作');
 				}
-			});
+			);			
 			/*
 			uni.getStorageInfo({
 				success: function(res) {

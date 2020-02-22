@@ -1,8 +1,8 @@
 <template>
 	<view class="list">
 		<view class="list_items" v-for="o in list" :key="o.id">
-			<view class="list-info">
-				<view class="qjmc"><image class="portrait" :src="getImg(o.zzcnr)"></image>
+			<view class="list-info" @tap="showDetails(o)">
+				<view class="qjmc"><image class="portrait" :src="getImg(o.zzc)"></image>
 				<view >{{ o.qjmc }}</view>
 				</view>				
 				<view class="content">
@@ -48,9 +48,18 @@ export default {
 		};
 	},
 	onLoad() {
-		console.log(this.list[0]);
+		//console.log(this.list[0]);
 	},
 	methods: {
+		showDetails(o){
+			//console.log(o);
+			let bm = o.qjmcbm;
+			if(o.jdzt>100)
+			uni.navigateTo({
+				url: '/pages/sjcl/'+bm+'/cx?o=' +  JSON.stringify(o)
+			});
+			//url: '/pages/sjcl/sorry?o=' +  JSON.stringify(o)
+		},
 		format(item) {
 			//return new Date(item).Format('yyyy.MM.dd hh:mm:ss');
 			return this.$moment(item).format('YYYY.MM.DD HH:mm:ss');

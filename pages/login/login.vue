@@ -51,27 +51,14 @@ export default {
 		if (uni.getSystemInfoSync().platform === 'android') {
 			this.version = plus.runtime.version; // 打包后有效，打包前是基座的版本号
 		}
-		this.hideIcon();
 	},
 	onShow() {
-		this.hideIcon();
 	},
 	methods: {
 		...mapMutations(['login']),
 		navBack() {
 			uni.navigateBack();
 		},		
-		hideIcon() {
-			if (uni.getSystemInfoSync().platform === 'android') {
-				var icon = plus.nativeObj.View.getViewById('LogoImg');
-				//console.log(icon);
-				if (icon) {
-					setTimeout(function() {
-						icon.hide();
-					}, 300);
-				}
-			}
-		},
 		toForgetPassword() {
 			uni.showToast({
 				icon: 'none',

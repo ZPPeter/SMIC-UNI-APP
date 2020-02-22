@@ -106,7 +106,7 @@ eval("// extracted by mini-css-extract-plugin//# sourceURL=[module]\n//# sourceM
 
 /***/ }),
 
-/***/ 229:
+/***/ 237:
 /*!**********************************************************************************************!*\
   !*** E:/Project2/2020/SMIC-UNI-APP/main.js?{"page":"pages%2Fcomponent%2Fucharts%2Fucharts"} ***!
   \**********************************************************************************************/
@@ -114,8 +114,8 @@ eval("// extracted by mini-css-extract-plugin//# sourceURL=[module]\n//# sourceM
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ 8);__webpack_require__(/*! @dcloudio/uni-stat */ 9);\n\nvar _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 3));\nvar _ucharts = _interopRequireDefault(__webpack_require__(/*! ./pages/component/ucharts/ucharts.vue */ 184));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}\ncreatePage(_ucharts.default);\n/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-app-plus/dist/index.js */ 1)[\"createPage\"]))//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbbnVsbF0sIm5hbWVzIjpbImNyZWF0ZVBhZ2UiLCJQYWdlIl0sIm1hcHBpbmdzIjoia0RBQUEsd0NBQW1COztBQUVuQjtBQUNBLDZHO0FBQ0FBLFVBQVUsQ0FBQ0MsZ0JBQUQsQ0FBVixDIiwiZmlsZSI6IjIyOS5qcyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCAndW5pLXBhZ2VzJztpbXBvcnQgJ0BkY2xvdWRpby91bmktc3RhdCc7XG5cbmltcG9ydCBWdWUgZnJvbSAndnVlJyAgICAgICAgICAgIFxuaW1wb3J0IFBhZ2UgZnJvbSAnLi9wYWdlcy9jb21wb25lbnQvdWNoYXJ0cy91Y2hhcnRzLnZ1ZSdcbmNyZWF0ZVBhZ2UoUGFnZSkiXSwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///229\n");
+eval("/* WEBPACK VAR INJECTION */(function(createPage) {__webpack_require__(/*! uni-pages */ 8);__webpack_require__(/*! @dcloudio/uni-stat */ 9);\n\nvar _vue = _interopRequireDefault(__webpack_require__(/*! vue */ 3));\nvar _ucharts = _interopRequireDefault(__webpack_require__(/*! ./pages/component/ucharts/ucharts.vue */ 184));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}\ncreatePage(_ucharts.default);\n/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-app-plus/dist/index.js */ 1)[\"createPage\"]))//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbbnVsbF0sIm5hbWVzIjpbImNyZWF0ZVBhZ2UiLCJQYWdlIl0sIm1hcHBpbmdzIjoia0RBQUEsd0NBQW1COztBQUVuQjtBQUNBLDZHO0FBQ0FBLFVBQVUsQ0FBQ0MsZ0JBQUQsQ0FBVixDIiwiZmlsZSI6IjIzNy5qcyIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCAndW5pLXBhZ2VzJztpbXBvcnQgJ0BkY2xvdWRpby91bmktc3RhdCc7XG5cbmltcG9ydCBWdWUgZnJvbSAndnVlJyAgICAgICAgICAgIFxuaW1wb3J0IFBhZ2UgZnJvbSAnLi9wYWdlcy9jb21wb25lbnQvdWNoYXJ0cy91Y2hhcnRzLnZ1ZSdcbmNyZWF0ZVBhZ2UoUGFnZSkiXSwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///237\n");
 
 /***/ })
 
-},[[229,"common/runtime","common/vendor"]]]);
+},[[237,"common/runtime","common/vendor"]]]);

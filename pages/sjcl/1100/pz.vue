@@ -12,7 +12,7 @@
 						出厂编号：
 						<view style="font-weight:bold;">{{ o.ccbh }}</view>
 					</view>
-					<p class="wtdw">制造厂家：{{ o.zzc }}</p>					
+					<p class="wtdw">制造厂家：{{ o.zzc | formatZzcTextLength }}</p>					
 					<p class="wtdw2">检定员：<text style="font-weight:bold;">{{ o.surname }}</text></p>
 					<p class="wtdw2">核验员：<text style="font-weight:bold;">{{ o.hyy }}</text></p>
 					
@@ -20,11 +20,15 @@
 			</view>
 			<result-data :res="res"></result-data>
 		</view>
+		<view class="fab-box fab">
+			<view class="fab-circle" @click="doReject()"><text class="iconfont icon-sey-Reject-a fontsize3"></text></view>
+		</view>
 		<view v-show="res" class="bottom-icon">
-			<view class="doc" @click="OpenDoc(o.qjmcbm,o.id)"><text class="iconfont icon-Word fontsize2"></text></view>			
-			<view class="xls" @click="OpenXls(o.qjmcbm,o.id)"><text class="iconfont icon-Excel1 fontsize2"></text></view>
-		</view>	
-		<button v-show="res" class="bottom-btn" @click="Pzwb()">批准通过</button>
+			<view class="doc" @click="OpenDoc(o.qjmcbm, o.id)"><text class="iconfont icon-Word fontsize2"></text></view>
+			<view class="xls" @click="OpenXls(o.qjmcbm, o.id)"><text class="iconfont icon-Excel1 fontsize2"></text></view>
+		</view>
+		<view v-show="res" class="bottom-view"><button class="bottom-btn2" @click="Pzwb()">批准通过</button></view>
+		<vus-layer></vus-layer>
 	</view>
 </template>
 
@@ -42,7 +46,8 @@ export default {
 	data() {
 		return {			
 			o: new JDJLFM(),
-			res: ''
+			res: '',
+			rejectInfo: ''
 		};
 	},
 	onNavigationBarButtonTap(e) {
@@ -64,7 +69,7 @@ export default {
 		this.o.qjmcbm = o.qjmcbm;
 		this.o.xhggbm = o.xhggbm;
 		this.o.xhggmc = o.xhggmc;
-		this.o.zzc = o.zzcnr;
+		this.o.zzc = o.zzc;
 		this.o.jdzt = o.jdzt;
 		this.o.surname = o.surname;
 		this.o.hyy = o.hyy;		
@@ -72,6 +77,47 @@ export default {
 		this.showRawData();
 	},	
 	methods: {
+		doReject() {
+			var _this = this;
+			this.vusui.prompt(
+				{
+					title: '请输入驳回原因', //设置标题
+					formType: 2 //多行文本 textarea
+				},
+				value => {
+					_this.rejectInfo = value;
+					_this.Reject();
+				}
+			);
+		},
+		async Reject() {
+			const data = {
+				id: this.o.id,
+				info: this.rejectInfo
+			};
+			const res = await this.$store.dispatch({
+				type: 'sjcl/SetApproveReject',
+				data: data
+			});
+			//console.log(res);
+			if (res == 1) {
+				// 首页数字刷新
+				var msg = {
+					messageType: 90,
+					sendUserId: store.state.userInfo.realname + ' [App]', //消息发送人(登录用户ID)
+					messageBody: ''
+				};
+				this.$signalR.sendMessage(JSON.stringify(msg));
+				// 微信通知
+				if (this.urgent) {
+					utils.shareMessage(this.o);
+				}
+				// 刷新待核验列表记录，显示全部记录
+				uni.reLaunch({
+					url: '/pages/approve/approve'
+				});
+			}
+		},
 		OpenDoc(bm,id){
 			utils.OpenDoc(bm,id);
 		},
@@ -80,17 +126,15 @@ export default {
 		},
 		Pzwb() {
 			var _this = this;
-			uni.showModal({
-				title: '提示',
-				content: '确认该仪器批准通过？',
-				success: function(res) {
-					if (res.confirm) {
-						_this.SetPzwb();
-					} else if (res.cancel) {
-						//console.log('用户点击取消');
-					}
+			this.vusui.confirm(
+				'确认该仪器批准通过？',
+				function() {
+					_this.SetPzwb();
+				},
+				function() {
+					//console.log('取消操作');
 				}
-			});
+			);
 		},
 		async SetPzwb() {
 			const res = await this.$store.dispatch({
@@ -106,6 +150,10 @@ export default {
 					messageBody: ''
 				};
 				this.$signalR.sendMessage(JSON.stringify(msg));
+				// 微信通知
+				if (this.urgent) {
+					utils.shareMessage(this.o);
+				}
 				// 刷新待检列表记录，显示全部记录
 				uni.reLaunch({
 					url: '/pages/approve/approve'
@@ -132,154 +180,7 @@ export default {
 	}
 };
 </script>
-
 <style lang="scss">
-.wtdw2 {
-	font-size: 32upx;
-	color: #0088cc;
-}
-.fab-box {
-	position: absolute;
-	right: 50upx;
-	top: 50upx;
-	width: 90upx;
-	height: 90upx;
-	//position: fixed;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	z-index: 2;
-}
-
-.fab-box.fab {
-	z-index: 10;
-}
-
-.fab-circle {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	position: absolute;
-	width: 100upx;
-	height: 100upx;
-	background: whitesmoke;
-	//background: #3c3e49;
-	/* background: #5989b9; */
-	border-radius: 10%;
-	box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.2);
-	z-index: 11;
-}
-
-.fab-circle.left {
-	left: 0;
-}
-
-.fab-circle.right {
-	right: 0;
-}
-
-.fab-circle.top {
-	top: 0;
-}
-
-.fab-circle.bottom {
-	bottom: 0;
-}
-
-.fontsize {
-	color: dodgerblue;
-	font-size: 65upx;
-	transition: all 0.3s;
-	font-weight: bold;
-}
-.tj-item {
-	color: #75787d;
-	font-size: $font-sm + 2upx;
-	margin-left: 4px;
-}
-.list_items {
-	margin: 21upx;
-	background-color: #f8f8f8;
-	//margin-top:21upx;
-	border: 1px #dcdcdc solid;
-}
-.list-info {
-	//height: 210upx;
-	padding: 12upx 15upx;
-	//box-sizing: border-box;
-	display: flex;
-	width: 100%;
-	flex-direction: row;
-	align-items: center;
-	position: relative;
-	z-index: 1;
-	.portrait {
-		//margin-left: 21upx;
-		width: 108upx;
-		height: 108upx;
-		//border: 2upx solid lightgrey;
-		//border-radius: 30%;
-		//background-color: #8f8f94;
-	}
-	.content {
-		font-size: $font-base;
-		color: $font-color-dark;
-		margin-left: 20upx;
-		.xhgg {
-			font-size: 32upx;
-		}
-		.wtdw {
-			font-size: 26upx;
-			color: #8f8f94;
-		}
-		.wtdw2 {
-			font-weight: 400;
-			font-size: 26upx;
-			color: #8f8f94;
-		}
-		.notice {
-			font-size: 32upx;
-			color: #ff0000;
-		}
-	}
-}
-.bottom-btn {
-	position: fixed;
-	left: 30upx;
-	right: 30upx;
-	bottom: 16upx;
-	z-index: 95;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	width: 690upx;
-	height: 80upx;
-	font-size: 32upx;
-	color: #fff;
-	background-color: $base-color;
-	border-radius: 10upx;
-	box-shadow: 1px 2px 5px rgba(219, 63, 96, 0.4);
-}
-.fontsize2{
-	color: #4c99e6;
-	font-size: 60upx;
-}
-.doc {
-	position: fixed;
-	left: 180upx;
-}
-.xls {
-	position: fixed;
-	right: 180upx;
-}
-.bottom-icon {
-	position: fixed;
-	left: 30upx;
-	right: 30upx;
-	bottom: 76upx;
-	z-index: 95;
-	display: flex;
-	width: 690upx;
-	height: 120upx;
-}
+@import './../sjcl.scss';
 </style>
+<style lang="scss"></style>

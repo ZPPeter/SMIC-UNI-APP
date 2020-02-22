@@ -2,5 +2,7 @@
   "navigationBarTitleText": "系统设置",
   "bounce": "none",
   "animationType": "none",
-  "usingComponents": {}
+  "usingComponents": {
+    "vus-layer": "/components/vusui-app-layer/vusui-layer"
+  }
 }

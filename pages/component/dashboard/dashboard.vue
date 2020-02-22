@@ -71,8 +71,9 @@ export default {
 	},
 	methods: {
 		GotoLogo() {
-			if (this.hasLogin) this.$Router.push('/pages/user/userinfo');
-			else this.$Router.push('/pages/login/login');
+			//if (this.hasLogin) 
+			this.$Router.push('/pages/user/userinfo');
+			//else this.$Router.push('/pages/login/login');
 		},
 		navTo(url) {
 			this.$Router.push(url); // 拦截未登录路由			

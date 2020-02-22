@@ -70,15 +70,6 @@ export default {
 				url:'/pages/wtdcx/wtdcx'
 			});
 		},
-		test() {
-			/*
-			uni.showModal({
-				title: 'Hello'
-			});*/
-			uni.navigateTo({
-				url: '/pages/test/test'
-			});
-		},
 		downCallback(mescroll) {
 			//刷新
 			if (mescroll) {

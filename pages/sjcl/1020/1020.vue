@@ -13,10 +13,18 @@
 						<view style="font-weight:bold;">{{ o.ccbh }}</view>
 					</view>
 					<p class="wtdw">精度指标：{{ jdzb2 }}</p>
-					<p class="wtdw">制造厂家：{{ o.zzc }}</p>
+					<p class="wtdw">制造厂家：{{ o.zzc | formatZzcTextLength }}</p>
 					<p v-if="o.jdzt == 111" class="wtdw2">
 						检定员：
-						<text style="font-weight:bold;">{{ o.surname }}</text>
+						<text style="font-weight:bold;">{{ o.surname }}</text>						
+						<text style="padding-left: 35upx;">核验员：</text>
+						<text style="font-weight:bold;">{{ o.hyy }}</text>
+					</p>
+					<p v-if="o.jdzt == 111 && o.hyyj.length>0" class="wtdw2">						
+						<text style="color: #DD514C,font-weight:bold;">{{ o.hyyj }}</text>
+					</p>
+					<p v-if="o.jdzt == 111 && o.pzyj.length>0" class="wtdw2">
+						<text style="color: #DD514C,font-weight:bold;">{{ o.pzyj }}</text>
 					</p>
 				</view>
 			</view>
@@ -90,10 +98,13 @@ export default {
 		this.o.xhggbm = o.xhggbm;
 		this.o.xhggmc = o.xhggmc;
 
-		this.o.zzc = o.zzcnr;
+		this.o.zzc = o.zzc;
 		this.o.jdzt = o.jdzt;
 
 		this.o.surname = o.surname;
+this.o.hyy = o.hyy;
+this.o.hyyj = o.hyyj;
+this.o.pzyj = o.pzyj;
 
 		//水准仪  DS05 DSZ05 DS1 DSZ1 DS3 DSZ3
 		this.jdzb2 = 'DS3';
@@ -260,152 +271,6 @@ export default {
 </script>
 
 <style lang="scss">
-.wtdw2 {
-	font-size: 32upx;
-	color: #0088cc;
-}
-.fab-box {
-	position: absolute;
-	right: 50upx;
-	top: 50upx;
-	width: 90upx;
-	height: 90upx;
-	//position: fixed;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	z-index: 2;
-}
-
-.fab-box.fab {
-	z-index: 10;
-}
-
-.fab-circle {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	position: absolute;
-	width: 100upx;
-	height: 100upx;
-	background: whitesmoke;
-	//background: #3c3e49;
-	/* background: #5989b9; */
-	border-radius: 10%;
-	box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.2);
-	z-index: 11;
-}
-
-.fab-circle.left {
-	left: 0;
-}
-
-.fab-circle.right {
-	right: 0;
-}
-
-.fab-circle.top {
-	top: 0;
-}
-
-.fab-circle.bottom {
-	bottom: 0;
-}
-
-.fontsize {
-	color: dodgerblue;
-	font-size: 65upx;
-	transition: all 0.3s;
-	font-weight: bold;
-}
-.tj-item {
-	color: #75787d;
-	font-size: $font-sm + 2upx;
-	margin-left: 4px;
-}
-.list_items {
-	margin: 21upx;
-	background-color: #f8f8f8;
-	//margin-top:21upx;
-	border: 1px #dcdcdc solid;
-}
-.list-info {
-	//height: 210upx;
-	padding: 12upx 15upx;
-	//box-sizing: border-box;
-	display: flex;
-	width: 100%;
-	flex-direction: row;
-	align-items: center;
-	position: relative;
-	z-index: 1;
-	.portrait {
-		//margin-left: 21upx;
-		width: 108upx;
-		height: 108upx;
-		//border: 2upx solid lightgrey;
-		//border-radius: 30%;
-		//background-color: #8f8f94;
-	}
-	.content {
-		font-size: $font-base;
-		color: $font-color-dark;
-		margin-left: 20upx;
-		.xhgg {
-			font-size: 32upx;
-		}
-		.wtdw {
-			font-size: 26upx;
-			color: #8f8f94;
-		}
-		.wtdw2 {
-			font-weight: 400;
-			font-size: 26upx;
-			color: #8f8f94;
-		}
-		.notice {
-			font-size: 32upx;
-			color: #ff0000;
-		}
-	}
-}
-.bottom-btn {
-	position: fixed;
-	left: 30upx;
-	right: 30upx;
-	bottom: 16upx;
-	z-index: 95;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	width: 690upx;
-	height: 80upx;
-	font-size: 32upx;
-	color: #fff;
-	background-color: $base-color;
-	border-radius: 10upx;
-	box-shadow: 1px 2px 5px rgba(219, 63, 96, 0.4);
-}
-.fontsize2 {
-	color: #4c99e6;
-	font-size: 60upx;
-}
-.doc {
-	position: fixed;
-	left: 180upx;
-}
-.xls {
-	position: fixed;
-	right: 180upx;
-}
-.bottom-icon {
-	position: fixed;
-	left: 30upx;
-	right: 30upx;
-	bottom: 76upx;
-	z-index: 95;
-	display: flex;
-	width: 690upx;
-	height: 120upx;
-}
+@import './../sjcl.scss';
 </style>
+<style lang="scss"></style>

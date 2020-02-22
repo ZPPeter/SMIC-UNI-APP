@@ -8,7 +8,7 @@ import moment from 'moment';
 
 // 配置请求根域名
 fly.config.baseURL = config.apiDomain;
-fly.config.timeout = 30000; // 超时时间，为0时则无超时限制 
+fly.config.timeout = 30000; // 毫秒超时时间，为0时则无超时限制 
 //fly.config.params = {"maxResultCount":5,"skipCount":0};
 //console.log(fly.config);
 

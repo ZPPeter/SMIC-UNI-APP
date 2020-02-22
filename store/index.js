@@ -1,15 +1,13 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 Vue.use(Vuex)
-
+import config from '@/libs/common/config.js';
 import app from './modules/app';
 import user from './modules/user';
 import sjmx from './modules/sjmx';
 import sjcl from './modules/sjcl';
 import xtgl from './modules/xtgl';
 import notice from './modules/notice';
-import config from '@/libs/common/config.js';
-
 const store = new Vuex.Store({
 	state: {
 		hasLogin: false,
@@ -65,10 +63,15 @@ const store = new Vuex.Store({
 			uni.removeStorage({
 				key: 'userInfo'
 			});
-			uni.removeStorage({
-				key: 'ChartsData'
-			});
+			//uni.removeStorage({
+			//	key: 'ChartsData'
+			//});
 			uni.setStorageSync('token', null);
+			setTimeout(() => {
+				uni.navigateTo({
+					url: '/pages/login/login'
+				});
+			}, 200);
 		}
 	},
 	modules: {
@@ -80,5 +83,4 @@ const store = new Vuex.Store({
 		notice
 	}
 })
-
 export default store

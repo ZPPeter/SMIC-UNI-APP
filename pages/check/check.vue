@@ -82,10 +82,10 @@ export default {
 		// #ifdef APP-PLUS
 		plus.key.hideSoftKeybord(); //强制隐藏
 		// #endif
-		if (this.hasLogin) {
+		//if (this.hasLogin) {
 			this.wtdh = e.text;
 			meScroll.resetUpScroll();
-		} else this.$Router.push('/pages/login/login');
+		//} else this.$Router.push('/pages/login/login');
 	},
 	onNavigationBarButtonTap(e) {
 		this.hideModal();
@@ -218,7 +218,6 @@ export default {
 			} else errorCallback && errorCallback();
 		},
 		doScan() {
-			if (this.hasLogin) {
 				uni.scanCode({
 					onlyFromCamera: true,
 					success: function(res) {
@@ -226,7 +225,6 @@ export default {
 						console.log('条码内容：' + res.result);
 					}
 				});
-			} else this.$Router.push('/pages/login/login');
 		}
 	},
 	onLoad() {
@@ -249,22 +247,10 @@ export default {
 		//showHomeData.showData();
 	},
 	onShow() {
-		if (!this.hasLogin) {
-			this.$Router.push('/pages/login/login');
-		}
 		this.qjmcnames = this.$abp.utils.getRolesValue(this.userInfo.roles, this.userInfo.roleNames);
 		this.qjmcNames.length = 0; // this.qjmcNames = [];		
 		this.qjmcNames = this.qjmcNames.concat(this.$abp.utils.qjmcNames);
 		getApp().globalData.userInfoid = this.userInfo.id;
-		
-		if (uni.getSystemInfoSync().platform === 'android') {
-			var icon = plus.nativeObj.View.getViewById('LogoImg');
-			if (icon) {
-				setTimeout(function() {
-					icon.show();
-				}, 100);
-			}
-		}
 		//console.log(meScroll);
 		//console.log(this.qjmcNames.length);
 		this.lstlength = 0;

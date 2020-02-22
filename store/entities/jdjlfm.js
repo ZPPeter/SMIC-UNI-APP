@@ -34,7 +34,7 @@ export default class JDJLFM {
 				dwdz: '/',
 				qjmc: this.o.qjmc,
 				xhgg: this.o.xhggmc,
-				zzc: this.o.zzcnr,
+				zzc: this.o.zzc,
 				ccbh: this.o.ccbh,
 				jjwd: WQ[0],
 				qT05: WQ[1],

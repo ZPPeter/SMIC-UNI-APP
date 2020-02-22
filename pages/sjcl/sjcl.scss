@@ -4,10 +4,10 @@
 }
 .fab-box {
 	position: absolute;
-	right: 50upx;
-	top: 50upx;
-	width: 90upx;
-	height: 90upx;
+	right: 70upx;
+	top: 70upx;
+	width: 70upx;
+	height: 70upx;
 	//position: fixed;
 	display: flex;
 	justify-content: center;
@@ -111,16 +111,6 @@
 	color: #4c99e6;
 	font-size: 60upx;
 }
-.bottom-view {
-	position: fixed;
-	left: 30upx;
-	right: 30upx;
-	bottom: 16upx;
-	z-index: 95;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}
 .bottom-btn {
 	width: 500upx;
 	height: 80upx;
@@ -132,7 +122,7 @@
 }
 .doc {
 	position: fixed;
-	right: 180upx;
+	right: 210upx;
 }
 .xls {
 	position: fixed;
@@ -143,6 +133,54 @@
 	left: 30upx;
 	right: 30upx;
 	bottom: 76upx;
+	z-index: 95;
+	display: flex;
+	width: 690upx;
+	height: 120upx;
+}
+.fontsize3{
+	color: #DD514C;
+	font-size: 65upx;
+	transition: all 0.3s;
+}	
+.bottom-view {
+	position: fixed;
+	left: 30upx;
+	right: 30upx;
+	bottom: 16upx;
+	z-index: 95;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.bottom-btn2 {
+	width: 100%;
+	height: 80upx;
+	font-size: 32upx;
+	color: #fff;
+	background-color: $base-color;
+	border-radius: 10upx;
+	box-shadow: 1px 2px 5px rgba(219, 63, 96, 0.4);
+}
+.fontcolor2 {
+	color:#bcc1c8;
+}
+.fontcolor1{
+	color: $uni-color-primary;
+}
+.doc2 {
+	position: fixed;
+	right: 180upx;
+}
+.xls2 {
+	position: fixed;
+	left: 180upx;
+}
+.bottom-icon2 {
+	position: fixed;
+	left: 30upx;
+	right: 30upx;
+	bottom: 16upx;
 	z-index: 95;
 	display: flex;
 	width: 690upx;

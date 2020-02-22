@@ -2,7 +2,7 @@
 	<view class="list">
 		<view class="list_items" v-for="o in list" :key="o.id">
 			<view class="list-info" @tap="showDetails(o)">
-				<view class="qjmc"><image class="portrait" :src="getImg(o.zzcnr)"></image>
+				<view class="qjmc"><image class="portrait" :src="getImg(o.zzc)"></image>
 				<view>{{ o.qjmc }}</view>
 				</view>	
 				<view class="content">

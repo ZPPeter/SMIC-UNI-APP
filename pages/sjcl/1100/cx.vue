@@ -12,7 +12,7 @@
 						出厂编号：
 						<view style="font-weight:bold;">{{ o.ccbh }}</view>
 					</view>
-					<p class="wtdw">制造厂家：{{ o.zzc }}</p>
+					<p class="wtdw">制造厂家：{{ o.zzc | formatZzcTextLength }}</p>
 				</view>
 			</view>
 			<result-data v-if="res" :res="res"></result-data>
@@ -22,10 +22,11 @@
 			<text :class="[hasRight?'fontcolor1':'fontcolor2']" class="iconfont icon-zhongxinpingjuan fontsize"></text>
 			</view>	
 		</view>		
-		<view v-show="res" class="bottom-icon">
-			<view class="doc" @click="OpenDoc(o.qjmcbm,o.id)"><text class="iconfont icon-Word fontsize2"></text></view>			
-			<view class="xls" @click="OpenXls(o.qjmcbm,o.id)"><text class="iconfont icon-Excel1 fontsize2"></text></view>
-		</view>			
+		<view v-show="res" class="bottom-icon2">
+			<view class="doc2" @click="OpenDoc(o.qjmcbm,o.id)"><text class="iconfont icon-Word fontsize2"></text></view>			
+			<view class="xls2" @click="OpenXls(o.qjmcbm,o.id)"><text class="iconfont icon-Excel1 fontsize2"></text></view>
+		</view>
+		<vus-layer></vus-layer>
 	</view>
 </template>
 
@@ -69,7 +70,7 @@ export default {
 		this.o.xhggbm = o.xhggbm;
 		this.o.xhggmc = o.xhggmc;		
 		this.o.zzc = o.zzc;
-		this.o.jdzt = o.jdzt2;		
+		this.o.jdzt = o.jdzt;		
 		this.o.surname = o.surname;		
 		if (this.o.jdzt> 100) {
 			// 显示计算结果
@@ -98,18 +99,16 @@ export default {
 		Reset() {
 			if(!this.hasRight) return;
 			var _this = this;
-			uni.showModal({
-				title: '提示',
-				content: '确认重新检定该仪器？',
-				success: function(res) {
-					if (res.confirm) {
-						_this.DoReset();
-					} else if (res.cancel) {
-						//console.log('用户点击取消');
-					}
+			this.vusui.confirm(
+				'确认重新检定该仪器？',
+				function() {
+					_this.DoReset();
+				},
+				function() {
+					//console.log('取消操作');
 				}
-			});
-		},
+			);
+		},		
 		async DoReset() {
 			const res = await this.$store.dispatch({
 				type: 'sjcl/ResetJdzt',
@@ -147,141 +146,7 @@ export default {
 	}
 };
 </script>
-
 <style lang="scss">
-.wtdw2 {
-	font-size: 32upx;
-	color: #0088cc;
-}
-.tj-item {
-	color: #75787d;
-	font-size: $font-sm + 2upx;
-	margin-left: 4px;
-}
-.list_items {
-	margin: 21upx;
-	background-color: #f8f8f8;
-	//margin-top:21upx;
-	border: 1px #dcdcdc solid;
-}
-.list-info {
-	//height: 210upx;
-	padding: 12upx 15upx;
-	//box-sizing: border-box;
-	display: flex;
-	width: 100%;
-	flex-direction: row;
-	align-items: center;
-	position: relative;
-	z-index: 1;
-	.portrait {
-		//margin-left: 21upx;
-		width: 108upx;
-		height: 108upx;
-		//border: 2upx solid lightgrey;
-		//border-radius: 30%;
-		//background-color: #8f8f94;
-	}
-	.content {
-		font-size: $font-base;
-		color: $font-color-dark;
-		margin-left: 20upx;
-		.xhgg {
-			font-size: 32upx;
-		}
-		.wtdw {
-			font-size: 26upx;
-			color: #8f8f94;
-		}
-		.wtdw2 {
-			font-weight: 400;
-			font-size: 26upx;
-			color: #8f8f94;
-		}
-		.notice {
-			font-size: 32upx;
-			color: #ff0000;
-		}
-	}
-}
-.bottom-btn {
-	position: fixed;
-	left: 30upx;
-	right: 30upx;
-	bottom: 16upx;
-	z-index: 95;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	width: 690upx;
-	height: 80upx;
-	font-size: 32upx;
-	color: #fff;
-	background-color: $base-color;
-	border-radius: 10upx;
-	box-shadow: 1px 2px 5px rgba(219, 63, 96, 0.4);
-}
-.fontsize2{
-	color: #4c99e6;
-	font-size: 60upx;
-}
-.doc {
-	position: fixed;
-	left: 180upx;
-}
-.xls {
-	position: fixed;
-	right: 180upx;
-}
-.bottom-icon {
-	position: fixed;
-	left: 30upx;
-	right: 30upx;
-	bottom: 76upx;
-	z-index: 95;
-	display: flex;
-	width: 690upx;
-	height: 120upx;
-}
-
-.fab-box {
-	position: absolute;
-	right: 50upx;
-	top: 50upx;
-	width: 90upx;
-	height: 90upx;
-	display: flex;
-	justify-content: flex-start;
-	align-items: center;
-	z-index: 2;
-}
-
-.fab-box.fab {
-	z-index: 10;
-}
-.fab-circle {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	position: absolute;
-	width: 100upx;
-	height: 100upx;
-	background: whitesmoke;
-	//background: #3c3e49;
-	/* background: #5989b9; */
-	border-radius: 10%;
-	box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.2);
-	z-index: 11;
-}
-.fontsize {	
-	font-size: 65upx;
-	transition: all 0.3s;
-	//font-weight: bold;
-}
-.fontcolor2 {
-	color:#bcc1c8;
-}
-.fontcolor1{
-	color: $uni-color-primary;
-}
+@import './../sjcl.scss';
 </style>
+<style lang="scss"></style>

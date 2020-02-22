@@ -2,6 +2,10 @@
 	"pages": [ //pages数组中第一项表示应用启动页,
 		{
 			"path": "pages/main/main",
+			"name": "main",
+			"meta":{
+				"title":"首页"
+			},
 			"style": {
 				"navigationBarTitleText": "全站仪检定数据处理系统",
 				// #ifdef MP
@@ -52,6 +56,7 @@
 		},
 		{
 			"path": "pages/verification/verification",
+			"name": "verification",
 			"style": {
 				"navigationBarTitleText": "仪器检定",
 				"disableScroll": true,
@@ -84,6 +89,7 @@
 			}
 		}, {
 			"path": "pages/check/check",
+			"name": "check",
 			"style": {
 				"navigationBarTitleText": "仪器检定-核验",
 				"app-plus": {
@@ -115,6 +121,7 @@
 			}
 		}, {
 			"path": "pages/approve/approve",
+			"name": "approve",
 			"style": {
 				"navigationBarTitleText": "检定结果批准",
 				// "enablePullDownRefresh": true, //下拉刷新 mescroll-uni 需要关闭这个
@@ -147,34 +154,8 @@
 			}
 		},
 		{
-			"path": "pages/login/login",
-			"style": {
-				"navigationBarTitleText": "",
-				"navigationStyle": "custom",
-				"app-plus": {
-					"bounce": "none",
-					"titleNView": false,
-					"animationType": "none"
-				}
-			}
-		},
-		{
-			"path": "pages/component/ucharts/ucharts",
-			"style": {
-				"navigationBarTitleText": "",
-				"navigationStyle": "custom",
-				"app-plus": {
-					"bounce": "none", //关闭窗口回弹效果
-					"softinput": { // 固定选项卡（tabbar）至底部不被软键盘弹起,注意仅打包后生效
-						"mode": "adjustPan"
-					},
-					"titleNView": false,
-					"animationType": "slide-in-bottom"
-				}
-			}
-		},
-		{
 			"path": "pages/user/user",
+			"name": "user",
 			"style": {
 				"navigationBarTitleText": "我的",
 				// #ifdef MP
@@ -211,7 +192,35 @@
 					}
 				}
 			}
-		}, {
+		},
+		{
+			"path": "pages/login/login",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom",
+				"app-plus": {
+					"bounce": "none",
+					"titleNView": false,
+					"animationType": "none"
+				}
+			}
+		},
+		{
+			"path": "pages/component/ucharts/ucharts",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom",
+				"app-plus": {
+					"bounce": "none", //关闭窗口回弹效果
+					"softinput": { // 固定选项卡（tabbar）至底部不被软键盘弹起,注意仅打包后生效
+						"mode": "adjustPan"
+					},
+					"titleNView": false,
+					"animationType": "slide-in-bottom"
+				}
+			}
+		},
+		 {
 			"path": "pages/test/test",
 			"style": {
 				"navigationBarTitleText": "测试"

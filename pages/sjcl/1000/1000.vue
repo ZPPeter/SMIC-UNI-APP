@@ -12,12 +12,20 @@
 						出厂编号：
 						<view style="font-weight:bold;">{{ o.ccbh }}</view>
 					</view>
-					<p class="wtdw">制造厂家：{{ o.zzc }}</p>
+					<p class="wtdw">制造厂家：{{ o.zzc | formatZzcTextLength }}</p>
 					<p class="wtdw" v-show="o.jbcs">精度指标：{{ o.jbcs.cjjd }}″，{{ dsz }}，{{ o.jbcs.bcjda }}+{{ o.jbcs.bcjdb }}</p>
 					<p class="notice" v-show="!o.jbcs">请设置精度指标!!!</p>
 					<p v-if="o.jdzt == 111" class="wtdw2">
 						检定员：
-						<text style="font-weight:bold;">{{ o.surname }}</text>
+						<text style="font-weight:bold;">{{ o.surname }}</text>						
+						<text style="padding-left: 35upx;">核验员：</text>
+						<text style="font-weight:bold;">{{ o.hyy }}</text>
+					</p>
+					<p v-if="o.jdzt == 111 && o.hyyj.length>0" class="wtdw2">						
+						<text style="color: #DD514C,font-weight:bold;">{{ o.hyyj }}</text>
+					</p>
+					<p v-if="o.jdzt == 111 && o.pzyj.length>0" class="wtdw2">
+						<text style="color: #DD514C,font-weight:bold;">{{ o.pzyj }}</text>
 					</p>
 				</view>
 			</view>
@@ -67,7 +75,7 @@ export default {
 			yqjchrq: "2019-05-08T08:46:44"
 			dwmc: "中建筑港集团有限公司"
 			xhggmc: "TS09plus"
-			zzcnr: "瑞士徕卡"
+			zzc: "瑞士徕卡"
 			ccbh: "1401505"
 			jdzt: 100
 			bzsm: ""
@@ -106,9 +114,13 @@ export default {
 		this.o.qjmcbm = o.qjmcbm;
 		this.o.xhggbm = o.xhggbm;
 		this.o.xhggmc = o.xhggmc;
-		this.o.zzc = o.zzcnr;
+		this.o.zzc = o.zzc;
 		this.o.jdzt = o.jdzt;
 		this.o.surname = o.surname;
+
+this.o.hyy = o.hyy;
+this.o.hyyj = o.hyyj;
+this.o.pzyj = o.pzyj;
 
 		this.o.jbcs.bcjda = '';
 		this.o.jbcs.bcjdb = '';

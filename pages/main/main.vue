@@ -54,23 +54,22 @@ export default {
 	// #ifndef MP
 	onNavigationBarSearchInputClicked() {
 		//console.log('Clicked');
-		if (this.hasLogin) {
+		//if (this.hasLogin) {
 			this.$Router.push('/pages/wtdcx/wtdcx');
-		} else this.$Router.push('/pages/login/login');
+		//} else this.$Router.push('/pages/login/login');
 	},
 	onNavigationBarSearchInputConfirmed(e) {
 		// 内容顶起 乱
-		if (this.hasLogin) {
+		//if (this.hasLogin) {
 			//console.log(e.text);
 			//this.$Router.push('/pages/wtd/wtd');
 			// 带查询参数，变成 /router1?filterText=private
 			this.$Router.push({ path: '/pages/wtdcx/wtdcx', query: { filterText: e.text } });
-		} else this.$Router.push('/pages/login/login');
+		//} else this.$Router.push('/pages/login/login');
 	},
 	onNavigationBarButtonTap(e) {
 		// 二维码扫描
 		if (!this.hasLogin) this.$Router.push('/pages/login/login');
-		else {
 			const index = e.index;
 			//console.log(index);
 			if (index === 1) {
@@ -98,8 +97,7 @@ export default {
 			//	url: '/pages/notice/notice'
 			//});
 			//this.navTo('/pages/wtd/wtd');
-			//}
-		}
+			//}		
 	},
 	// #endif
 	methods: {
@@ -125,15 +123,15 @@ export default {
 			return this.$store.state.latestData.Data || [0, 0, 0, 0, 0, 0, 1, 0, 0];
 		},
 		GotoLogo() {
-			if (this.hasLogin) this.$Router.push('/pages/user/userinfo');
-			else this.$Router.push('/pages/login/login');
+			//if (this.hasLogin) 
+			this.$Router.push('/pages/user/userinfo');
+			//else this.$Router.push('/pages/login/login');
 		},
 		navTo(url) {
 			this.$Router.push(url); // 拦截未登录路由
 			return;
 		},
 		doScan() {
-			if (this.hasLogin) {
 				uni.scanCode({
 					onlyFromCamera: true,
 					success: function(res) {
@@ -141,7 +139,6 @@ export default {
 						console.log('条码内容：' + res.result);
 					}
 				});
-			} else this.$Router.push('/pages/login/login');
 		}
 	},
 	onLoad: async function(e) {
@@ -168,7 +165,8 @@ export default {
 		*/
 
 		// 只加载一次
-		if (!this.hasLogin) this.$Router.push('/pages/login/login');
+		if (!this.hasLogin) 
+		this.$Router.push('/pages/login/login');
 
 		/*
 		uni.showModal({
@@ -203,15 +201,12 @@ export default {
 		}, 500);
 	},
 	onShow() {
-		if (uni.getSystemInfoSync().platform === 'android') {
-			var icon = plus.nativeObj.View.getViewById('LogoImg');
-			if (icon) {
-				setTimeout(function() {
-					icon.show();
-					plus.key.hideSoftKeybord();
-				}, 100);
-			}
-		}
+	},
+	onHide() {
+		//console.log('onHide');
+	},
+	onUnload() {
+		//console.log('onUnload');// reLaunch tabbar执行
 	}
 };
 </script>

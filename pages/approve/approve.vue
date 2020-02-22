@@ -4,12 +4,17 @@
 			<div style="background-color: red;width:4px;height:12px;vertical-align: bottom;"></div>
 			<view class="tj-item">您有{{ lstlength }}台仪器待批准。</view>
 		</view>
-		<mescroll-uni @down="downCallback" @up="upCallback"><pd-list :list="pdList" :lstlength="lstlength"></pd-list></mescroll-uni>
+		<mescroll-uni @init="mescrollInit" @down="downCallback" @up="upCallback" :down="downOption" :up="upOption">
+			<pd-list :list="pdList" :lstlength="lstlength"></pd-list>
+		</mescroll-uni>
 		<button v-show="lstlength" class="btnrightbottom" @tap="showModal" data-target="RadioModal">全部批准</button>
 		<view class="cu-modal" :class="modalName == 'RadioModal' ? 'show' : ''" @tap="hideModal">
 			<view class="cu-dialog" @tap.stop="">
 				<view style="height: 24upx;"></view>
-				<view style="display: flex; text-align: left; margin-left: 12px;align-items: center;"><icon type="warn" size="26" style="margin-right: 6px;"/>确认所有仪器全部批准通过？</view>
+				<view style="display: flex; text-align: left; margin-left: 12px;align-items: center;">
+					<icon type="warn" size="26" style="margin-right: 6px;" />
+					确认所有仪器全部批准通过？
+				</view>
 				<view style="height: 36upx;"></view>
 				<view class="cu-bar bg-white justify-end">
 					<view class="action">
@@ -19,6 +24,7 @@
 				</view>
 			</view>
 		</view>
+		<vus-layer></vus-layer>
 	</view>
 </template>
 
@@ -46,7 +52,13 @@ export default {
 			query: '',
 			wtdh: '',
 			modalName: null,
-			pdList: []
+			pdList: [],
+			downOption: {
+				auto: false
+			},
+			upOption: {
+				auto: false
+			}
 		};
 	},
 	computed: mapState(['hasLogin', 'userInfo']),
@@ -56,10 +68,10 @@ export default {
 		// #ifdef APP-PLUS
 		plus.key.hideSoftKeybord(); //强制隐藏
 		// #endif
-		if (this.hasLogin) {
-			this.wtdh = e.text;
-			meScroll.resetUpScroll();
-		} else this.$Router.push('/pages/login/login');
+		//if (this.hasLogin) {
+		this.wtdh = e.text;
+		meScroll.resetUpScroll();
+		//}
 	},
 	onNavigationBarButtonTap(e) {
 		const index = e.index;
@@ -126,11 +138,11 @@ export default {
 		hideModal(e) {
 			this.modalName = null;
 		},
+		mescrollInit(mescroll){
+			//console.log(mescroll);
+			meScroll = mescroll;
+		},
 		downCallback(mescroll) {
-			//下拉刷新
-			if (mescroll) {
-				meScroll = mescroll;
-			}
 			mescroll.resetUpScroll();
 		},
 		upCallback(mescroll) {
@@ -196,15 +208,13 @@ export default {
 			} else errorCallback && errorCallback();
 		},
 		doScan() {
-			if (this.hasLogin) {
-				uni.scanCode({
-					onlyFromCamera: true,
-					success: function(res) {
-						console.log('条码类型：' + res.scanType);
-						console.log('条码内容：' + res.result);
-					}
-				});
-			} else this.$Router.push('/pages/login/login');
+			uni.scanCode({
+				onlyFromCamera: true,
+				success: function(res) {
+					console.log('条码类型：' + res.scanType);
+					console.log('条码内容：' + res.result);
+				}
+			});
 		}
 	},
 	onLoad() {
@@ -227,19 +237,33 @@ export default {
 		//showHomeData.showData();
 	},
 	onShow() {
-		if (uni.getSystemInfoSync().platform === 'android') {
-			var icon = plus.nativeObj.View.getViewById('LogoImg');
-			if (icon) {
-				setTimeout(function() {
-					icon.show();
-				}, 100);
-			}
-		}
-		if (!this.hasLogin) {
-			this.$Router.push('/pages/login/login');
-		} else {
-			getApp().globalData.userInfoid = this.userInfo.id;
-			if (!this.userInfo.roles.includes('批准')) {
+		getApp().globalData.userInfoid = this.userInfo.id;
+		//console.log(this.userInfo.roles);
+		//console.log(this.userInfo.roles.includes('批准'));
+		if (!this.userInfo.roles.includes('批准')) {
+			this.vusui.confirm(
+				'您没有证书批准权限，无法查看该项列表！',
+				{
+					icon: 5, //-1/0-5
+					button: ['确定'],
+					contentAlign: 'left',
+					shade: 0.7,
+					time: 3000
+				},
+				function() {
+					//Yes
+					uni.switchTab({
+						url: '/pages/main/main'
+					});
+				},
+				function() {
+					//自动关闭
+					uni.switchTab({
+						url: '/pages/main/main'
+					});
+				}
+			);
+			/*
 				uni.showModal({
 					title: '提示',
 					content: '您没有批准权限！',
@@ -252,8 +276,10 @@ export default {
 						}
 					}
 				});
-			}
+			*/
+		} else {
 			//this.downCallback(meScroll);
+			meScroll.resetUpScroll();
 		}
 	}
 };

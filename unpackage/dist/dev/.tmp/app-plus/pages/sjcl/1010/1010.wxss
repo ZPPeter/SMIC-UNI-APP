@@ -37,10 +37,10 @@
 }
 .fab-box {
   position: absolute;
-  right: 50rpx;
-  top: 50rpx;
-  width: 90rpx;
-  height: 90rpx;
+  right: 70rpx;
+  top: 70rpx;
+  width: 70rpx;
+  height: 70rpx;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -148,6 +148,41 @@
   color: #4c99e6;
   font-size: 60rpx;
 }
+.bottom-btn {
+  width: 500rpx;
+  height: 80rpx;
+  font-size: 32rpx;
+  color: #fff;
+  background-color: #fa436a;
+  border-radius: 10rpx;
+  box-shadow: 1px 2px 5px rgba(219, 63, 96, 0.4);
+}
+.doc {
+  position: fixed;
+  right: 210rpx;
+}
+.xls {
+  position: fixed;
+  right: 70rpx;
+}
+.bottom-icon {
+  position: fixed;
+  left: 30rpx;
+  right: 30rpx;
+  bottom: 76rpx;
+  z-index: 95;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  width: 690rpx;
+  height: 120rpx;
+}
+.fontsize3 {
+  color: #DD514C;
+  font-size: 65rpx;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
 .bottom-view {
   position: fixed;
   left: 30rpx;
@@ -164,8 +199,8 @@
   -webkit-justify-content: center;
           justify-content: center;
 }
-.bottom-btn {
-  width: 500rpx;
+.bottom-btn2 {
+  width: 100%;
   height: 80rpx;
   font-size: 32rpx;
   color: #fff;
@@ -173,19 +208,25 @@
   border-radius: 10rpx;
   box-shadow: 1px 2px 5px rgba(219, 63, 96, 0.4);
 }
-.doc {
+.fontcolor2 {
+  color: #bcc1c8;
+}
+.fontcolor1 {
+  color: #fa436a;
+}
+.doc2 {
   position: fixed;
   right: 180rpx;
 }
-.xls {
+.xls2 {
   position: fixed;
-  right: 70rpx;
+  left: 180rpx;
 }
-.bottom-icon {
+.bottom-icon2 {
   position: fixed;
   left: 30rpx;
   right: 30rpx;
-  bottom: 76rpx;
+  bottom: 16rpx;
   z-index: 95;
   display: -webkit-box;
   display: -webkit-flex;

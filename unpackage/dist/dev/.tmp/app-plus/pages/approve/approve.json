@@ -25,6 +25,7 @@
   },
   "animationType": "slide-in-bottom",
   "usingComponents": {
+    "vus-layer": "/components/vusui-app-layer/vusui-layer",
     "mescroll-uni": "/components/mescroll-uni/mescroll-uni",
     "pd-list": "/pages/approve/veri_list"
   }

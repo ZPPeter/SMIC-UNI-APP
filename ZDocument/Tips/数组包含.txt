@@ -1,0 +1,4 @@
+Array.prototype.in_array = function(e) {
+	var r = new RegExp(',' + e + ',');
+	return (r.test(',' + this.join(this.S) + ','));
+};
