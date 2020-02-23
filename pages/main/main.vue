@@ -55,36 +55,30 @@ export default {
 	onNavigationBarSearchInputClicked() {
 		//console.log('Clicked');
 		//if (this.hasLogin) {
-			this.$Router.push('/pages/wtdcx/wtdcx');
+		this.$Router.push('/pages/wtdcx/wtdcx');
 		//} else this.$Router.push('/pages/login/login');
 	},
 	onNavigationBarSearchInputConfirmed(e) {
 		// 内容顶起 乱
 		//if (this.hasLogin) {
-			//console.log(e.text);
-			//this.$Router.push('/pages/wtd/wtd');
-			// 带查询参数，变成 /router1?filterText=private
-			this.$Router.push({ path: '/pages/wtdcx/wtdcx', query: { filterText: e.text } });
+		//console.log(e.text);
+		//this.$Router.push('/pages/wtd/wtd');
+		// 带查询参数，变成 /router1?filterText=private
+		this.$Router.push({ path: '/pages/wtdcx/wtdcx', query: { filterText: e.text } });
 		//} else this.$Router.push('/pages/login/login');
 	},
 	onNavigationBarButtonTap(e) {
 		// 二维码扫描
 		if (!this.hasLogin) this.$Router.push('/pages/login/login');
-			const index = e.index;
-			//console.log(index);
-			if (index === 1) {
-				//this.navTo('/pages/test/test');
-				uni.scanCode({
-					onlyFromCamera: true,
-					success: function(res) {
-						console.log('条码类型：' + res.scanType);
-						console.log('条码内容：' + res.result);
-					}
-				});
-			}
-			if (index === 2) {
-				this.$Router.push('/pages/zhcx/zhcx');
-			}
+		const index = e.index;
+		//console.log(index);
+		if (index === 1) {
+			this.doScan();
+		}
+		if (index === 2) {
+			this.$Router.push('/pages/zhcx/zhcx');
+		}
+		/*
 			// #ifdef APP-PLUS
 			const pages = getCurrentPages();
 			const page = pages[pages.length - 1];
@@ -93,11 +87,7 @@ export default {
 				index
 			});
 			// #endif
-			//uni.navigateTo({
-			//	url: '/pages/notice/notice'
-			//});
-			//this.navTo('/pages/wtd/wtd');
-			//}		
+			*/
 	},
 	// #endif
 	methods: {
@@ -123,7 +113,7 @@ export default {
 			return this.$store.state.latestData.Data || [0, 0, 0, 0, 0, 0, 1, 0, 0];
 		},
 		GotoLogo() {
-			//if (this.hasLogin) 
+			//if (this.hasLogin)
 			this.$Router.push('/pages/user/userinfo');
 			//else this.$Router.push('/pages/login/login');
 		},
@@ -131,14 +121,26 @@ export default {
 			this.$Router.push(url); // 拦截未登录路由
 			return;
 		},
+		showDetails(id){ // wtd id
+			uni.navigateTo({
+				url: '/pages/wtdcx/wtd_scan_details?id=' + id
+			});
+		},
 		doScan() {
-				uni.scanCode({
-					onlyFromCamera: true,
-					success: function(res) {
-						console.log('条码类型：' + res.scanType);
-						console.log('条码内容：' + res.result);
-					}
-				});
+			this.showDetails(1000028337);
+			return;
+			var _this = this;
+			uni.scanCode({
+				onlyFromCamera: true,
+				success: function(res) {
+					//console.log('条码类型：' + res.scanType);
+					//console.log('条码内容：' + res.result);
+					//uni.showToast({
+					//	title: res.result
+					//});
+					_this.showDetails(res.result);
+				}
+			});
 		}
 	},
 	onLoad: async function(e) {
@@ -165,8 +167,7 @@ export default {
 		*/
 
 		// 只加载一次
-		if (!this.hasLogin) 
-		this.$Router.push('/pages/login/login');
+		if (!this.hasLogin) this.$Router.push('/pages/login/login');
 
 		/*
 		uni.showModal({
@@ -200,8 +201,7 @@ export default {
 			this.gTime = new Date().Format(' hh:mm:ss'); // new Date().Format("yyyy年MM月dd日 hh:mm:ss");
 		}, 500);
 	},
-	onShow() {
-	},
+	onShow() {},
 	onHide() {
 		//console.log('onHide');
 	},

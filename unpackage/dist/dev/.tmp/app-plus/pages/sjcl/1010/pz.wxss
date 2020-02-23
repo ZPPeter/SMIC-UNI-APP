@@ -31,6 +31,9 @@
 /* 边框颜色 */
 /* 图片加载中颜色 */
 /* 行为相关颜色 */
+checkbox {
+  color: #FFCC33;
+}
 .wtdw2 {
   font-size: 32rpx;
   color: #0088cc;

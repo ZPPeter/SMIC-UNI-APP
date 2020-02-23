@@ -84,8 +84,7 @@ https://www.cnblogs.com/adalovelacer/archive/2019/02/08/abp-big-project-2-read-a
 Pdf 生成 / 电子签名
 
 ======================================================================================================
-.NET Core 3.1
-======================================================================================================
+
 服务器宕机！？ - 插件？？？
 .net core host 内存占用!!!
 // 超时?缓存？
@@ -96,7 +95,10 @@ https://www.cnblogs.com/xiashengwang/p/8581104.html
 config.taskInfo
 PC 证书签名在证书打印模块 - JDZT：222->300
 编辑权限参考 Ant / ele / VusUI
-logo 图标隐藏 观察
+logo 图标隐藏 观察:不稳定就改为系统Icon
+蓝牙：全站仪模块可用，下一步加入
+NFC电子标签用于设备管理
+是否缴费发货提货交证属于收发模块，本系统是检定模块
 --------------------------------------------
 https://www.cnblogs.com/lonelyxmas/p/9091867.html
 https://www.cnblogs.com/jearay/p/6248351.html
@@ -113,4 +115,4 @@ https://blog.csdn.net/qq_36051316/article/details/83054446
 .net core 内存泄漏 调试
 死锁错误原因
 
-
+.NET Core 3.1

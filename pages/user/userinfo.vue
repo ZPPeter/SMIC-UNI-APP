@@ -75,7 +75,7 @@ export default {
 		...mapState(['userInfo'])
 	},
 	onLoad() {
-		this.CheckUserSign();		
+		this.CheckUserSign();
 		//获得Canvas的上下文
 		//thi.SetCanvascontent();
 		_this = this;
@@ -83,8 +83,17 @@ export default {
 	onShow() {
 		//console.log(this.userInfo.portrait);
 	},
+	onBackPress() {},
+	onUnload() {
+		let icon = plus.nativeObj.View.getViewById('LogoImg');
+		if (icon) {
+			setTimeout(function() {
+				icon.show();
+			}, 100);
+		}
+	},
 	methods: {
-		SetCanvascontent(){
+		SetCanvascontent() {
 			content = wx.createCanvasContext('firstCanvas');
 			//设置线的颜色
 			content.setStrokeStyle('#000');
@@ -127,8 +136,8 @@ export default {
 		uploadFile(tempFilePath) {
 			// 上传到服务器
 			uni.showLoading({
-				title:'正在上传...'
-			})
+				title: '正在上传...'
+			});
 			const uploadTask = uni.uploadFile({
 				url: config.uploadSign,
 				filePath: tempFilePath,
@@ -144,8 +153,8 @@ export default {
 					_this.hideModal(); //_this.userSign = '_doc/logo/sign.png';
 					uni.hideLoading();
 					_this.vusui.msg('签名设置完毕!', {
-					                icon: 0, //0-5
-					})
+						icon: 0 //0-5
+					});
 					/*
 					uni.showToast({
 						icon: 'success',
@@ -156,8 +165,8 @@ export default {
 					//console.log(err);
 					uni.hideLoading();
 					_this.vusui.msg('签名上传失败！', {
-					                icon: 3, //0-5
-					})
+						icon: 3 //0-5
+					});
 					/*uni.showToast({
 						icon: 'none',
 						title: '签名上传失败！'//err.errMsg
@@ -374,7 +383,7 @@ canvas {
 	display: flex;
 	position: absolute;
 	bottom: calc((100vh - 140upx) / 2);
-	left: -30upx;
+	left: -50upx; //-30
 	transform: rotate(270deg);
 	background-color: red;
 	.button {

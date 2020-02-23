@@ -238,7 +238,7 @@ this.o.pzyj = o.pzyj;
 			return this.$moment(item).format('YYYY.MM.DD HH:mm:ss');
 		},
 		getImg(zzc) {
-			return '/static/ins/1040/default.jpg';
+			return '/static/ins/' + this.o.qjmcbm + '/default.jpg';
 		},
 		doSetting(o) {
 			//console.log(JSON.stringify(o));

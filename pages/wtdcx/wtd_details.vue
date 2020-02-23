@@ -3,45 +3,54 @@
 		<h3 class="wtdh">委托单号：{{ wtdh }}</h3>
 		<p class="wtdw2">委托单位：{{ wtdw }}</p>
 		<p class="wtdw2">委托日期：{{ wtrq }}</p>
+		<p class="wtdw2" :class="{ jdqx2: jdqx1(yqjcrq, wtdzt) }">要求检出日期：{{ yqjcrq }}</p>
+		<view class="wtdzt" v-if="jdqx1(yqjcrq, wtdzt)"><icon type="warn" size="52" /></view>
+		<view class="wtdzt" v-else><icon :type="wtdztIcon" size="52" /></view>
+
 		<view class="list_items" v-for="o in list" :key="o.id">
 			<view class="list-info" @tap="showDetails(o)">
-				<view class="qjmc"><image class="portrait" :src="getImg(o.zzc)"></image>
-				<view>{{ o.qjmc }}</view>
+				<view class="qjmc">
+					<image class="portrait" :src="getImg(o.zzc)"></image>
+					<view>{{ o.qjmc }}</view>
 				</view>
 				<view class="content">
 					<view>
 						<h4 class="xhgg">{{ o.xhggmc }} / {{ o.ccbh }}</h4>
 					</view>
 					<p class="wtdw">证书编号：{{ o.zsbh }}</p>
-					<view class="wtdw" v-if="o.jdzt != '222'">
+					<view class="wtdw" v-if="o.jdzt && o.jdzt != '222'">
 						<p class="wtdw" :class="{ jdqx1: jdqx(o.yqjcrq, o.jwrq) }">要求检出日期：{{ format2(o.yqjcrq) }}</p>
 					</view>
 					<p class="wtdw" v-else>检完日期：{{ getJwrq(o.jwrq) }}</p>
-					<p class="wtdw">检定员：{{ getJdy(o.jdy) }}<text style="padding-left: 50upx;">核验员:</text>{{ getJdy(o.hyy) }}</p>
-					
+					<p class="wtdw">
+						检定员：{{ getJdy(o.jdy) }}
+						<text style="padding-left: 50upx;">核验员:</text>
+						{{ getJdy(o.hyy) }}
+					</p>
+
 					<p class="font-seal0">{{ jdzt(o.jdzt) }}</p>
-					<p><view v-if="jdqx(o.yqjcrq) && o.jdzt != '222'" class="font-seal">已超期</view></p>
-					
-					<p v-if="o.jdzt == '100' " class="triangle-topright add_wtd"></p>
-					<p v-else-if="o.jdzt == '222'" class="triangle-topright over_wtd"></p>
+					<p><view v-if="o.jdzt && jdqx(o.yqjcrq) && o.jdzt != '222'" class="font-seal">已超期</view></p>
+
+					<p v-if="o.jdzt == '100'" class="triangle-topright add_wtd"></p>
+					<p v-else-if="!o.jdzt || o.jdzt == '222'" class="triangle-topright over_wtd"></p>
 					<p v-else class="triangle-topright working_wtd"></p>
-					
 				</view>
 			</view>
 		</view>
 	</view>
 </template>
-
 <script>
-	import utils from '@/libs/common/utils.js';
+import utils from '@/libs/common/utils.js';
 export default {
 	data() {
 		return {
 			isActive: true,
-			id:'',
+			id: '',
 			wtdh: '',
 			wtdw: '',
 			wtrq: '',
+			wtdzt: '',
+			yqjcrq: '',
 			list: ''
 		};
 	},
@@ -61,16 +70,28 @@ export default {
 		//console.log(option);
 		this.id = option.id;
 		this.ListDetail(option.id);
-		this.wtdh = option.wtdh;
-		this.wtdw = option.wtdw;
-		this.wtrq = this.format2(option.wtrq);
+		//this.wtdh = option.wtdh;
+		//this.wtdw = option.wtdw;
+		//this.wtrq = this.format2(option.wtrq);
 	},
 	onShow() {
 		let pages = getCurrentPages();
-		let currPage = pages[pages.length-1];
-		if(1==currPage.data.doReset){			
+		let currPage = pages[pages.length - 1];
+		if (1 == currPage.data.doReset) {
 			this.ListDetail(this.id);
 			uni.hideLoading();
+		}
+	},
+	computed: {
+		wtdztIcon: {
+			get() {
+				let o = this.wtdzt;
+				if (!o) return 'info';
+				if (o == '登记') return 'info';
+				if (o == '在检') return 'waiting';
+				if (o == '检完') return 'success';
+			}
+			//set() {}
 		}
 	},
 	methods: {
@@ -82,42 +103,51 @@ export default {
 			});
 			this.list = res;
 			if (this.list.length > 0) {
-				//this.wtdh = res[0].送检单号;
-				//this.wtdw = res[0].单位名称;
-				//this.wtrq = this.format2(res[0].送检日期);
+				this.wtdh = res[0].wtdh;
+				this.wtdw = res[0].wtdw;
+				this.wtdzt = res[0].wtdzt;
+				this.wtrq = this.format2(res[0].djrq);
+				this.yqjcrq = this.format2(res[0].yqjcrq);
 			}
 			//console.log(JSON.stringify(res));
-		},		
-		showDetails(o){
+		},
+		showDetails(o) {
 			//console.log(o);
 			let bm = o.qjmcbm;
-			if(o.jdzt>100)
-			uni.navigateTo({
-				url: '/pages/sjcl/'+bm+'/cx?o=' +  JSON.stringify(o)
-			});
-			//url: '/pages/sjcl/sorry?o=' +  JSON.stringify(o)
+			if (o.jdzt > 100)
+				uni.navigateTo({
+					url: '/pages/sjcl/' + bm + '/cx?o=' + JSON.stringify(o)
+				});
 		},
 		format(item) {
 			//return new Date(item).Format('yyyy.MM.dd hh:mm:ss');
-			return this.$moment(item).format('YYYY.MM.DD HH:mm:ss');
+			return this.$moment(item).format('YYYY-MM-DD HH:mm:ss');
 		},
 		format2(item) {
 			//return new Date(item).Format('yyyy.MM.dd hh:mm:ss');
-			return this.$moment(item).format('YYYY.MM.DD');
+			return this.$moment(item).format('YYYY-MM-DD');
 		},
-		getJdy(o){
-			if(o)
-				return o;
-			else
-				return '-';
+		getJdy(o) {
+			if (o) return o;
+			else return '-';
+		},
+		jdqx1(item, wtdzt) {
+			if (!item) return;
+			if (wtdzt == '检完') return false;
+			//console.log(item);
+			if (this.$moment().isBefore(item)) {
+				return false;
+			} else {
+				return true; //超期
+			}
 		},
 		jdqx(item) {
 			//console.log(this.$moment('1972-1-1').isAfter(item2));
 			//if (this.$moment().isBefore(item) || this.$moment('1972-1-1').isAfter(item2)) {
 			if (this.$moment().isBefore(item)) {
-				return false; //'jdqx0';
+				return false; //超期
 			} else {
-				return true; //'jdqx1';
+				return true;
 			}
 		},
 		jdzt(zt2) {
@@ -144,6 +174,11 @@ export default {
 }
 .wtdw2 {
 	padding-left: 30upx;
+}
+.jdqx2 {
+	color: #e54d42;
+	font-weight: 600;
+	text-decoration: line-through;
 }
 .list {
 	padding-top: 40upx;
@@ -207,11 +242,14 @@ export default {
 	align-items: center;
 	z-index: 2;
 }
-
+.wtdzt {
+	position: fixed;
+	right: 50upx;
+	top: 50upx;
+}
 .fab-box.fab {
 	z-index: 10;
 }
-
 .fab-circle {
 	display: flex;
 	justify-content: center;

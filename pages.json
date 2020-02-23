@@ -931,7 +931,26 @@
 				}
 			}
 		}
-	],
+	    ,{
+            "path" : "pages/wtdcx/wtd_scan_details",
+            "style": {
+            		"navigationBarTitleText": "委托单详情",
+            		"app-plus": {
+            			"bounce": "none",
+            			"titleNView": {
+            				"buttons": [{
+            					"fontSrc": "/static/iconfont.ttf",
+            					"text": "\ue61d",
+            					"fontSize": "24",
+            					"color": "ghostwhite",
+            					"background": "rgba(0,0,0,0)"
+            				}]
+            			}
+            		}
+            	}
+            
+        }
+    ],
 	"tabBar": {
 		"color": "#7a7e83",
 		"selectedColor": "#0faeff",

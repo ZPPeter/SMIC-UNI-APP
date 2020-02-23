@@ -48,8 +48,8 @@ export default {
 			},
 			set() {}
 		},
-		halfWidth() {
-		   return uni.upx2px(750 / 2) + 'px';             
+		halfWidth() {
+		   return uni.upx2px(750 / 2) + 'px';             
 		}
 	},
 	components: {
@@ -155,7 +155,7 @@ export default {
 			return this.$moment(item).format('YYYY.MM.DD HH:mm:ss');
 		},
 		getImg(zzc) {
-			return '/static/ins/1030/default.jpg';
+			return '/static/ins/' + this.o.qjmcbm + '/default.jpg';
 		}		
 	}
 };

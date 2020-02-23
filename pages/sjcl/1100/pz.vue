@@ -175,7 +175,7 @@ export default {
 			return this.$moment(item).format('YYYY.MM.DD HH:mm:ss');
 		},
 		getImg(zzc) {
-			return '/static/ins/1030/default.jpg';
+			return '/static/ins/' + this.o.qjmcbm + '/default.jpg';
 		}
 	}
 };

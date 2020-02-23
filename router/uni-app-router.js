@@ -20,7 +20,7 @@ router.beforeEach((to, from, next) => {
 
 	//if (uni.getSystemInfoSync().platform === 'android') {
 	//console.log(to.name == null);
-	var icon = plus.nativeObj.View.getViewById('LogoImg');
+	let icon = plus.nativeObj.View.getViewById('LogoImg');
 	if (icon) {
 		if (to.name == null) {
 			//console.log('to.name == null hide icon');
@@ -40,8 +40,10 @@ router.beforeEach((to, from, next) => {
 				}, 100);
 			}
 		}
-	}else
-	console.log('getViewById_LogoImg Error');
+	} else {
+		// App Launch 之前取不到此对象
+		console.log('getViewById_LogoImg Error');
+	}
 
 	if (!store.state.hasLogin) {
 		next({

@@ -55,7 +55,8 @@
     "pages/sjcl/1020/hy",
     "pages/sjcl/1020/pz",
     "pages/sjcl/1020/cx",
-    "pages/sjcl/1020/set"
+    "pages/sjcl/1020/set",
+    "pages/wtdcx/wtd_scan_details"
   ],
   "window": {
     "navigationBarTextStyle": "white",

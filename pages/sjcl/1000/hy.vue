@@ -244,7 +244,7 @@ export default {
 			else if (~zzc.indexOf('索佳')) img = '4';
 			else if (~zzc.indexOf('南方')) img = '5';
 			else if (~zzc.indexOf('尼康')) img = '6';
-			return '/static/ins/1000/' + img + '.png';
+			return '/static/ins/' + this.o.qjmcbm + '/' + img + '.png';
 		}
 	}
 };

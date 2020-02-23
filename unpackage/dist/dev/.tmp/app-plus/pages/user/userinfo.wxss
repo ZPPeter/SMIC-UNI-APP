@@ -94,7 +94,7 @@ canvas {
   display: flex;
   position: absolute;
   bottom: calc((100vh - 140rpx) / 2);
-  left: -30rpx;
+  left: -50rpx;
   -webkit-transform: rotate(270deg);
           transform: rotate(270deg);
   background-color: red;

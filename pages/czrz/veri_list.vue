@@ -6,7 +6,7 @@
 					<p class="wtdw">操作者：<text style="font-weight:bold;">{{ o.surname }}</text></p>
 					<p class="wtdw">操作时间：{{ o.czsj | formatDateFilter }}</p>
 					<p class="wtdw">操作内容：{{ o.cznr }}</p>					
-					<p class="wtdw">备注说明：{{ o.bzsm | formatTextFilter}}</p>
+					<p class="wtdw">备注说明：{{ o.bzsm | formatTextNullFilter}}</p>
 				</view>
 			</view>
 		</view>

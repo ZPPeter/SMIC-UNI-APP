@@ -54,11 +54,10 @@ export default {
 		showDetails(o){
 			//console.log(o);
 			let bm = o.qjmcbm;
-			if(o.jdzt>100)
+			//if(o.jdzt>100)
 			uni.navigateTo({
-				url: '/pages/sjcl/'+bm+'/cx?o=' +  JSON.stringify(o)
+				url: '/pages/sjcl/'+bm+'/'+bm+'?o=' +  JSON.stringify(o)
 			});
-			//url: '/pages/sjcl/sorry?o=' +  JSON.stringify(o)
 		},
 		format(item) {
 			//return new Date(item).Format('yyyy.MM.dd hh:mm:ss');

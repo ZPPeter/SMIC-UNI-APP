@@ -63,16 +63,16 @@ export default {
 		showDetails(o){
 			//getApp().globalData.wtd_obj = o;
 			uni.navigateTo({
-				url: '/pages/wtdcx/wtd_details?id=' + o.id + '&wtdh=' + o.sjdid + '&wtdw=' + o.dwmc + '&wtrq=' + o.sjrq
+				url: '/pages/wtdcx/wtd_details?id=' + o.id // + '&wtdh=' + o.sjdid + '&wtdw=' + o.dwmc + '&wtrq=' + o.sjrq
 			});
 		},
 		format(item) {
 			//return new Date(item).Format('yyyy.MM.dd hh:mm:ss');
-			return this.$moment(item).format('YYYY.MM.DD HH:mm:ss');
+			return this.$moment(item).format('YYYY-MM-DD HH:mm:ss');
 		},
 		format2(item) {
 			//return new Date(item).Format('yyyy.MM.dd hh:mm:ss');
-			return this.$moment(item).format('YYYY.MM.DD');
+			return this.$moment(item).format('YYYY-MM-DD');
 		},
 		jdqx0(item) {
 			//console.log(this.$moment('1972-1-1').isAfter(item2));
@@ -86,15 +86,15 @@ export default {
 		jdqx(jdzt,item) {
 			//console.log(jdzt);
 			//console.log(item);
-			this.jcrqlbl = "检完日期：" + this.$moment(item).format('YYYY.MM.DD');
-			if(jdzt==='检定完毕'){
-				return false;
+			this.jcrqlbl = "检完日期：" + this.$moment(item).format('YYYY-MM-DD');
+			if(jdzt==='检完'){
+				return true;
 			}
 			if (this.$moment().isBefore(item)) {
 				return false;//'jdqx0';
 			} else {
-				this.jcrqlbl = "要求检出日期：" + this.$moment(item).format('YYYY.MM.DD');
-				return true;//'jdqx1';
+				this.jcrqlbl = "要求检出日期：" + this.$moment(item).format('YYYY-MM-DD');
+				return true;//检完
 			}
 		}
 	}

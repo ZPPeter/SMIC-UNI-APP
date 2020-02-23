@@ -11,7 +11,7 @@ export function formatDateFilter(time) {
 }
 
 // 空值过滤
-export function formatTextFilter(obj) {
+export function formatTextNullFilter(obj) {
 	if (typeof(obj) == "undefined" || obj == null || obj == "null") {
 		return "";
 	} else

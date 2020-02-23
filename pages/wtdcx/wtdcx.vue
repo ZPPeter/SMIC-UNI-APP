@@ -134,8 +134,7 @@ export default {
 			this.pagerequest.FilterText = this.q;
 			this.pagerequest.maxResultCount = pageSize;
 			this.pagerequest.skipCount = (pageNum - 1) * pageSize;
-			var _store = '';
-			_store = 'sjmx/ListWtds';
+			var _store = 'sjmx/ListWtds';
 			const res = await this.$store.dispatch({
 				type: _store,
 				data: this.pagerequest

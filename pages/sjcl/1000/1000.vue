@@ -19,7 +19,7 @@
 						检定员：
 						<text style="font-weight:bold;">{{ o.surname }}</text>						
 						<text style="padding-left: 35upx;">核验员：</text>
-						<text style="font-weight:bold;">{{ o.hyy }}</text>
+						<text style="font-weight:bold;">{{ o.hyy | formatTextNullFilter}}</text>
 					</p>
 					<p v-if="o.jdzt == 111 && o.hyyj.length>0" class="wtdw2">						
 						<text style="color: #DD514C,font-weight:bold;">{{ o.hyyj }}</text>
@@ -328,7 +328,7 @@ this.o.pzyj = o.pzyj;
 			else if (~zzc.indexOf('索佳')) img = '4';
 			else if (~zzc.indexOf('南方')) img = '5';
 			else if (~zzc.indexOf('尼康')) img = '6';
-			return '/static/ins/1000/' + img + '.png';
+			return '/static/ins/' + this.o.qjmcbm + '/' + img + '.png';
 		},
 		doSetting(o) {
 			//console.log(JSON.stringify(o));
