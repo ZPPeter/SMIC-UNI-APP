@@ -2,12 +2,6 @@
 	<view class="container">
 		<view class="user-section">
 			<image class="bg" src="/static/img/user-bg.jpg"></image>
-			<!-- <view class="user-info-box">				
-				<view><image class="portrait" :src="userInfo.portrait || '/static/img/missing-face.png'" @click="GotoLogo"></image></view>
-				<view>
-					<text class="username">{{ userInfo.realname || '未登录' }}</text>
-				</view>				
-			</view>-->
 			<view class="vip-card-box">
 				<image class="card-bg" src="/static/img/vip-card-bg.png" mode=""></image>
 				<view class="b-btn" @click="showOpenSrcInfo()">关于系统</view>
@@ -19,7 +13,6 @@
 				<text class="e-b">精心.精细.精准.精益求精，测绘仪器数据处理系统。</text>
 			</view>
 		</view>
-
 		<view
 			class="cover-container"
 			:style="[
@@ -98,24 +91,31 @@ export default {
 		const page = pages[pages.length - 1];
 		const currentWebview = page.$getAppWebview();
 		//console.log(this.$store.state.user.newNotices);
-		if (this.$store.state.user.newNotices > 0) currentWebview.showTitleNViewButtonRedDot({ index: 2 }); // 新消息
+		if (this.$store.state.user.newNotices > 0) currentWebview.showTitleNViewButtonRedDot({ index: 3 }); // 新消息
 		// #endif
 	},
 	onError(err) {
 		// 这里只能捕获方法内的异常，不能捕获生命周期中的逻辑异常
 		// 不能捕获Unhandled promise rejection
 		console.log(err);
-	},	
+	},
 	onLoad() {
-		//console.log('onLoad');
 		this.getCountData();
 	},
 	// #ifndef MP
 	onNavigationBarButtonTap(e) {
 		const index = e.index;
-		if (index === 1) {
+		if (index === 0) {
+		}
+		else if (index === 1) {
+			uni.switchTab({
+				url:'/pages/main/main'
+			})
+		}
+		else if (index === 2) {
 			this.navTo('/pages/user/set');
-		} else if (index === 2) {
+		}
+		else if (index === 3) {
 			// 消息红点
 			// #ifdef APP-PLUS
 			const pages = getCurrentPages();
@@ -133,6 +133,7 @@ export default {
 			//});
 			this.navTo('/pages/notice/notice');
 		}
+		
 	},
 	// #endif
 	computed: {
@@ -149,19 +150,13 @@ export default {
 				this.Datas = res;
 			}
 		},
-		GotoLogo() {
-			this.$Router.push('/pages/user/userinfo');
-		},
 		navTo(url) {
-			// this.$Router.push({path:url, query: {}});
-			this.$Router.push(url); // 拦截未登录路由
-			// this.$Router.push('/pages/router/router1');  // 字符串
-			// this.$Router.push({ name: 'userinfo'});      // 命名的路由
-			return;
+			uni.navigateTo({
+				url:url
+			})
 		},
 		navTo2(url) {
 			uni.navigateTo({ url: url }); // 不传递 query 参数，uni.chooseImage 不会引发 unhandled promise rejection
-			return;
 		},
 		navTo3(url) {
 			if(!this.userInfo.roles.includes('ADMIN'))

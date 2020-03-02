@@ -109,15 +109,20 @@ export default {
 		//if (this.hasLogin) {
 			this.wtdh = e.text;
 			meScroll.resetUpScroll();
-		//} else this.$Router.push('/pages/login/login');
+		//} 
 	},
 	onNavigationBarButtonTap(e) {
 		this.hideModal();
 		const index = e.index;
 		//console.log(index);
-		if (index === 0) {
-			//this.$Router.push('/pages/wtd/wtd');
-		} else if (index === 1) {
+		if (index === 0) {			
+		}
+		else if (index === 1) {
+			uni.switchTab({
+				url:'/pages/main/main'
+			})
+		}
+		else if (index === 2) {
 			this.doScan();
 		}
 	},
@@ -258,22 +263,6 @@ export default {
 	},
 	onLoad() {
 		//console.log('onLoad');
-		//console.log(this.userInfo.roles.length);
-		//getApp().globalData.roles = abp.utils.getRolesValue(this.userInfo.roles);
-		// #ifdef APP-PLUS
-		var webView = this.$mp.page.$getAppWebview();
-		// 修改buttons
-		// index: 按钮索引, style {WebviewTitleNViewButtonStyles }
-		webView.setTitleNViewButtonStyle(0, {
-			text: '',
-			width: '35px',
-			fontWeight: 'bold',
-			fontSize: '18px',
-			background: '#0081FF'
-		});
-		// #endif
-		//let showHomeData = new ShowHomeData.ShowHomeData();
-		//showHomeData.showData();
 	},
 	onShow() {
 		this.qjmcnames = this.$abp.utils.getRolesValue(this.userInfo.roles, this.userInfo.roleNames);
@@ -281,14 +270,6 @@ export default {
 		this.qjmcNames = this.qjmcNames.concat(this.$abp.utils.qjmcNames);		
 		getApp().globalData.userInfoid = this.userInfo.id;
 
-		if (uni.getSystemInfoSync().platform === 'android') {
-			var icon = plus.nativeObj.View.getViewById('LogoImg');
-			if (icon) {
-				setTimeout(function() {
-					icon.show();
-				}, 100);
-			}
-		}
 		//console.log(meScroll);
 		//console.log(this.qjmcNames.length);
 		this.lstlength = 0;

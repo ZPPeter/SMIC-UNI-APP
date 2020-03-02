@@ -50,7 +50,7 @@ export default {
 		meScroll.resetUpScroll();
 	},
 	onLoad(options) {
-		this.pagerequest.isAdmin = this.userInfo.roles.includes('ADMIN');
+		//this.pagerequest.isAdmin = this.userInfo.roles.includes('ADMIN');
 		//console.log(options);	
 	},	
 	methods: {		
@@ -107,6 +107,9 @@ export default {
 			this.pagerequest.FilterText = this.q;			
 			this.pagerequest.maxResultCount = pageSize;
 			this.pagerequest.skipCount = (pageNum - 1) * pageSize;
+			//console.log(this.userInfo.roles);
+			if(this.userInfo.roles.includes('ADMIN'))
+			this.pagerequest.isAdmin = true;
 			//console.log(this.pagerequest);
 			const res = await this.$store.dispatch({
 				type: 'xtgl/ListCzrzs',

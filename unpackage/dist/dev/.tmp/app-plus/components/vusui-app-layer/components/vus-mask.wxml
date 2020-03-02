@@ -1,1 +1,0 @@
-<view data-event-opts="{{[['tap',[['close',['$event']]]]]}}" class="{{['vus-layer-mask vus-layer-anim',addAnim]}}" style="{{(setStyle)}}" bindtap="__e"></view>

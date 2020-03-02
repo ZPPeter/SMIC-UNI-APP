@@ -25,6 +25,8 @@ fly.interceptors.request.use((request) => {
 		//console.log(new Date().toLocaleString()); //不支持Android手机
 		console.log(moment(new Date()).format('YYYY.MM.DD HH:mm:ss'));
 	}
+	//console.log(JSON.stringify(request));
+	//console.log(request.ShowLoading);
 	if (request.ShowLoading === false)
 		showLoading = false;
 	else
@@ -33,7 +35,6 @@ fly.interceptors.request.use((request) => {
 	//console.log(request.url.includes(config.Authenticate));
 	if (showLoading)
 		uni.showLoading();
-
 	if (!!uni.getStorageSync('token')) {
 		request.headers['Authorization'] = 'Bearer ' + uni.getStorageSync('token');
 	}
@@ -84,18 +85,19 @@ fly.interceptors.response.use((response) => {
 					});
 			}
 
-		} else if (err.status === 401) { // 未登录
+		} else if (err.status === 401) { // 缓存失效无法自动登录
+			console.log('err.status = 401 缓存失效无法自动登录');
 			uni.reLaunch({
 				url: '/pages/login/login'
 			});
 		} else if (err.status <= 1) { // 0 网络错误 1 请求超时
 			uni.showToast({
 				icon: 'none',
-				title: '无法访问服务器'
+				title: '请求超时，网络错误' //法访问服务器
 			});
 		} else {
 			//console.log(err.message)
-			//console.log('网络错误：' + JSON.stringify(err))			
+			console.log('网络错误：' + JSON.stringify(err))			
 			uni.showToast({
 				icon: 'none',
 				title: '未知服务器错误'

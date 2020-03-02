@@ -27,7 +27,7 @@ class AppModule {
 				//console.log('Login:' + JSON.stringify(rep));
 				return rep; // return '登录成功'; 返回到此处
 			},
-            async init(content) {
+            async init(content) {// 登录缓存再次进入系统检测用户等信息
                 let rep = await fly.get(config.GetCurrentLoginInformations,null,{ShowLoading:false}).then(function(res) {
 					//console.log(res);
 					if (res.success) {
@@ -36,7 +36,6 @@ class AppModule {
 					return null;
 				})
 				return rep;
-				// 此时 App.vue 尚未加载完成，this.$store 为 null
 			},
 			async CacheUserData(content) {
 			    let rep = await fly.get(config.GetCacheUserData,null,{ShowLoading:false}).then(function(res) {

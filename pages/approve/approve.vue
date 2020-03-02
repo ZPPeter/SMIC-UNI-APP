@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view style="padding-top: 10upx;">
 		<view style="display: flex; width:90%;text-align: left; margin-left: 12px;align-items: center;">
 			<div style="background-color: red;width:4px;height:12px;vertical-align: bottom;"></div>
 			<view class="tj-item">您有{{ lstlength }}台仪器待批准。</view>
@@ -77,8 +77,13 @@ export default {
 		const index = e.index;
 		//console.log(index);
 		if (index === 0) {
-			//this.$Router.push('/pages/wtd/wtd');
-		} else if (index === 1) {
+		}
+		else if (index === 1) {
+			uni.switchTab({
+				url:'/pages/main/main'
+			})
+		}
+		else if (index === 2) {
 			this.doScan();
 		}
 	},
@@ -219,28 +224,14 @@ export default {
 	},
 	onLoad() {
 		//console.log('onLoad');
-		//console.log(this.userInfo.roles.length);
-		//getApp().globalData.roles = abp.utils.getRolesValue(this.userInfo.roles);
-		// #ifdef APP-PLUS
-		var webView = this.$mp.page.$getAppWebview();
-		// 修改buttons
-		// index: 按钮索引, style {WebviewTitleNViewButtonStyles }
-		webView.setTitleNViewButtonStyle(0, {
-			text: '',
-			width: '35px',
-			fontWeight: 'bold',
-			fontSize: '18px',
-			background: '#0081FF'
-		});
-		// #endif
-		//let showHomeData = new ShowHomeData.ShowHomeData();
-		//showHomeData.showData();
 	},
 	onShow() {
 		getApp().globalData.userInfoid = this.userInfo.id;
 		//console.log(this.userInfo.roles);
 		//console.log(this.userInfo.roles.includes('批准'));
-		if (!this.userInfo.roles.includes('批准')) {
+		meScroll.resetUpScroll();
+		/*
+		if (this.userInfo.roles.includes('批准')) {
 			this.vusui.confirm(
 				'您没有证书批准权限，无法查看该项列表！',
 				{
@@ -262,25 +253,10 @@ export default {
 						url: '/pages/main/main'
 					});
 				}
-			);
-			/*
-				uni.showModal({
-					title: '提示',
-					content: '您没有批准权限！',
-					showCancel: false,
-					success: function(res) {
-						if (res.confirm) {
-							uni.switchTab({
-								url: '/pages/main/main'
-							});
-						}
-					}
-				});
-			*/
+			);			
 		} else {
-			//this.downCallback(meScroll);
-			meScroll.resetUpScroll();
-		}
+			//this.downCallback(meScroll);			
+		}*/
 	}
 };
 </script>

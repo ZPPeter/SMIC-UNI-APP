@@ -23,6 +23,8 @@
 
 					<p v-if="o.jdzt == '100'" class="triangle-topright add_wtd"></p>
 					<p v-else-if="o.jdzt == '222'|| !o.jdzt" class="triangle-topright over_wtd"></p>
+					<p v-else-if="o.jdzt == '122'" class="triangle-topright dhy_wtd"></p>
+					<p v-else-if="o.jdzt == '200'" class="triangle-topright dpz_wtd"></p>
 					<p v-else class="triangle-topright working_wtd"></p>
 				</view>
 			</view>
@@ -124,6 +126,7 @@ export default {
 </script>
 
 <style lang="scss">
+	@import '@/css/wtd_list.scss';
 .list {
 	padding-top: 80upx;
 }
@@ -173,58 +176,6 @@ export default {
 			text-decoration: line-through;
 		}
 	}
-}
-.font-seal0 {
-	font-size: 12px;
-	z-index: 2;
-	position: absolute;
-	right: -12px;
-	top: 5px;
-	border: 0px;
-	transform: rotate(50deg);
-	width: 53px;
-	line-height: 20px;
-	text-align: center;
-	color: white;
-	font-weight: bold;
-}
-
-.font-seal {
-	font-size: 12px;
-	z-index: 2;
-	position: absolute;
-	right: 8px;
-	top: 24px;
-	border: 1px solid #f73a3c;
-	transform: rotate(50deg);
-	width: 53px;
-	line-height: 20px;
-	text-align: center;
-	color: #f73a3c;
-	font-weight: bold;
-}
-
-.triangle-topright {
-	position: absolute;
-	right: 0px;
-	top: 0px;
-	width: 0;
-	height: 0;
-	border-top: 44px solid #fd9d2d;
-	border-left: 2rem solid transparent;
-	border-bottom: 1rem solid transparent;
-}
-
-.triangle-topright.add_wtd {
-	border-top: 44px solid #56cf87;
-}
-
-.triangle-topright.working_wtd {
-	border-top: 44px solid #0099ff;
-}
-
-.triangle-topright.over_wtd {
-	border-top-color: #cccccc;
 }
 .qjmc {
 	width: 112upx;

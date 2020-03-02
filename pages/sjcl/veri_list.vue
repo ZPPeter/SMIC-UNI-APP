@@ -22,6 +22,8 @@
 					<p><view v-if="jdqx(o.yqjcrq)" class="font-seal">已超期</view></p>
 
 					<p v-if="o.jdzt == 100" class="triangle-topright add_wtd"></p>
+					<p v-else-if="o.jdzt == 122" class="triangle-topright dhy_wtd"></p>
+					<p v-else-if="o.jdzt == 200" class="triangle-topright dpz_wtd"></p>
 					<p v-else class="triangle-topright working_wtd"></p>
 
 				</view>
@@ -32,6 +34,7 @@
 
 <script>
 import utils from '@/libs/common/utils.js';
+import { mapState } from 'vuex';
 export default {
 	props: {
 		list: {
@@ -42,6 +45,7 @@ export default {
 			}
 		}		
 	},
+	computed: mapState(['userInfo']),
 	data() {
 		return {
 			isActive: true
@@ -54,9 +58,22 @@ export default {
 		showDetails(o){
 			//console.log(o);
 			let bm = o.qjmcbm;
-			//if(o.jdzt>100)
+			let url = "";
+			if (o.jdzt == 200 && this.userInfo.roles.includes('批准'))
+				url = '/pages/sjcl/'+bm+'/pz?o=' +  JSON.stringify(o);
+			else if(this.userInfo.roles.includes(bm)){
+				if(o.jdzt == 100)
+					url = '/pages/sjcl/'+bm+'/'+bm+'?o=' +  JSON.stringify(o);
+				else if(o.jdzt == 122)
+					url = '/pages/sjcl/'+bm+'/hy?o=' +  JSON.stringify(o);	
+				else
+					url = '/pages/sjcl/'+bm+'/cx?o=' +  JSON.stringify(o);	
+			}
+			else
+				url = '/pages/sjcl/'+bm+'/cx?o=' +  JSON.stringify(o);				
+			
 			uni.navigateTo({
-				url: '/pages/sjcl/'+bm+'/'+bm+'?o=' +  JSON.stringify(o)
+				url: url
 			});
 		},
 		format(item) {
@@ -75,8 +92,13 @@ export default {
 			}
 		},
 		jdzt(zt2) {
+			//return utils.getJdzt(zt2); //此处不能用 zt2 = 100 不是 '100'
 			if(zt2==100)
 			return '登记';
+			else if(zt2==122)
+			return '待核';
+			else if(zt2==200)
+			return '待批';
 			else
 			return '在检';
 		},		
@@ -101,6 +123,7 @@ export default {
 </script>
 
 <style lang="scss">
+	@import '@/css/wtd_list.scss';
 .list {
 	padding-top: 80upx;
 }
@@ -151,7 +174,8 @@ export default {
 		}
 	}
 }
-.font-seal0 {
+
+/* .font-seal0 {
 	font-size: 12px;
 	z-index: 2;
 	position: absolute;
@@ -196,6 +220,14 @@ export default {
 	border-top: 44px solid #56cf87;
 }
 
+.triangle-topright.dhy_wtd {
+	border-top: 44px solid #e5e572;
+}
+
+.triangle-topright.dpz_wtd {
+	border-top: 44px solid #d94800;
+}
+
 .triangle-topright.working_wtd {
 	border-top: 44px solid #0099ff;
 }
@@ -203,6 +235,7 @@ export default {
 .triangle-topright.over_wtd {
 	border-top-color: #cccccc;
 }
+ */
 .qjmc {
 	width: 112upx;
 	font-size: 10px;

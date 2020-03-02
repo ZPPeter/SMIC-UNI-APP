@@ -1,7 +1,0 @@
-{
-  "navigationBarTitleText": "关于",
-  "bounce": "none",
-  "usingComponents": {
-    "u-link": "/components/uLink"
-  }
-}

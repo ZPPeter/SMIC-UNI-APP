@@ -88,9 +88,6 @@ export default {
 				return true; //'jdqx1';
 			}
 		},
-		lastReadTime() {
-			return this.$store.state.user.readLastNoticeTime;
-		},
 		getImg(zzc) {
 			return utils.getImg(zzc);
 		}

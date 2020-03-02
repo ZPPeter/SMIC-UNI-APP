@@ -40,7 +40,6 @@
 				<vus-layer></vus-layer>
 			</view>
 		</template>
-
 <script>
 import { mapState } from 'vuex';
 import store from '@/store';

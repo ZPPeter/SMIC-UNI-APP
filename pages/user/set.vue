@@ -54,9 +54,6 @@ export default {
 		};
 	},
 	onLoad() {
-		//if (!this.hasLogin) {
-		//	this.$Router.push('/pages/login/login');
-		//}
 		if (uni.getSystemInfoSync().platform === 'android') {
 			this.version = plus.runtime.version; // 打包后有效，打包前是基座的版本号
 		}
@@ -72,8 +69,9 @@ export default {
 		//	return config.Settings.useMockData();
 		//},
 		navTo(url) {
-			//utils.showToast(`跳转到${url}`);
-			if (url) this.$Router.push(url);
+			uni.navigateTo({
+				url:url
+			})
 		},
 		async checkUpdate() {
 			// 检测升级
@@ -170,6 +168,12 @@ export default {
 						                icon: 0, //0-5
 						})
 						_this.tempSize = '';
+						uni.removeStorage({
+						    key: 'firstTime',
+						    success: function (res) {
+						        //console.log('success');
+						    }
+						});
 						/*
 						uni.showToast({
 							title: '清除成功',
@@ -303,10 +307,6 @@ export default {
 		}
 	},
 	onShow() {
-		if (!this.hasLogin) {
-			// 避免取消登录
-			this.$Router.push('/pages/login/login');
-		}
 		uni.hideKeyboard(); // 无效???
 	}
 };
@@ -347,7 +347,7 @@ page {
 	}
 }
 .first {
-	background-color: #449ded;
+	background-color: #0081ff;
 	//margin-top: -20upx;
 }
 .confirm-btn {

@@ -24,6 +24,10 @@ var signalR = (function() {
 	//连接异常处理事件
 	_events['error'] = function(ex) {
 		console.log(ex);
+	};	
+	//心跳检测
+	_events['heartbeat'] = function() {
+		console.log('心跳 heartbeat');
 	};
 	return {
 		//事件绑定
@@ -65,6 +69,7 @@ var signalR = (function() {
 					//console.log(obj.type);
 					//心跳检测
 					if (obj.type == 6) {
+						_events['heartbeat']();
 					}
 					//当收到返回消息type=1（调用方法）
 					if (obj.type == 1) {

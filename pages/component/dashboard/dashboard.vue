@@ -1,15 +1,14 @@
 <template name="dashboard">
 	<view class="content">
 		<view class="user-section">
-			<image class="bg" src="/static/img/user-bg.jpg"></image>
-			<!-- image class="logo" src="/static/img/logo.png"></image -->
+			<view class="time">{{ gDate }}</view>
 			<view class="user-info-box">
-				<view class="portrait-box"><image class="portrait" :src="userInfo.portrait || '/static/img/missing-face.png'" @click="GotoLogo"></image></view>
+				<view class="portrait-box"><image class="portrait" :src="userInfo.portrait || '/static/img/missing-face.png'" @tap="navTo('/pages/user/userinfo')"></image></view>
 				<view>
 					<text class="username">{{ userInfo.realname || '未登录' }}</text>
 				</view>
 				<view class="list-info">
-					<view class="list-item" @click="navTo2('/pages/sjcl/getalltasks')">
+					<view class="list-item" @tap="navTo('/pages/sjcl/getalltasks')">
 						<text class="data">{{ datas[0] }}</text>
 						<text class="data1">台</text>
 						<!--所有未完成-->
@@ -21,13 +20,22 @@
 					<text class="list-num">{{ datas[1] }}</text>
 					<text class="list">待检</text>
 				</view>
+				<view>
+					<div style="background-color: #c1c1c1;width:1px;"></div>
+				</view>
 				<view class="list-item" @click="switchTo('/pages/verification/verification')">
 					<text class="list-num">{{ datas[2] }}</text>
 					<text class="list">在检</text>
 				</view>
+				<view>
+					<div style="background-color: #c1c1c1;width:1px;"></div>
+				</view>
 				<view class="list-item"  @click="switchTo('/pages/check/check')">
 					<text class="list-num">{{ datas[3] }}</text>
 					<text class="list">核验</text>
+				</view>
+				<view>
+					<div style="background-color: #c1c1c1;width:1px;"></div>
 				</view>
 				<view class="list-item" @click="switchTo('/pages/approve/approve')">
 					<text class="list-num">{{ datas[4] }}</text>
@@ -50,11 +58,13 @@
 <script>
 import { mapState } from 'vuex';
 import store from '@/store';
+var weekAry = new Array('星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六');
+var d = new Date();
 export default {
 	name: 'dashboard',
 	props: {
 		datas: Array, // datas
-		//percentage: [String, Number]
+		gDate: String
 	},
 	computed: mapState(['hasLogin', 'userInfo']),
 	data() {
@@ -62,7 +72,7 @@ export default {
 			//data:[0,0,0,0,0,0,0]
 		};
 	},
-	created:async function(){
+	created: async function() {
 		//this.data[0] = 125;
 		//this.Init();
 	},
@@ -70,15 +80,7 @@ export default {
 		//组件生命周期区别于页面生命周期，没有onShow，onLoad
 	},
 	methods: {
-		GotoLogo() {
-			//if (this.hasLogin) 
-			this.$Router.push('/pages/user/userinfo');
-			//else this.$Router.push('/pages/login/login');
-		},
 		navTo(url) {
-			this.$Router.push(url); // 拦截未登录路由			
-		},
-		navTo2(url) {
 			uni.navigateTo({
 				url:url
 			})
@@ -89,6 +91,13 @@ export default {
 			}
 		},*/
 		switchTo(tab) {
+			if (tab == '/pages/approve/approve' && !this.userInfo.roles.includes('批准')) {
+				uni.showToast({
+					icon: 'none',
+					title: '您没有证书批准权限，无法查看该项列表！'
+				});
+				return;
+			} 
 			uni.switchTab({
 				url: tab
 			});
@@ -142,38 +151,11 @@ export default {
 </script>
 
 <style lang="scss">
-page,
-view {
-	display: flex;
-	font-size: 25upx;
-	color: #303133;
-}
-page {
-	min-height: 100%;
-	background-color: #ffffff;
-}
-.infoBox {
-	position: absolute;
-	bottom: 120upx;
-	//left: 60upx;
-	width: 100%;
-	flex-direction: row;
-	flex: 1;
-	background-color: #fffbe8;
-}
-.fontsize {
-	//color:white;
-	//font-size: 40upx;
-	color: #ffffff;
-	font-size: 50upx;
-	transition: all 0.3s;
-	font-weight: bold;
-}
 .user-section {
 	flex-direction: column;
 	width: 100vw;
-	height: 500upx;
-	padding: 100upx 30upx 0;
+	height: 400upx;
+	padding: 20upx 30upx 0;
 	position: relative;
 	.bg {
 		position: absolute;
@@ -185,23 +167,15 @@ page {
 		opacity: 0.8; //图像透明度
 	}
 }
-.logo {
-	position: absolute;
-	left: 10upx;
-	top: 100upx;
-	width: 90upx;
-	height: 70upx;
-}
 .user-info-box {
-	//flex-direction: column;
 	width: 95%;
-	height: 180upx;
-	//display: flex;
+	height: 120upx;
 	align-items: center;
 	position: absolute; //relative
-	top: 150upx;
+	top: 90upx;
 	z-index: 1;
-	.portrait-box {
+	.portrait-box{
+		margin-left: 20upx;
 	}
 	.portrait {
 		width: 130upx;
@@ -253,7 +227,7 @@ page {
 	justify-content: space-around;
 	align-content: center;
 	position: relative;
-	margin-top: 240upx;
+	margin-top: 180upx;
 	z-index: 1;
 	.list-item {
 		//display: flex;
@@ -298,5 +272,6 @@ page {
 .content {
 	flex-direction: column;
 	flex: 1;
+	background-color: #0081ff;
 }
 </style>

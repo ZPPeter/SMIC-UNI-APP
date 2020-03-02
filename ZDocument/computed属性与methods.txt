@@ -56,7 +56,7 @@ import { mapState } from 'vuex';
 export default {
 	computed: {
 		...mapState(['userInfo']),
-		showInfo: { // 计算属性必须有 get/set
+		showInfo: { // 计算属性必须有 get
 			get() { // get: function() { 
 				if(this.userInfo.realname)
 					return '您: ';

@@ -36,7 +36,7 @@ import ShowHomeData from 'libs/ShowHomeData.js';
 export default {
 	data() {
 		return {
-			userNameOrEmailAddress: 'user10',
+			userNameOrEmailAddress: 'admin', //user10
 			password: '123qwe',
 			logining: false,
 			version: '1.01'
@@ -52,13 +52,12 @@ export default {
 			this.version = plus.runtime.version; // 打包后有效，打包前是基座的版本号
 		}
 	},
-	onShow() {
-	},
+	onShow() {},
 	methods: {
 		...mapMutations(['login']),
 		navBack() {
 			uni.navigateBack();
-		},		
+		},
 		toForgetPassword() {
 			uni.showToast({
 				icon: 'none',
@@ -80,7 +79,7 @@ export default {
 				}
 			});
 		},
-		getUserSign(userid){
+		getUserSign(userid) {
 			var _this = this;
 			var relativePath = '_doc/logo/sign.png';
 			//检查图片是否已存在
@@ -107,10 +106,10 @@ export default {
 		downloadUserSign(userid) {
 			var _this = this;
 			//console.log(config.signImgPath + userid + '.png');
-			var dtask = plus.downloader.createDownload(config.signImgPath + userid + '.png', { filename: '_doc/logo/sign.png' }, function(d, status) {
+			var dtask = plus.downloader.createDownload(config.signImgPath + userid + '.png', { filename: '_doc/logo/sign.png'}, function(d, status) {
 				// 下载完成
 				if (status == 200) {
-					//console.log('Download success: ' + d.filename);					
+					//console.log('Download success: ' + d.filename);
 				} else {
 					// 未设置签名
 					console.log('Download failed: ' + status);
@@ -154,7 +153,9 @@ export default {
 			if (res != '') {
 				this.getUserSign(res.userId);
 				//console.log(res);
-				this.$store.state.user.readLastNoticeTime = res.lastReadNoticeTime;
+
+				if (res.lastReadNoticeTime) this.$store.state.user.readLastNoticeTime = res.lastReadNoticeTime;
+
 				var filePath = '';
 				let userInfo = {
 					id: res.userId,
@@ -162,8 +163,9 @@ export default {
 					realname: res.surName,
 					roles: res.roles, //"roles": ["一般用户", "1000", "1030"],
 					roleNames: res.roleNames, //"roleNames": ["一般用户", "全站仪", "GPS接收机"],
-					portrait: null // config.avatarImgPath + res.userId + '.png?t=' + new Date().getTime()
+					portrait: ''
 				};
+				//console.log(JSON.stringify(userInfo));
 
 				/*
 				const res2 = await this.$store.dispatch({
@@ -199,7 +201,6 @@ export default {
 						_this.downloadAvatar(userInfo);
 					}
 				);
-				userInfo.portrait = '_doc/logo/logo.png';
 				/*
 				uni.downloadFile({
 					url: config.avatarImgPath + res.userId + '.png',
@@ -231,7 +232,6 @@ export default {
 					}
 				});
 				*/
-
 				let showHomeData = new ShowHomeData.ShowHomeData();
 				showHomeData.showData();
 			} else {
@@ -244,27 +244,32 @@ export default {
 			//文件路径以文件后缀名结尾（如"_doc/download/a.doc"）表明指定保存文件目录及名称，以“/”结尾则认为指定保存文件的目录（此时程序自动生成文件名）。
 			//如果指定的文件已经存在，则自动在文件名后面加"(i)"，其中i为数字，如果文件名称后面已经是此格式，则数字i递增，如"download(1).doc"。
 			//默认保存目录为（"_downloads"），并自动生成文件名称
-			//console.log('开始下载Logo:'+config.avatarImgPath + userInfo.id + '.png');
+			//console.log('1开始下载Logo:' + config.avatarImgPath + userInfo.id + '.png');
 			var _this = this;
-			var dtask = plus.downloader.createDownload(config.avatarImgPath + userInfo.id + '.png', { filename: '_doc/logo/logo.png' }, function(d, status) {
-				// 下载完成
-				if (status == 200) {
-					//console.log('Download success: ' + d.filename);
+			var dtask = plus.downloader.createDownload(config.avatarImgPath + userInfo.id + '.png',
+				{
+					filename: '_doc/logo/logo.png',
+					timeout: 15 // 默认0:120s，不起作用,实测文件不存在 210s才报错
+				},
+				function(d, status) {
+					if (status == 200) {// 下载完成
+						console.log('Download success: ' + d.filename);
+					} else {
+						console.log('Download failed: ' + status);
+					}
 					//console.log(userInfo);
-					_this.login(userInfo); // -> ...mapMutations(['login'])
-					_this.$signalR.connection(config.SignalR);
-					//uni.navigateBack();
-					uni.hideLoading();
-					uni.switchTab({
-						url: '/pages/main/main'
-					});
-				} else {
-					console.log('Download failed: ' + status);
 				}
-			});
+			);
 			//dtask.addEventListener("statechanged", onStateChanged, false);
-			dtask.start();
 			//plus.downloader.startAll();
+			dtask.start();
+			_this.login(userInfo); // -> ...mapMutations(['login'])
+			_this.$signalR.connection(config.SignalR);
+			//uni.navigateBack();
+			uni.hideLoading();
+			uni.switchTab({
+				url: '/pages/main/main'
+			});					
 		}
 	}
 };

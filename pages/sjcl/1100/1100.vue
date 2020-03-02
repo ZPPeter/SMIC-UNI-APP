@@ -31,7 +31,7 @@
 			<result-data v-if="res" :res="res"></result-data>
 		</view>
 		<view class="fab-box fab">
-			<view class="fab-circle" @click="doSetting(o)"><text class="iconfont icon-Setting fontsize"></text></view>
+			<view class="fab-circle" @click="doSetting(o)"><text :class="[hasRight?'fontcolor1':'fontcolor2']" class="iconfont icon-Setting fontsize"></text></view>
 		</view>
 		<view v-show="res" class="bottom-icon">
 			<view class="doc" @click="OpenDoc(o.qjmcbm, o.id)"><text class="iconfont icon-Word fontsize2"></text></view>
@@ -74,7 +74,8 @@ export default {
 			btnJDWB: '检完确认',
 			res: '',
 			jdzb2: '',
-			urgent: false
+			hasRight:false,
+			urgent: false //加急发送微信消息
 		};
 	},
 	onNavigationBarButtonTap(e) {
@@ -108,11 +109,11 @@ export default {
 
 		this.jdzb2 = '2'; // 2 5
 		this.o.jdzb = this.jdzb2;
-
 		if (this.o.jdzt == 111 || this.o.jdzt == 122) {
 			// 显示计算结果
 			this.showRawData();
 		}
+		this.hasRight = this.userInfo.roles.includes(this.o.qjmcbm);
 	},
 	onShow: function(e) {
 		let pages = getCurrentPages();
@@ -194,6 +195,7 @@ export default {
 			}
 		},
 		async getRawData() {
+			if(!this.hasRight)return;
 			// 读取 xls
 			//console.log((this.o.jdzt==111 && this.o.surname!=this.userInfo.realname));
 			if (this.o.jdzt == 111 && this.o.surname != this.userInfo.realname) {
@@ -262,6 +264,7 @@ export default {
 		},
 		doSetting(o) {
 			//console.log(JSON.stringify(o));
+			if(!this.hasRight)return;
 			uni.navigateTo({
 				url: '/pages/sjcl/' + o.qjmcbm + '/set?o=' + JSON.stringify(o)
 			});

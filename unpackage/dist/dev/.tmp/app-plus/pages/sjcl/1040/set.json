@@ -1,7 +1,0 @@
-{
-  "navigationBarTitleText": "手持测距仪检定 - 参数设置",
-  "bounce": "none",
-  "usingComponents": {
-    "uni-notice-bar": "/components/uni-notice-bar/uni-notice-bar"
-  }
-}

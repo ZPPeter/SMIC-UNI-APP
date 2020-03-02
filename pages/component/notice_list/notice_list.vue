@@ -1,22 +1,27 @@
 <template>
 	<view class="pd-list">
-		<view v-for="pd in list" :key="pd.id">
-			<view class="content">
-				<view class="title1">
-					<div style="background-color: silver;width:4px;height:12px;vertical-align: bottom;"></div>
-					<text class="title">{{ pd.title }}</text>
+		<view class="uni-list">
+			<view class="uni-list-cell" hover-class="uni-list-cell-hover" v-for="pd in list" :key="pd.id" @tap="nav(pd)">
+				<view class="uni-list-cell-navigate uni-navigate-right uni-media-list ">
+					<view class="uni-media-list-body">
+						<view style="display: flex;align-items: center;">
+							<view :class="before(pd.creationTime) ? 'icon-red-dot' : ''"></view>
+							<view class="uni-media-list-text-top title">{{ pd.title }}</view>
+						</view>
+						<view class="uni-media-list-text-bottom uni-ellipsis details">{{ pd.description }}</view>
+						<view class="user_time">
+							<text>{{ pd.user }}</text>
+							<text class="time">{{ getDateStr(pd.creationTime) }}</text>
+						</view>
+					</view>
 				</view>
-				<text class="details">{{ pd.description }}</text>
-			</view>
-			<view class="title1">
-			<text class="time">{{ format(pd.creationTime) }}</text>
-			<div :class="before(pd.creationTime) ? 'icon-red-dot' : ''"></div>
 			</view>
 		</view>
 	</view>
 </template>
 
 <script>
+import dn from '@/libs/dn_utils.js';
 export default {
 	props: {
 		list: {
@@ -26,11 +31,15 @@ export default {
 				return [];
 			}
 		}
-	},
+	},	
 	methods: {
-		format(item) {
-			//return new Date(item).Format('yyyy.MM.dd hh:mm:ss');
-			return this.$moment(item).format('YYYY.MM.DD HH:mm:ss');
+		getDateStr(o){
+			return dn.dateUtils.format(this.$moment(o).format('YYYY-MM-DD HH:mm:ss'));
+		},
+		nav(o) {
+			uni.navigateTo({
+				url: '/pages/notice/detail?o=' + JSON.stringify(o)
+			});
 		},
 		before(item) {
 			return this.$moment(this.$store.state.user.readLastNoticeTime).isBefore(item);
@@ -42,133 +51,49 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 .icon-red-dot {
-	background-color: #0081FF;
-	//position: absolute;
+	//background-color: #0081ff;
+	position: relative;
 	width: 10px;
 	height: 10px;
 	background: red;
-	//right: -5px;
-	//top: -5px;
+	margin-right: 5px;
 	border-radius: 50%;
 }
 
 .pd-list {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	padding-top: 12upx;
-}
-.title1 {
-	display: flex;
-	width: 90%;
-	margin-left: 0px;
-	align-items: center;
-}
-.time {
-	display: flex;
-	align-items: center;
-	justify-content: flex-end;
-	text-align: right;
-	height: 80upx;
-	padding-top: 8upx;
-	padding-right: 8upx;
-	font-size: 26upx;
-	color: #7d7d7d;
-	width: 100%;
-}
-.content {
-	width: 710upx;
-	padding: 0upx 24upx;
-	border-radius: 18upx;
-	background-color: #f0f0f0;
-	align-items: center;
+	//display: flex;
+	//flex-direction: column;
+	//align-items: center;
+	//padding-top: 100upx;
 }
 .title {
 	display: flex;
-	align-items: center;
-	height: 90upx;
-	font-size: 28upx;
-	margin-left: 5px;
+	font-size: 36upx;
+	font-weight: bold;
+	//margin-left: 5px;
 	//color: #0081ff; //#303133;
 }
-.img-wrapper {
-	width: 100%;
-	height: 260upx;
-	position: relative;
-}
-.pic {
-	display: block;
-	width: 100%;
-	height: 100%;
-	border-radius: 6upx;
-}
-
-.cover {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	position: absolute;
-	left: 0;
-	top: 0;
-	width: 100%;
-	height: 100%;
-	background-color: rgba(0, 0, 0, 0.5);
-	font-size: 36upx;
-	color: #fff;
-}
 .details {
-	display: inline-block;
+	//display: inline-block;// P 块内不换行显示
 	padding: 12upx 0;
-	font-size: 28upx;
+	font-size: 36upx;
 	color: #606266;
-	line-height: 38upx;
+	line-height: 48upx;
 }
-.bot {
+.user_time {
 	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	height: 80upx;
-	font-size: 24upx;
-	color: #707070;
-	position: relative;
-}
-.more-icon {
-	font-size: 32upx;
-}
-.btn-view {
-	margin: 30upx 30upx 0;
-	text-align: center;
-}
-/*数据列表*/
-.pd-li {
-	position: relative;
-	height: 160upx;
-	padding: 20upx 16upx 20upx 240upx;
-	border-bottom: 1upx solid #eee;
-}
-.pd-li .pd-img {
-	position: absolute !important; /*编译到H5,在list-mescroll-more的案例中需加上!important,解决tab切换过快定位失效的问题*/
-	left: 36upx;
-	top: 20upx;
-	width: 160upx;
-	height: 160upx;
-}
-.pd-li .pd-name {
+	flex-direction: row;
+	width: 100%;
 	font-size: 26upx;
-	line-height: 40upx;
-	height: 80upx;
-	margin-bottom: 20upx;
-	overflow: hidden;
-}
-.pd-li .pd-price {
-	font-size: 26upx;
-	color: red;
-}
-.pd-li .pd-sold {
-	font-size: 24upx;
-	margin-left: 16upx;
-	color: gray;
+	.time {
+		display: flex;
+		position: absolute;
+		right: 40upx;		
+		font-style: italic;
+		color: #7d7d7d;
+		//width: 100%;
+	}
 }
 </style>

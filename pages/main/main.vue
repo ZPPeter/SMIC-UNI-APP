@@ -1,35 +1,27 @@
 <template>
 	<view class="container">
 		<view class="content">
-			<view class="dashboard0"><dash-board :datas="GetHomeData()"></dash-board></view>
-			<view style="padding-top: 20upx;"><u-charts :percentage="GetStats()"></u-charts></view>
-			<view class="uni-swiper-msg" style="text-align: left;width: 100%;font-size: 32upx;padding-top: 10upx;">
-				<view class="uni-swiper-msg-icon">
-					<!-- icon type="info" size="14" color="darkgray" / -->
-					<!-- image src="/static/img/info4.jpg" mode="widthFix" style="margin-left: 20upx;"></image -->
-					<text class="cuIcon-title text-orange " style="margin-left: 30upx;font-size: 30upx;"></text>
+			<view class="dashboard0"><dash-board :datas="GetHomeData()" :gDate="dateMessage"></dash-board></view>
+			<view style="padding-top: 100upx;"><u-charts :percentage="GetStats()"></u-charts></view>
+			<view class="infoBox">
+				<view class="uni-swiper-msg" style="text-align: left;width: 100%;font-size: 32upx;padding-top: 10upx;">
+					<view class="uni-swiper-msg-icon"><text class="cuIcon-title text-orange" style="margin-left: 15upx;font-size: 30upx;"></text></view>
+					<swiper vertical="true" autoplay="true" circular="true" interval="4500">
+						<swiper-item @tap="showInfoDetails(index)" v-for="(item, index) in getNoticeList" :key="index">{{ item }}</swiper-item>
+					</swiper>
 				</view>
-				<swiper vertical="true" autoplay="true" circular="true" interval="3000">
-					<swiper-item v-for="(item, index) in NoticeList" :key="index">{{ item }}</swiper-item>
-				</swiper>
 			</view>
 		</view>
-		<view class="infoBox">
-			<!-- view class="fab-box fab">
-				<view class="fab-circle" @click="doScan"><text class="iconfont icon-saoma1 fontsize"></text></view>
-			</view -->
-			<!-- App+ 不支持滚动 -->
-			<view><uni-notice-bar class="noticebar" show-icon="true" :text="GetHomeInfo()"></uni-notice-bar></view>
-		</view>
-		<view class="time">{{ gDate }}{{ gTime }}</view>
+		<view v-show="GetHomeInfo" class="infNotice"><uni-notice-bar class="notice-bar" :show-icon="true" :text="GetHomeInfo" /></view>
 	</view>
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapMutations } from 'vuex';
 import uCharts from '@/pages/component/ucharts/ucharts.vue';
 import dashBoard from '@/pages/component/dashboard/dashboard.vue';
 import uniNoticeBar from '@/components/uni-notice-bar/uni-notice-bar.vue';
+import infoBox from '@/pages/component/dashboard/infobox.vue';
 import utils from '@/libs/common/utils.js';
 import App from '@/App';
 var weekAry = new Array('星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六');
@@ -38,45 +30,53 @@ export default {
 	components: {
 		uCharts,
 		uniNoticeBar,
+		infoBox,
 		dashBoard
 	},
 	data() {
 		return {
-			gDate: new Date().Format('yyyy年MM月dd日 ') + weekAry[d.getDay()],
+			//gDate: new Date().Format('yyyy年MM月dd日 ') + weekAry[d.getDay()],
 			gTime: new Date().Format(' hh:mm:ss'),
 			NoticeList: [' 正在连接服务器..', ' 正在连接服务器...'],
 			modalName: null,
 			tabbar: true,
+			infoColor:'#de8c17',
 			windowHeight: ''
 		};
 	},
-	computed: mapState(['hasLogin', 'userInfo']),
+	computed: {
+		...mapState(['hasLogin', 'userInfo']),
+		dateMessage: function() {
+			//return this.gDate + ' ' + this.gTime; // 23:59:59 -> 0 日期不变
+			return new Date().Format('yyyy年MM月dd日 ') + weekAry[d.getDay()] + ' ' + this.gTime;
+		},
+		getNoticeList() {
+			return this.NoticeList;
+		},
+		GetHomeInfo() {
+			return this.$store.state.latestData.HomeInfo;
+		}
+	},
 	// #ifndef MP
 	onNavigationBarSearchInputClicked() {
-		//console.log('Clicked');
-		//if (this.hasLogin) {
-		this.$Router.push('/pages/wtdcx/wtdcx');
-		//} else this.$Router.push('/pages/login/login');
+		this.navTo('/pages/wtdcx/wtdcx');
 	},
 	onNavigationBarSearchInputConfirmed(e) {
 		// 内容顶起 乱
-		//if (this.hasLogin) {
-		//console.log(e.text);
-		//this.$Router.push('/pages/wtd/wtd');
-		// 带查询参数，变成 /router1?filterText=private
-		this.$Router.push({ path: '/pages/wtdcx/wtdcx', query: { filterText: e.text } });
-		//} else this.$Router.push('/pages/login/login');
+		//this.$Router.push({ path: '/pages/wtdcx/wtdcx', query: { filterText: e.text } });
 	},
 	onNavigationBarButtonTap(e) {
 		// 二维码扫描
-		if (!this.hasLogin) this.$Router.push('/pages/login/login');
 		const index = e.index;
-		//console.log(index);
-		if (index === 1) {
+		//console.log(index); // 0Icon 1标题 2Scan 3Zhcx 4Wtdcx
+		if (index === 0) {
+		} else if (index === 1) {
+		} else if (index === 2) {
 			this.doScan();
-		}
-		if (index === 2) {
-			this.$Router.push('/pages/zhcx/zhcx');
+		} else if (index === 3) {
+			this.navTo('/pages/zhcx/zhcx');
+		} else if (index === 4) {
+			this.navTo('/pages/wtdcx/wtdcx');
 		}
 		/*
 			// #ifdef APP-PLUS
@@ -91,6 +91,12 @@ export default {
 	},
 	// #endif
 	methods: {
+		showInfoDetails(id) {
+			// ToDo
+			uni.navigateTo({
+				url: '/pages/wtdcx/wtdcx'
+			});
+		},
 		test() {
 			/*
 			const subNVue = uni.getSubNVueById('test');
@@ -98,9 +104,6 @@ export default {
 			subNVue.show('slide-in-left',200,()=>{
 			    console.log('subNVue 原生子窗体显示成功');
 			})*/
-		},
-		GetHomeInfo() {
-			return this.$store.state.latestData.HomeInfo;
 		},
 		GetStats() {
 			if (this.$store.state.isConnected) {
@@ -113,18 +116,16 @@ export default {
 			return this.$store.state.latestData.Data || [0, 0, 0, 0, 0, 0, 1, 0, 0];
 		},
 		GotoLogo() {
-			//if (this.hasLogin)
-			this.$Router.push('/pages/user/userinfo');
-			//else this.$Router.push('/pages/login/login');
+			this.navTo('/pages/user/userinfo');
 		},
 		navTo(url) {
-			this.$Router.push(url); // 拦截未登录路由
-			return;
-		},
-		showDetails(id){ // wtd id
 			uni.navigateTo({
-				url: '/pages/wtdcx/wtd_scan_details?id=' + id
+				url: url
 			});
+		},
+		showDetails(id) {
+			// wtd id
+			this.navTo('/pages/wtdcx/wtd_scan_details?id=' + id);
 		},
 		doScan() {
 			this.showDetails(1000028337);
@@ -144,9 +145,11 @@ export default {
 		}
 	},
 	onLoad: async function(e) {
+		//console.log('main onLoad');
+		/*
 		// #ifdef APP-PLUS
 		var webView = this.$mp.page.$getAppWebview();
-		// 修改buttons
+		// 动态修改buttons
 		// index: 按钮索引, style {WebviewTitleNViewButtonStyles }
 		webView.setTitleNViewButtonStyle(0, {
 			text: '',
@@ -158,16 +161,35 @@ export default {
 		var view = new plus.nativeObj.View('LogoImg', { top: '30px', left: '7px', height: '35px', width: '35px' }, [
 			{ tag: 'img', id: 'img', src: '/static/img/logo.png', position: { top: '0px', left: '0px', width: '100%', height: '100%' } }
 		]);
-		view.show();
+		setTimeout(function() {
+			view.show();
+		}, 100);
 		// #endif
+		*/
+
+		// OnLoad 只加载一次
+		if (!this.hasLogin) {
+			uni.showModal({
+				title: '提示',
+				content: '您还没有登录系统！',
+				showCancel: false,
+				success: function(res) {
+					if (res.confirm) {
+					} else if (res.cancel) {
+					}
+				},
+				complete: function() {
+					uni.navigateTo({
+						url: '/pages/login/login'
+					});
+				}
+			});
+		}
 
 		/*
 		   读取缓存 LatestData
 		   读取服务器，成功后刷新并缓存
 		*/
-
-		// 只加载一次
-		if (!this.hasLogin) this.$Router.push('/pages/login/login');
 
 		/*
 		uni.showModal({
@@ -195,19 +217,21 @@ export default {
 		//	}
 		//});
 		// #endif
-
 		//console.log(this.hasLogin)
 		this.timer = setInterval(() => {
 			this.gTime = new Date().Format(' hh:mm:ss'); // new Date().Format("yyyy年MM月dd日 hh:mm:ss");
 		}, 500);
 	},
-	onShow() {},
+	onShow() {
+		//console.log('onShow');
+	},
 	onHide() {
 		//console.log('onHide');
 	},
 	onUnload() {
 		//console.log('onUnload');// reLaunch tabbar执行
-	}
+	},
+	onReady() {}
 };
 </script>
 <style lang="scss">
@@ -222,63 +246,9 @@ page {
 	background-color: #ffffff;
 }
 .infoBox {
-	position: absolute;
-	bottom: 80upx;
-	//left: 60upx;
+	padding-top: 10upx;
 	width: 100%;
-	flex-direction: row;
-	flex: 1;
-	background-color: #fffbe8;
 }
-.noticebar {
-	//margin-left: 90upx;
-	padding: 10upx;
-	font-size: $font-lg;
-	//height:240upx;
-}
-.fab-box {
-	width: 90upx;
-	height: 90upx;
-	//justify-content: center;
-	//align-items: center;
-	z-index: 2;
-}
-
-.fab-box.fab {
-	z-index: 10;
-}
-
-.fab-circle {
-	//display: flex;
-	justify-content: center;
-	align-items: center;
-	position: absolute;
-	width: 110upx;
-	height: 110upx;
-	background: dodgerblue;
-	//background: #3c3e49;
-	/* background: #5989b9; */
-	border-radius: 50%;
-	box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.2);
-	z-index: 11;
-}
-
-.fab-circle.left {
-	left: 0;
-}
-
-.fab-circle.right {
-	right: 0;
-}
-
-.fab-circle.top {
-	top: 0;
-}
-
-.fab-circle.bottom {
-	bottom: 0;
-}
-
 .fontsize {
 	//color:white;
 	//font-size: 40upx;
@@ -426,7 +396,7 @@ page {
 		text-align: center;
 		bottom: 5px;
 		width: 100%;
-		font-size: $font-base - 1upx;
+		font-size: $font-lg - 0upx;
 		color: silver; //: #808080;
 		padding: 0upx;
 	}
@@ -437,5 +407,21 @@ page {
 }
 .dashboard0 {
 	width: 100%;
+	height: 400upx;
+}
+.infNotice {
+	position: fixed;
+	bottom: 8upx;
+	left: 10upx;
+	right: 10upx;
+	border: 1upx solid #ff5959;
+	z-index: 95;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	.notice-bar {
+		width: 100%;
+		background-color: #fffbe8;
+	}
 }
 </style>

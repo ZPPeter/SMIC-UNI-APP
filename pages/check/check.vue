@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view style="padding-top: 10upx;">
 		<view style="display: flex; width:90%;text-align: left; margin-left: 12px;align-items: center;">
 			<div style="background-color: red;width:4px;height:12px;vertical-align: bottom;"></div>
 			<view class="tj-item">查询到{{ lstlength }}台仪器待核验。</view>
@@ -85,15 +85,20 @@ export default {
 		//if (this.hasLogin) {
 			this.wtdh = e.text;
 			meScroll.resetUpScroll();
-		//} else this.$Router.push('/pages/login/login');
+		//} 
 	},
 	onNavigationBarButtonTap(e) {
 		this.hideModal();
 		const index = e.index;
 		//console.log(index);
 		if (index === 0) {
-			//this.$Router.push('/pages/wtd/wtd');
-		} else if (index === 1) {
+		}
+		else if (index === 1) {
+			uni.switchTab({
+				url:'/pages/main/main'
+			})
+		}
+		else if (index === 2) {
 			this.doScan();
 		}
 	},
@@ -228,23 +233,7 @@ export default {
 		}
 	},
 	onLoad() {
-		//console.log('onLoad');
-		//console.log(this.userInfo.roles.length);
-		//getApp().globalData.roles = abp.utils.getRolesValue(this.userInfo.roles);	
-		// #ifdef APP-PLUS
-		var webView = this.$mp.page.$getAppWebview();
-		// 修改buttons
-		// index: 按钮索引, style {WebviewTitleNViewButtonStyles }
-		webView.setTitleNViewButtonStyle(0, {
-			text: '',
-			width: '35px',
-			fontWeight: 'bold',
-			fontSize: '18px',
-			background: '#0081FF'
-		});
-		// #endif
-		//let showHomeData = new ShowHomeData.ShowHomeData();
-		//showHomeData.showData();
+		//console.log('onLoad');		
 	},
 	onShow() {
 		this.qjmcnames = this.$abp.utils.getRolesValue(this.userInfo.roles, this.userInfo.roleNames);

@@ -1,0 +1,3 @@
+:style="[{ width:loading?'30%':''}]"
+
+loading = true

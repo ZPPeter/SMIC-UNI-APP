@@ -1,6 +1,0 @@
-{
-  "navigationBarTitleText": "修改登录密码",
-  "usingComponents": {
-    "uni-notice-bar": "/components/uni-notice-bar/uni-notice-bar"
-  }
-}

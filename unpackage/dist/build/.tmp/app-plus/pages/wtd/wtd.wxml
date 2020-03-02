@@ -1,1 +1,0 @@
-<view><uni-card class="head" vue-id="1" title="济南市规划局水利设计院" extra="2019121121" note="送检日期:2019.12.31" bind:__l="__l" vue-slots="{{['default']}}"><view class="_ul"><view class="_li">SET2B/100678</view><view class="_li">GTS311/23845</view></view></uni-card></view>

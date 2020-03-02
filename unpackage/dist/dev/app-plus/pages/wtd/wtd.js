@@ -1,2 +1,0 @@
-setCssToHead([".",[1],"head{ background-color: #0A98D5; }\n.",[1],"flex-item-0 { width: 100%; height: ",[0,200],"; text-align: center; line-height: ",[0,200],"; background-color: #0faeff; }\n",],undefined,{path:"./pages/wtd/wtd.wxss"})();
-document.dispatchEvent(new CustomEvent("generateFuncReady", { detail: { generateFunc: $gwx('./pages/wtd/wtd.wxml') } }));

@@ -1,8 +1,0 @@
-{
-  "navigationBarTitleText": "GPS接收机检定",
-  "bounce": "none",
-  "usingComponents": {
-    "vus-layer": "/components/vusui-app-layer/vusui-layer",
-    "result-data": "/pages/sjcl/1030/result"
-  }
-}

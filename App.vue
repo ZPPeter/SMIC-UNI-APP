@@ -15,7 +15,7 @@ export default {
 	* */
 	globalData: {
 		userInfoid: '',
-		providerList:''
+		providerList: ''
 	},
 	computed: mapState(['hasLogin', 'userInfo']),
 	data() {
@@ -38,55 +38,49 @@ export default {
 					}
 				}
 			});
-		}		
+		},
+		async appInit(){
+			let rep = await this.$store.dispatch({
+				type: 'app/init'
+			});
+			if (rep) {
+				if (rep.user) this.$store.state.user.readLastNoticeTime = rep.user.readLastNoticeTime;
+			}
+		}
 	},
-	onLaunch: async function() {
+	onLaunch: function() {
+		console.log('App Launch');
+		//console.log((this.hasLogin));
 		//console.log(config.Settings.useMockData());
 		this.CheckNetworkStatus();
-		uni.getStorage({
-			key: 'userInfo',
-			success: res => {
-				this.login(res.data);
-				this.UserName = this.$store.state.userInfo.realname;
-				//console.log(this.$store.state.userInfo.realname);
-			}
-		});
-	
-		let rep = await this.$store.dispatch({
-			type: 'app/init'
-		});
-		if (this.hasLogin) {
-			if (rep) {
-				setTimeout(() => {
-					// -> main.vue
-					if(rep.user)
-					this.$store.state.user.readLastNoticeTime = rep.user.readLastNoticeTime;
-					//console.log(this.$store.state.user.readLastNoticeTime);
-					/*
-					uni.setTabBarBadge({
-						index: 1,
-						text: '31'
-					});
-					uni.showTabBarRedDot({
-						index: 3
-					});
-					uni.showTabBarRedDot({
-						index: 4
-					});*/
-				}, 1000);
-			}
-			this.$signalR.connection(config.SignalR);
+
+		try {
+			// 本地缓存登录信息 userInfo
+		    const res = uni.getStorageSync('userInfo');
+		    if (res) {
+				this.login(res); // this.hasLogin = true				
+				this.UserName = res.realname;
+				this.appInit();
+		    }
+		} catch (e) {
+		    // error
 		}
-
-		console.log('App Launch');
-
-		// #ifdef APP-PLUS
-		// 锁定屏幕方向
-		plus.screen.lockOrientation('portrait-primary'); //锁定
+		
+		// uni.getStorage({//异步， uni.getStorageSync 同步
+		// 	key: 'userInfo',
+		// 	success: res => {
+		// 		this.login(res.data); // this.hasLogin = true
+		// 		console.log(res.data);
+		// 		this.UserName = res.data.realname;
+		// 		this.appInit();	
+		// 	}
+		// });	
+		
+		this.$signalR.connection(config.SignalR);
+		
 		// 检测升级
 		utils.checkUpdate();
-		utils.getProvider();
-		// #endif
+		utils.getProvider();	
 	},
 	onShow: function() {
 		console.log('App Show');
@@ -97,6 +91,23 @@ export default {
 	created: function() {
 		// App.vue 不支持 OnLoad()
 		console.log('App created');
+		
+		try {
+		    const res = uni.getSystemInfoSync(); // 同步
+		    if(res.system<=8){				
+				plus.runtime.quit();
+				//非阻塞模式
+				//plus.nativeUI.alert("本系统运行于安卓9.0以上版本!", function(){					
+				//}, "提示", "确定");				
+		    }
+		} catch (e) {
+		    // error
+		}
+		
+		// #ifdef APP-PLUS
+			// 锁定屏幕方向
+			plus.screen.lockOrientation('portrait-primary'); //锁定
+		// #endif	
 	}
 };
 </script>
@@ -106,15 +117,24 @@ export default {
 @import 'colorui/icon.css';
 @import 'css/iconfont.css';
 @import 'css/uni.css';
-@import 'css/qiun.css';
 </style>
 <style lang="scss">
+	//@import 'css/qiun.css'; //uCharts
 @font-face {
 	font-family: yticon;
 	font-weight: normal;
 	font-style: normal;
 	src: url('static/font_1078604_w4kpxh0rafi.ttf') format('truetype');
 }
+
+/*
+    page {
+        background-color: #4993dd;
+        height: 100%;
+        font-size: 28upx;
+        line-height: 1.8;
+    }
+*/
 
 .yticon {
 	font-family: 'yticon' !important;

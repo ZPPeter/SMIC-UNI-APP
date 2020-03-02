@@ -1,11 +1,7 @@
 <template>
 	<view>
 		<mescroll-uni @down="downCallback" @up="upCallback">
-			<view class="notice-item">
-				<view class="content0">
-					<text class="title0">欢迎{{ showInfo }}{{ userInfo.realname }}</text>
-				</view>
-			</view>
+			<uni-section title="消息通知" type="line"></uni-section>
 			<pd-list :list="pdList"></pd-list>
 		</mescroll-uni>
 	</view>
@@ -16,12 +12,14 @@ import { mapState } from 'vuex';
 import utils from '@/libs/common/utils.js';
 import MescrollUni from '@/components/mescroll-uni/mescroll-uni.vue';
 import PdList from '@/pages/component/notice_list/notice_list.vue';
+import uniSection from '@/components/uni-section/uni-section.vue'
 import PageRequest from '@/store/entities/page-request';
 class PageNoticeRequest extends PageRequest {};
 export default {
 	components: {
 		MescrollUni,
-		PdList
+		PdList,
+		uniSection
 	},
 	data() {
 		return {
@@ -39,7 +37,11 @@ export default {
 			});
 		}
 	},
-	onLoad: async function(e) {},
+	onLoad: async function(e) {
+		uni.setNavigationBarTitle({
+		　　title:'欢迎您：'+this.userInfo.realname
+		})
+	},
 	/*
 	onPullDownRefresh() {
 		console.log('refresh');
@@ -59,8 +61,7 @@ export default {
 		showInfo: {
 			get() {
 				if (this.userInfo.realname) return '您: ';
-			},
-			set() {}
+			}
 		}
 	},
 	methods: {
@@ -116,6 +117,7 @@ export default {
 				type: 'notice/GetNotices',
 				data: this.pagerequest
 			});
+			//console.log(res);
 			if (res != '') {
 				//console.log(res);
 				successCallback && successCallback(res.items);
@@ -150,17 +152,11 @@ page {
 	box-sizing: border-box;
 	background-color: #fff; // #f7f7f7;
 	padding-bottom: 30upx;
-	padding-top: 30upx;
+	//padding-top: 30upx;
 }
-
 view {
 	font-size: 28upx;
 	line-height: inherit;
-}
-hr {
-	border: none;
-	height: 1px;
-	background-color: #e5e5e5;
 }
 .notice-item {
 	display: flex;

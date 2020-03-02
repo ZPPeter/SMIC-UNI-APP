@@ -30,7 +30,7 @@
 			<result-data v-if="res" :res="res"></result-data>
 		</view>
 		<view class="fab-box fab">
-			<view class="fab-circle" @click="doSetting(o)"><text class="iconfont icon-Setting fontsize"></text></view>
+			<view class="fab-circle" @click="doSetting(o)"><text :class="[hasRight?'fontcolor1':'fontcolor2']" class="iconfont icon-Setting fontsize"></text></view>
 		</view>		
 		<view v-show="res" class="bottom-icon">
 					<view class="doc" @click="OpenDoc(o.qjmcbm, o.id)"><text class="iconfont icon-Word fontsize2"></text></view>
@@ -69,6 +69,7 @@ export default {
 			o: new JDJLFM(),
 			btnJDWB: '检完确认',
 			res: '',
+			hasRight:false,
 			urgent: false
 		};
 	},
@@ -105,6 +106,7 @@ this.o.pzyj = o.pzyj;
 			// 显示计算结果
 			this.showRawData();
 		}
+		this.hasRight = this.userInfo.roles.includes(this.o.qjmcbm);
 	},
 	onShow: function(e) {
 		let pages = getCurrentPages();
@@ -179,6 +181,7 @@ this.o.pzyj = o.pzyj;
 			}
 		},
 		async getRawData() { // 读取 xls
+		if(!this.hasRight)return;
 			//console.log((this.o.jdzt==111 && this.o.surname!=this.userInfo.realname));
 			if (this.o.jdzt == 111 && this.o.surname != this.userInfo.realname) {
 				this.btnJDWB = '检定员: ' + this.o.surname;
@@ -241,6 +244,7 @@ this.o.pzyj = o.pzyj;
 			return '/static/ins/' + this.o.qjmcbm + '/default.jpg';
 		},
 		doSetting(o) {
+			if(!this.hasRight)return;
 			//console.log(JSON.stringify(o));
 			uni.navigateTo({
 				url: '/pages/sjcl/1040/set?o=' + JSON.stringify(o)

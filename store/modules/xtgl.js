@@ -13,7 +13,7 @@ class XtglModule {
 			},
 			async ListCzrzs(state, payload) { // 查询日志
 				//console.log(payload.data);
-				let rep = await fly.get(config.ListCzrzs, {params:payload.data}).then(function(res) {
+				let rep = await fly.get(config.ListCzrzs, {params:payload.data},{ShowLoading:false}).then(function(res) {
 					return res.result;
 				})
 				//console.log(rep);

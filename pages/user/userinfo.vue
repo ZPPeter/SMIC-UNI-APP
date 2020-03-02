@@ -30,7 +30,7 @@
 					disable-scroll="true"
 					@error="error"
 				></canvas>
-				<view v-show="!startsign" class="info">请在空白处签字</view>
+				<view v-show="!startsign" class="info" @tap="startSign">空白处长按开始</view>
 				<view class="caozuo">
 					<view class="button cancel" @tap="hideModal">取消</view>
 					<view class="button chongqian" @tap="clearClick">重签</view>
@@ -85,14 +85,18 @@ export default {
 	},
 	onBackPress() {},
 	onUnload() {
+		/*
 		let icon = plus.nativeObj.View.getViewById('LogoImg');
 		if (icon) {
 			setTimeout(function() {
 				icon.show();
 			}, 100);
-		}
+		}*/
 	},
 	methods: {
+		startSign(){
+			this.startsign = true;
+		},
 		SetCanvascontent() {
 			content = wx.createCanvasContext('firstCanvas');
 			//设置线的颜色
@@ -114,6 +118,7 @@ export default {
 			this.startsign = false;
 			this.modalName = null;
 			this.userSign = '_doc/logo/sign.png';
+			//this.CheckUserSign();
 		},
 		CheckUserSign() {
 			var relativePath = '_doc/logo/sign.png';
@@ -122,9 +127,11 @@ export default {
 				relativePath,
 				function(entry) {
 					_this.userSign = '_doc/logo/sign.png';
+					//console.log(_this.userSign);
 				},
 				function(e) {
 					_this.userSign = '';
+					//console.log(_this.userSign);
 				}
 			);
 		},
@@ -138,6 +145,8 @@ export default {
 			uni.showLoading({
 				title: '正在上传...'
 			});
+			//console.log(config.uploadSign);
+			//console.log(tempFilePath);
 			const uploadTask = uni.uploadFile({
 				url: config.uploadSign,
 				filePath: tempFilePath,
@@ -150,6 +159,7 @@ export default {
 				},
 				success: function(res) {
 					// compressImage() 已经获取固定文件路径 uni.saveFile 不能指定文件名
+					//_this.userSign = '';
 					_this.hideModal(); //_this.userSign = '_doc/logo/sign.png';
 					uni.hideLoading();
 					_this.vusui.msg('签名设置完毕!', {
@@ -163,8 +173,9 @@ export default {
 				},
 				fail(err) {
 					//console.log(err);
+					//console.log('签名上传失败: ' + err.errMsg);
 					uni.hideLoading();
-					_this.vusui.msg('签名上传失败！', {
+					_this.vusui.msg('注意：签名上传失败！错误信息：'+err.errMsg, {
 						icon: 3 //0-5
 					});
 					/*uni.showToast({
@@ -272,7 +283,6 @@ export default {
 				this.draw(touchs);
 			}
 		},
-
 		// 画布的触摸移动结束手势响应
 		end: function(e) {
 			//console.log("触摸结束" + e)
@@ -288,16 +298,14 @@ export default {
 		cancel: function(e) {
 			console.log('触摸取消' + e);
 		},
-
 		// 画布的长按手势响应
 		tap: function(e) {
-			console.log('长按手势' + e);
+			this.startsign = true;
+			//console.log('长按手势' + e);
 		},
-
 		error: function(e) {
 			console.log('画布触摸错误' + e);
 		},
-
 		//绘制
 		draw: function(touchs) {
 			//console.log(touchs[0],touchs[1])

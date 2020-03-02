@@ -124,7 +124,7 @@ class SjclModule {
 				return rep;
 			},
 			async GetAllTasks(state, payload) { // 所有任务列表
-				let rep = await fly.get(config.GetAllTasks, {params:payload.data}).then(function(res) {
+				let rep = await fly.get(config.GetAllTasks, {params:payload.data},{ShowLoading:false}).then(function(res) {
 					//console.log(JSON.stringify(res));
 					return res.result;
 				})

@@ -154,10 +154,10 @@ const utils = {
 				return '在检';
 				break;
 			case '122':
-				return '在检';
+				return '待核';
 				break;
 			case '200':
-				return '在检';
+				return '待批';
 				break;
 			case '222':
 				return '检完';
@@ -296,9 +296,23 @@ const utils = {
 		let rep = await this.getUpdate();
 		//console.log(JSON.stringify(rep)); // 是 "none" 不是 none ,length=6
 		return JSON.stringify(rep);
+	},
+	showLogoImg(status) {
+		return;
+		if (uni.getSystemInfoSync().platform === 'android') {
+			let icon = plus.nativeObj.View.getViewById('LogoImg');
+			if (icon) {
+				//console.log(status);
+				setTimeout(function() {
+					if (status)
+						icon.show();
+					else
+						icon.hide();
+				}, 100);
+			}
+		}
 	}
 }
-
 export default utils;
 
 /* 得到日期年月日等加数字后的日期 */
@@ -402,3 +416,8 @@ if (typeof String.prototype.inOf != 'function') {
 //console.log( (new Date()).Format("yyyy.MM.dd") )
 //alert((new Date()).Format("yyyy.MM.dd"));
 //alert(("123.png").endsWith('.png'));
+
+Array.prototype.in_array = function(e) {
+	var r = new RegExp(',' + e + ',');
+	return (r.test(',' + this.join(this.S) + ','));
+};

@@ -563,7 +563,6 @@ radio-group label, checkbox-group label{
 	width: 100%;
 }
 .uni-media-list-body {
-	height: 84upx;
 	display: flex;
 	flex: 1;
 	flex-direction: column;

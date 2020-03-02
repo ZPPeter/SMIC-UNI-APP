@@ -1,9 +1,11 @@
 const isDebugRequest = false; //false 不显示request信息
 const isDevelopment = process.env.NODE_ENV === 'development'; //是否发布到正式环境 production
-const serverIP = '192.168.3.37:21021';
-const apiDomain = 'http://'+serverIP;
-const SignalR = 'ws://'+serverIP+'/signalr-myChatHub';
-const taskInfo = 'http://192.168.3.37:8080/ShowDetail?id=';
+const serverIP = '192.168.3.43';
+const serverPort = ':21021';
+const dataPort = ':8000';
+const apiDomain = 'http://'+serverIP+serverPort;
+const SignalR = 'ws://'+serverIP+serverPort+'/signalr-myChatHub';
+const taskInfo = 'http://'+serverIP+dataPort+'/ShowDetail?id=';
 
 const avatarImgPath = apiDomain + '/images/logo_'; //.png
 const signImgPath = apiDomain + '/SignImages/sign_'; //.png
@@ -11,7 +13,7 @@ const signImgPath = apiDomain + '/SignImages/sign_'; //.png
 const uploadAvatar = apiDomain + '/api/services/app/UploadAvatar/UploadFile';
 const uploadSign   = apiDomain + '/api/services/app/UploadAvatar/uploadSign';
 
-const Authenticate = '/api/TokenAuth/Authenticate';
+const Authenticate = '/api/TokenAuth/AuthenticateEx';
 const GetCurrentLoginInformations = '/api/services/app/Session/GetCurrentLoginInformations';
 //const GetCacheUserData = '/api/services/app/SJCLAppServices/GetCacheUserData';// 缓存用户信息
 const GetUsers = '/api/services/app/User/GetAll';
@@ -19,7 +21,7 @@ const ChangePwd = '/api/services/app/User/ChangePassword';
 const AddtoCZRZ = '/api/services/app/CZRZAppServices/AddtoCZRZ';
 
 const GetHomeInfos = '/api/services/app/HomeInfo/GetHomeInfos'; // 第一条和未读消息
-const GetNotices = '/api/services/app/HomeInfo/GetPaged';
+const GetNotices = '/api/services/app/HomeInfo/GetPagedAll';
 
 const GetQzyStatsData = '/api/services/app/StatsAppServices/getStatsDataBy?ID=1000';
 const GetHomeDatas = '/api/services/app/StatsAppServices/GetHomeCountData';

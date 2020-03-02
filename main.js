@@ -79,15 +79,22 @@ Vue.prototype.$moment = moment;
 //Vue.prototype.$eventHub = new Vue(); 
 App.mpType = 'app';
 
-//http://hhyang.cn/src/router/tutorial/rgRoutes.html
-import router from './router/uni-app-router.js';
-import routerLink from './node_modules/uni-simple-router/component/router-link.vue';
 //import cuCustom from './colorui/components/cu-custom.vue'
 //Vue.component('cu-custom',cuCustom);
-Vue.component('router-link', routerLink);
+
+//http://hhyang.cn/src/router/tutorial/rgRoutes.html
+// next(false) ???
+//import router from './router/uni-app-router.js';
+//import routerLink from './node_modules/uni-simple-router/component/router-link.vue';
+//Vue.component('router-link', routerLink);
+
+import router from './router'
+import { RouterMount } from 'uni-simple-router'
 
 // 引入 Vusui-app-layer 弹层
 // https://vusui.github.io/#/app/layer
+//当前在用版本 this.$Router.push('/pages/user/userinfo');
+//返回不经过路由
 /*
 icon 默认4, 0:Ok 1:Info(Yellow) 2:Error 3:Info(Blue) 4:Question 5:/
 */
@@ -102,7 +109,6 @@ Vue.component('vus-layer', vusLayer); //设置组件名称
 //import MescrollUni from "@/components/mescroll-uni/mescroll-uni.vue"
 //Vue.component('mescroll-body', MescrollBody)
 //Vue.component('mescroll-uni', MescrollUni)
-	
 
 // 此处重写 receive，connection 则 signalR.js 对应函数不再执行
 // MessageType 消息类型 1.发送连接消息 2.新消息通知 3.未定义 90.首页数字刷新 98.连接回执消息
@@ -122,36 +128,37 @@ _signalR.on('ReceiveMessage', async function(message) {
 		});
 	} else if (msg.MessageType == 90) {// 首页数字刷新
 		showHomeData.showData();
-	} else if (msg.MessageType == 98) { // 上线通知
-		if (msg.MessageBody.replace('[PC]', '').replace('[App]', '').trim() != userName) {
+	} else if (msg.MessageType == 98) { // 上线通知，不发给自己
+		//if (msg.MessageBody.replace('[PC]', '').replace('[App]', '').trim() != userName) {
 			uni.showToast({
 				icon: 'none',
 				position: 'top',
 				title: '用户: ' + msg.MessageBody + ' 上线了'
 			})
-		} else {
-			showHomeData.showData();
-		}
+		//}		
 	};
 });
 
 _signalR.on('connection', function() {
 	//console.log('连接成功！');
+	showHomeData.showData();
 	//消息格式
 	var msg = {
 		messageType: 1, //消息类型 1.发送连接消息 2.普通内容消息 98.连接回执消息
 		sendUserId: store.state.userInfo.realname + ' [App]', //消息发送人(登录用户ID)
 		messageBody: 'online' //消息内容
 	};
+	//console.log(msg);
 	_signalR.sendMessage(JSON.stringify(msg));
 });
 
-async function start() {
+async function restart() {
+	//console.log(config.SignalR);
 	try {
 		await _signalR.connection(config.SignalR);;
 	} catch (err) {
 		console.log(err); // 执行下面的 _signalR.on('error', async function(ex) {, 此处不执行
-		//setTimeout(() => start(), 5000);
+		//setTimeout(() => restart(), 5000);
 	}
 };
 
@@ -166,7 +173,7 @@ _signalR.on('close', async function() {
 		showCancel: false,
 		content: '注意：已经与服务器断开连接!'
 	});
-	await start();
+	await restart();
 });
 
 _signalR.on('error', async function(ex) {
@@ -184,8 +191,14 @@ _signalR.on('error', async function(ex) {
 		//	title: '注意：已经与服务器断开连接!'
 		//});
 	}
-	setTimeout(() => start(), 5000); // 5 秒重连
-	//await start();
+	setTimeout(() => restart(), 5000); // 5 秒重连
+	//await restart();
+});
+
+_signalR.on('heartbeat', async function() {
+	//console.log('heartbeat');
+	if(store.state.latestData.List.length == 0)
+		store.state.latestData.List.push('服务器已经连接!');	
 });
 
 const app = new Vue({
@@ -193,4 +206,20 @@ const app = new Vue({
 	router,
 	...App
 })
-app.$mount()
+//已经登录测试
+//console.log(store.state.hasLogin);  // fale,在 App created 之后显示
+/*
+uni.showToast({ // main.js 可以执行的
+	title:'Peter 2019'
+})
+main.js 是程序入口文件
+App.vue 是我们的主组件根组件，页面入口文件 ，所有页面都是在App.vue下进行切换的。
+        也是整个项目的关键,负责构建定义及页面组件归集。
+15:47:54.352  App created  at App.vue
+15:47:54.388  程序入口文件  at main.js
+15:47:54.403  App Launch   at App.vue
+15:47:54.418  App Show     at App.vue
+15:47:55.137  router at    router\uni-app-router.js
+*/	
+app.$mount();
+//console.log(store.state.hasLogin); // true，在 App Show 之后显示

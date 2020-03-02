@@ -3,18 +3,19 @@
 		{
 			"path": "pages/main/main",
 			"name": "main",
-			"meta":{
-				"title":"首页"
+			"meta": {
+				"title": "首页"
 			},
 			"style": {
-				"navigationBarTitleText": "全站仪检定数据处理系统",
+				"navigationBarTitleText": "", //测绘仪器检定数据处理系统
 				// #ifdef MP
 				"navigationStyle": "custom",
 				// #endif
 				"app-plus": {
 					"bounce": "none",
+					"softinputMode": "adjustPan",
 					"titleNView": {
-						"type": "transparent",
+						//"type": "transparent",
 						/*"titleText": "",
 						"tags": [{
 							"tag": "img",
@@ -25,29 +26,55 @@
 								"width": "110px",
 								"height": "26px"
 							}
-						}],*/
+						}],
 						"searchInput": {
 							"backgroundColor": "rgba(231, 231, 231,.7)",
 							"borderRadius": "8px",
 							"placeholder": "委托单信息查询",
 							"disabled": true, // true -> Clicked
 							"placeholderColor": "#606266"
-						},
+						},*/
 						"buttons": [{
-								"text": "", //\ue613
-								"float": "left"
+								"text": "\ue7ec", //\ue613  // 图标
+								"float": "left",
+								"fontSrc": "/static/iconfont.ttf",
+								"fontSize": "24",
+								//"width": "auto",
+								"color": "#EBEEF5",
+								"background": "rgba(0,0,0,0)"
+							},
+							{
+								"text": "测绘仪器检定", //\ue613
+								"float": "left",
+								"width": "110px",
+								"fontSize": "18",
+								"background": "rgba(0,0,0,0)",
+								"color": "#EBEEF5",
+								"colorPressed":"#EBEEF5"
 							},
 							{
 								"text": "\ue624", // 二维码
 								"fontSrc": "/static/iconfont.ttf",
-								"fontSize": "19",
-								"color": "black"
+								"color": "#EBEEF5",
+								"fontSize": "28",
+								"width": "42px",
+								"background": "rgba(0,0,0,0)"
 							},
 							{
 								"text": "\ue64f", // 送检明细
 								"fontSrc": "/static/iconfont.ttf",
-								"fontSize": "19",
-								"color": "black"
+								"fontSize": "28",
+								"color": "#EBEEF5",
+								"width": "42px",
+								"background": "rgba(0,0,0,0)"
+							},
+							{
+								"fontSrc": "/static/iconfont.ttf",
+								"text": "\ue659",//委托单
+								"fontSize": "24",
+								"color": "white",
+								"width": "42px",
+								"background": "rgba(0,0,0,0)"
 							}
 						]
 					}
@@ -67,20 +94,32 @@
 						"searchInput": {
 							"backgroundColor": "rgba(231, 231, 231,.7)",
 							"borderRadius": "8px",
-							"placeholder": "委托单位/委托单号/出厂编号",
+							"placeholder": "待检仪器查询",
 							"disabled": false,
 							"placeholderColor": "#606266"
 						},
 						"buttons": [{
-								"text": "",
-								"float": "left"
+								"text": "\ue7ec", //\ue613
+								"float": "left",
+								"fontSrc": "/static/iconfont.ttf",
+								"fontSize": "24",
+								"color": "#EBEEF5",
+								"background": "rgba(0,0,0,0)"
+							},
+							{
+								"text": "测绘仪器检定", //\ue613
+								"float": "left",
+								"width": "110px",
+								"fontSize": "18",
+								"background": "rgba(0,0,0,0)"
 							},
 							{
 								"fontSrc": "/static/iconfont.ttf",
 								"text": "\ue624",
-								"fontSize": "24",
-								"color": "ghostwhite",
-								"width": "46px",
+								"fontSize": "28",
+								"color": "#EBEEF5",
+								"colorPressed":"#EBEEF5",
+								"width": "42px",
 								"background": "rgba(0,0,0,0)"
 							}
 						]
@@ -99,20 +138,33 @@
 						"searchInput": {
 							"backgroundColor": "rgba(231, 231, 231,.7)",
 							"borderRadius": "8px",
-							"placeholder": "委托单位/委托单号/出厂编号",
+							"placeholder": "待核验仪器查询",
 							"disabled": false,
 							"placeholderColor": "#606266"
 						},
 						"buttons": [{
-								"text": "",
-								"float": "left"
+								"text": "\ue7ec", //\ue613
+								"float": "left",
+								"fontSrc": "/static/iconfont.ttf",
+								"fontSize": "24",
+								"color": "#EBEEF5",
+								"background": "rgba(0,0,0,0)"
+							},
+							{
+								"text": "测绘仪器检定", //\ue613
+								"float": "left",
+								"width": "110px",
+								"fontSize": "18",
+								"background": "rgba(0,0,0,0)",
+								"color": "#EBEEF5",
+								"colorPressed":"#EBEEF5"
 							},
 							{
 								"fontSrc": "/static/iconfont.ttf",
 								"text": "\ue624",
-								"fontSize": "24",
-								"color": "ghostwhite"
-								//,"width": "46px",
+								"fontSize": "28",
+								"color": "#EBEEF5",
+								"width": "46px"
 								//"background": "rgba(0,0,0,0)"
 							}
 						]
@@ -132,19 +184,33 @@
 						"searchInput": {
 							"backgroundColor": "rgba(231, 231, 231,.7)",
 							"borderRadius": "8px",
-							"placeholder": "委托单位/委托单号/出厂编号",
+							"placeholder": "待批准仪器查询",
 							"disabled": false,
 							"placeholderColor": "#606266"
 						},
 						"buttons": [{
-								"text": "",
-								"float": "left"
+								"text": "\ue7ec", //\ue613
+								"float": "left",
+								"fontSrc": "/static/iconfont.ttf",
+								"fontSize": "24",
+								"color": "#EBEEF5",
+								"background": "rgba(0,0,0,0)"
+							},
+							{
+								"text": "测绘仪器检定", //\ue613
+								"float": "left",
+								"width": "110px",
+								"fontSize": "18",
+								"background": "rgba(0,0,0,0)",
+								"color": "#EBEEF5",
+								"colorPressed":"#EBEEF5"
 							},
 							{
 								"fontSrc": "/static/iconfont.ttf",
 								"text": "\ue624",
-								"fontSize": "24",
-								"color": "ghostwhite",
+								"fontSize": "28",
+								"width": "46px",
+								"color": "#EBEEF5",
 								"background": "rgba(0,0,0,0)"
 							}
 						]
@@ -166,16 +232,26 @@
 					"titleNView": {
 						"type": "transparent",
 						"buttons": [{
-								"text": "测绘仪器检定", //\ue613
+								"text": "\ue7ec", //\ue613
 								"float": "left",
-								"width": "195px",
-								"fontSize": "18",
+								"fontSrc": "/static/iconfont.ttf",
+								"fontSize": "24",
+								"color": "#EBEEF5",
 								"background": "rgba(0,0,0,0)"
 							},
 							{
+								"text": "测绘仪器检定", //\ue613
+								"float": "left",
+								"width": "110px",
+								"fontSize": "18",
+								"background": "rgba(0,0,0,0)",
+								"color": "#EBEEF5",
+								"colorPressed":"#EBEEF5"
+							},							
+							{
 								"fontSrc": "/static/yticon.ttf",
 								"text": "\ue60f",
-								"fontSize": "24",
+								"fontSize": "28",
 								"color": "#303133",
 								"width": "46px",
 								"background": "rgba(0,0,0,0)"
@@ -192,9 +268,10 @@
 					}
 				}
 			}
-		},
+		},		
 		{
 			"path": "pages/login/login",
+			"name": "login",
 			"style": {
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom",
@@ -220,7 +297,7 @@
 				}
 			}
 		},
-		 {
+		{
 			"path": "pages/test/test",
 			"style": {
 				"navigationBarTitleText": "测试"
@@ -257,14 +334,29 @@
 							"fontSrc": "/static/iconfont.ttf",
 							"text": "\ue61d",
 							"fontSize": "21",
-							"color": "ghostwhite",
+							"color": "#EBEEF5",
 							"background": "rgba(0,0,0,0)"
 						}]
 					}
 				}
 
 			}
-		}, {
+		},
+		{
+		    "path" : "pages/notice/detail",
+		    "style": {
+		    		"navigationBarTitleText": "通知消息详情",
+		    		"app-plus": {
+		    			"bounce": "none",
+		    			"titleNView": {
+		    				"type": "transparent"
+		    			}
+		    		}
+		    
+		    	}
+		    
+		},
+		{
 			"path": "pages/about/about",
 			"style": {
 				"navigationBarTitleText": "关于",
@@ -333,7 +425,7 @@
 							"fontSrc": "/static/iconfont.ttf",
 							"text": "\ue61d",
 							"fontSize": "24",
-							"color": "ghostwhite",
+							"color": "#EBEEF5",
 							"background": "rgba(0,0,0,0)"
 						}]
 					}
@@ -363,7 +455,7 @@
 							"fontSrc": "/static/iconfont.ttf",
 							"text": "\ue61d",
 							"fontSize": "24",
-							"color": "ghostwhite",
+							"color": "#EBEEF5",
 							"background": "rgba(0,0,0,0)"
 						}]
 					}
@@ -384,7 +476,7 @@
 							"fontSrc": "/static/iconfont.ttf",
 							"text": "\ue61d",
 							"fontSize": "24",
-							"color": "ghostwhite",
+							"color": "#EBEEF5",
 							"background": "rgba(0,0,0,0)"
 						}]
 					}
@@ -410,7 +502,7 @@
 							"fontSrc": "/static/iconfont.ttf",
 							"text": "\ue61d",
 							"fontSize": "24",
-							"color": "ghostwhite",
+							"color": "#EBEEF5",
 							"background": "rgba(0,0,0,0)"
 						}]
 					}
@@ -436,7 +528,7 @@
 							"fontSrc": "/static/iconfont.ttf",
 							"text": "\ue61d",
 							"fontSize": "24",
-							"color": "ghostwhite",
+							"color": "#EBEEF5",
 							"background": "rgba(0,0,0,0)"
 						}]
 					}
@@ -930,30 +1022,29 @@
 					"bounce": "none"
 				}
 			}
-		}
-	    ,{
-            "path" : "pages/wtdcx/wtd_scan_details",
-            "style": {
-            		"navigationBarTitleText": "委托单详情",
-            		"app-plus": {
-            			"bounce": "none",
-            			"titleNView": {
-            				"buttons": [{
-            					"fontSrc": "/static/iconfont.ttf",
-            					"text": "\ue61d",
-            					"fontSize": "24",
-            					"color": "ghostwhite",
-            					"background": "rgba(0,0,0,0)"
-            				}]
-            			}
-            		}
-            	}
-            
-        }
+		}, {
+			"path": "pages/wtdcx/wtd_scan_details",
+			"style": {
+				"navigationBarTitleText": "委托单详情",
+				"app-plus": {
+					"bounce": "none",
+					"titleNView": {
+						"buttons": [{
+							"fontSrc": "/static/iconfont.ttf",
+							"text": "\ue61d",
+							"fontSize": "24",
+							"color": "#EBEEF5",
+							"background": "rgba(0,0,0,0)"
+						}]
+					}
+				}
+			}
+
+		}	    
     ],
 	"tabBar": {
 		"color": "#7a7e83",
-		"selectedColor": "#0faeff",
+		"selectedColor": "#0081ff",
 		"backgroundColor": "#ffffff",
 		"list": [{
 				"pagePath": "pages/main/main",
@@ -989,7 +1080,7 @@
 	},
 	"globalStyle": {
 		"navigationBarTextStyle": "white",
-		"navigationBarBackgroundColor": "#449DED",
+		"navigationBarBackgroundColor": "#0081ff",
 		"backgroundColor": "#fbf9fe"
 	}
 }
